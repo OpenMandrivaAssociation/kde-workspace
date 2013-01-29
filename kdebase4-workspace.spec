@@ -82,6 +82,7 @@ BuildRequires:	pkgconfig(libraw1394)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(libxklavier)
 BuildRequires:	pkgconfig(lua)
+BuildRequires:	pkgconfig(xtst)
 %if %{with_networkmanager}
 BuildRequires:	pkgconfig(NetworkManager)
 %endif
