@@ -88,6 +88,7 @@ BuildRequires:	pkgconfig(NetworkManager)
 BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(qimageblitz)
 BuildRequires:	pkgconfig(xcomposite)
+BuildRequires:	pkgconfig(xcb-image) pkgconfig(xcb-renderutil)
 BuildRequires:	pkgconfig(xcursor)
 BuildRequires:	pkgconfig(libggadget-1.0) pkgconfig(libggadget-qt-1.0)
 Requires:	qt4-qtdbus
