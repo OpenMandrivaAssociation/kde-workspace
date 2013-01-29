@@ -1,0 +1,32 @@
+diff -urN kde-workspace-4.8.97/klipper/klipper.cpp kde-workspace-4.8.97-patched/klipper/klipper.cpp
+--- kde-workspace-4.8.97/klipper/klipper.cpp	2012-06-26 07:03:28.000000000 +1100
++++ kde-workspace-4.8.97-patched/klipper/klipper.cpp	2012-07-14 13:18:33.890838701 +1100
+@@ -178,11 +178,6 @@
+     m_configureAction->setText( i18n("&Configure Klipper...") );
+     connect(m_configureAction, SIGNAL(triggered(bool)), SLOT(slotConfigure()));
+ 
+-    m_quitAction = m_collection->addAction( "quit" );
+-    m_quitAction->setIcon( KIcon("application-exit") );
+-    m_quitAction->setText( i18nc("@item:inmenu Quit Klipper", "&Quit") );
+-    connect(m_quitAction, SIGNAL(triggered(bool)), SLOT(slotQuit()));
+-
+     m_repeatAction = m_collection->addAction("repeat_action");
+     m_repeatAction->setText(i18n("Manually Invoke Action on Current Clipboard"));
+     m_repeatAction->setGlobalShortcut(KShortcut(Qt::ALT+Qt::CTRL+Qt::Key_R));
+@@ -224,15 +219,12 @@
+ 
+     popup->plugAction( m_toggleURLGrabAction );
+     popup->plugAction( m_clearHistoryAction );
+-    popup->plugAction( m_configureAction );
+     popup->plugAction( m_repeatAction );
+     popup->plugAction( m_editAction );
+ #ifdef HAVE_PRISON
+     popup->plugAction( m_showBarcodeAction );
+ #endif
+-    if ( !isApplet() ) {
+-        popup->plugAction( m_quitAction );
+-    }
++    popup->plugAction( m_configureAction );
+ }
+ 
+ Klipper::~Klipper()

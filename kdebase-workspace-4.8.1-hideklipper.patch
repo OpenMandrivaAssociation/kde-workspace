@@ -1,0 +1,11 @@
+diff -urN kde-workspace-4.8.1.orig/klipper/klipper.desktop kde-workspace-4.8.1/klipper/klipper.desktop
+--- kde-workspace-4.8.1.orig/klipper/klipper.desktop	2012-03-13 11:42:15.644091228 +0400
++++ kde-workspace-4.8.1/klipper/klipper.desktop	2012-03-13 11:43:01.519967969 +0400
+@@ -189,6 +189,7 @@
+ X-KDE-autostart-condition=klipperrc:General:AutoStart:true
+ OnlyShowIn=KDE;
+ Categories=Qt;KDE;Utility;X-KDE-Utilities-Desktop;
++NoDisplay=true
+ Comment=A cut & paste history utility
+ Comment[af]='n Knip & plak geskiedenis program
+ Comment[ar]=أداة تاريخ القص واللصق

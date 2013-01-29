@@ -1,0 +1,267 @@
+diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/CMakeLists.txt kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/CMakeLists.txt
+--- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/CMakeLists.txt	2012-08-13 19:53:51.000000000 +1100
++++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/CMakeLists.txt	2012-11-23 14:59:34.945436595 +1100
+@@ -71,6 +71,7 @@
+ set(SimpleApplet_SRCS
+     ui/contextmenufactory.cpp
+     simpleapplet/menuview.cpp
++    simpleapplet/toptile.cpp
+     simpleapplet/simpleapplet.cpp
+ )
+ kde4_add_plugin(plasma_applet_simplelauncher ${SimpleApplet_SRCS})
+diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp
+--- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2012-08-13 19:53:51.000000000 +1100
++++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2012-11-23 15:00:57.962581259 +1100
+@@ -22,6 +22,7 @@
+ // Own
+ #include "simpleapplet/simpleapplet.h"
+ #include "simpleapplet/menuview.h"
++#include "simpleapplet/toptile.h"
+ 
+ // Qt
+ #include <QtGui/QLabel>
+@@ -36,6 +37,9 @@
+ #include <QtGui/QSpacerItem>
+ #include <QtGui/QListWidget>
+ #include <QtGui/QListWidgetItem>
++#include <QPixmapCache>
++#include <QFileInfo>
++#include <QSvgRenderer>
+ 
+ // KDE Libs
+ #include <KActionCollection>
+@@ -56,6 +60,7 @@
+ 
+ // KDE Base
+ #include <kworkspace/kworkspace.h>
++#include <kstandarddirs.h>
+ 
+ // Plasma
+ #include <Plasma/IconWidget>
+@@ -98,6 +103,9 @@
+ class MenuLauncherApplet::Private
+ {
+ public:
++    class EventSniffer;
++    EventSniffer *eventSniffer;
++  
+     MenuLauncherApplet *q;
+ 
+     QWeakPointer<Kickoff::MenuView> menuview;
+@@ -127,19 +135,8 @@
+ 
+     bool delayedConfigLoad;
+ 
+-    explicit Private(MenuLauncherApplet *q)
+-            : q(q),
+-              icon(0),
+-              bookmarkcollection(0),
+-              bookmarkowner(0),
+-              bookmarkmenu(0),
+-              view(0),
+-              iconButton(0),
+-              formatComboBox(0),
+-              showMenuTitlesCheckBox(0),
+-              switcher(0),
+-              contextMenuFactory(0)
+-    {}
++    explicit Private(MenuLauncherApplet *q);
++    //{}
+ 
+     ~Private()
+     {
+@@ -269,6 +266,47 @@
+     }
+ };
+ 
++class MenuLauncherApplet::Private::EventSniffer
++: public QObject
++{
++   public:
++       EventSniffer(QObject *parent = 0)
++           : QObject(parent) { }
++
++       ~EventSniffer() { }
++
++       bool eventFilter(QObject *object, QEvent *event)
++       {
++          Q_UNUSED(object);
++
++          if (event->type() == QEvent::Paint ||
++               event->type() == QEvent::KeyPress ||
++               event->type() == QEvent::KeyRelease)
++           {
++               return false;
++            }
++
++           event->accept();
++           return true;
++       }
++};
++
++MenuLauncherApplet::Private::Private(MenuLauncherApplet *q)
++   : eventSniffer(new EventSniffer),
++   q(q),
++   icon(0),
++   bookmarkcollection(0),
++   bookmarkowner(0),
++   bookmarkmenu(0),
++   view(0),
++   iconButton(0),
++   formatComboBox(0),
++   showMenuTitlesCheckBox(0),
++   switcher(0),
++   contextMenuFactory(0)
++{
++}
++
+ MenuLauncherApplet::MenuLauncherApplet(QObject *parent, const QVariantList &args)
+         : Plasma::Applet(parent, args),
+         d(new Private(this))
+@@ -606,6 +644,47 @@
+                 this, SLOT(customContextMenuRequested(QMenu*,QPoint)));
+         //connect(menuview, SIGNAL(afterBeingHidden()), menuview, SLOT(deleteLater()));
+ 
++        KConfig *cfg = new KConfig("mandrivarc");
++        KConfigGroup grp = cfg->group("menu");
++
++        QString fileName = grp.exists() ?
++           grp.readEntry("topimage",
++               KStandardDirs::locate("data", "mandriva/pics/top.svg"))
++           :
++           KStandardDirs::locate("data", "mandriva/pics/top.svg");
++
++        if(QFile::exists(fileName))
++        {
++           QFileInfo info(fileName);
++           QString key = fileName + info.lastModified().toString();
++
++           QPixmap topPixmap;
++
++           if(!QPixmapCache::find(key, topPixmap))
++           {
++              QSvgRenderer *renderer = new QSvgRenderer(fileName);
++              if(renderer->isValid())
++              {
++                   topPixmap = QPixmap(renderer->defaultSize());
++                   topPixmap.fill(Qt::transparent);
++
++                   QPainter p(&topPixmap);
++                   renderer->render(&p);
++                   p.end();
++
++                   QPixmapCache::insert(key, topPixmap);
++              }
++           }
++
++           QWidgetAction *topAction = new QWidgetAction(menuview);
++           TopTile *top = new TopTile(topPixmap);
++           top->installEventFilter(d->eventSniffer);
++
++           topAction->setDefaultWidget(top);
++           menuview->addAction(topAction);
++        }
++
++
+         //Kickoff::MenuView::ModelOptions options = d->viewtypes.count() < 2 ? Kickoff::MenuView::MergeFirstLevel : Kickoff::MenuView::None;
+         foreach(const QString &vtname, d->viewtypes) {
+             if(vtname == "Applications") {
+diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp
+--- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp	1970-01-01 10:00:00.000000000 +1000
++++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp	2012-11-23 14:59:34.945936595 +1100
+@@ -0,0 +1,50 @@
++/*
++ * Copyright 2008 Gustavo Pichorim Boiko <boiko@mandriva.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++
++#include "toptile.h"
++
++#include <QPainter>
++
++TopTile::TopTile(const QPixmap &pix, QWidget *parent)
++: QWidget(parent)
++{
++	int middle = pix.width() / 2;
++	int height = pix.height();
++
++	m_leftPix = pix.copy(0,0,middle,height);
++	m_tilePix = pix.copy(middle, 0, 1, height);
++	m_rightPix = pix.copy(middle, 0, pix.width() - middle, height);
++	setMinimumSize(pix.size());
++}
++
++TopTile::~TopTile()
++{
++}
++
++void TopTile::paintEvent(QPaintEvent *e)
++{
++	QRect r = rect();
++	QPainter p(this);
++
++	p.drawTiledPixmap(r, m_tilePix);
++	p.drawPixmap(r.topLeft(), m_leftPix);
++	QRect r2 = m_rightPix.rect();
++	r2.moveTopRight(r.topRight());
++	p.drawPixmap(r2.topLeft(), m_rightPix);
++}
+diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.h kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.h
+--- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.h	1970-01-01 10:00:00.000000000 +1000
++++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.h	2012-11-23 14:59:34.945936595 +1100
+@@ -0,0 +1,41 @@
++/*
++ * Copyright 2008 Gustavo Pichorim Boiko <boiko@mandriva.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++ *
++ */
++
++#ifndef TOPTILE_H
++#define TOPTILE_H
++
++#include <QWidget>
++
++class TopTile : public QWidget
++{
++	Q_OBJECT
++public:
++	TopTile(const QPixmap &pix, QWidget *parent = 0);
++	~TopTile();
++
++protected:
++	void paintEvent(QPaintEvent *e);
++
++private:
++	QPixmap m_leftPix;
++	QPixmap m_rightPix;
++	QPixmap m_tilePix;
++};
++
++#endif

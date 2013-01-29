@@ -1,0 +1,24 @@
+diff -p -up kdebase-workspace-4.2.0/kcontrol/krdb/krdb.cpp.fix_gtkrc kdebase-workspace-4.2.0/kcontrol/krdb/krdb.cpp
+--- kdebase-workspace-4.2.0/kcontrol/krdb/krdb.cpp.fix_gtkrc	2009-01-06 15:22:09.000000000 -0200
++++ kdebase-workspace-4.2.0/kcontrol/krdb/krdb.cpp	2009-02-03 14:31:15.000000000 -0200
+@@ -88,6 +88,20 @@ static void applyGtkStyles(bool active, 
+    QByteArray gtkrc = getenv(gtkEnvVar(version));
+    QStringList list = QFile::decodeName(gtkrc).split( ':');
+    QString userHomeGtkrc = QDir::homePath()+userGtkrc(version);
++
++   // check if using IaOra
++   KConfig cfg("kdeglobals");
++   KConfigGroup grp = cfg.group("General");
++   QString style = grp.readEntry("widgetStyle");
++   if((style.toLower() =="iaora-qt") || (style.toLower() == "iaorakde"))
++   {
++      // if we are using IaOra, the gtkrc file created here should be removed
++      if (QFile::exists(gtkkde))
++         QFile::remove(gtkkde);
++     
++      return;
++   }
++
+    if (!list.contains(userHomeGtkrc))
+       list.prepend(userHomeGtkrc);
+    QLatin1String systemGtkrc = QLatin1String(sysGtkrc(version));

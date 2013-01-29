@@ -1,0 +1,26 @@
+Index: plasma/desktop/applets/kickoff/applet/plasma-applet-launcher.desktop
+===================================================================
+--- a/plasma/desktop/applets/kickoff/applet/plasma-applet-launcher.desktop
++++ b/plasma/desktop/applets/kickoff/applet/plasma-applet-launcher.desktop	2010-06-28 22:47:39.000000000 +0200
+@@ -155,7 +155,7 @@
+ Comment[x-test]=xxLauncher to start applicationsxx
+ Comment[zh_CN]=应用程序的启动器
+ Comment[zh_TW]=應用程式啟動器
+-Icon=start-here-kde
++Icon=mdvbutton
+ Type=Service
+ X-KDE-ServiceTypes=Plasma/Applet
+ 
+Index: plasma/desktop/applets/kickoff/simpleapplet/plasma-applet-simplelauncher.desktop
+===================================================================
+--- a/plasma/desktop/applets/kickoff/simpleapplet/plasma-applet-simplelauncher.desktop
++++ b/plasma/desktop/applets/kickoff/simpleapplet/plasma-applet-simplelauncher.desktop	2010-06-28 22:48:03.000000000 +0200
+@@ -144,7 +144,7 @@
+ Comment[x-test]=xxTraditional menu based application launcherxx
+ Comment[zh_CN]=基于菜单的传统程序启动器
+ Comment[zh_TW]=傳統選單式的應用程式啟動器
+-Icon=start-here-kde
++Icon=mdvbutton
+ Type=Service
+ X-KDE-ServiceTypes=Plasma/Applet
+ X-KDE-Library=plasma_applet_simplelauncher

@@ -1,0 +1,27 @@
+--- kde-workspace-4.8.95/ksmserver/startup.cpp.0305~	2012-05-22 23:52:43.000000000 +0000
++++ kde-workspace-4.8.95/ksmserver/startup.cpp	2012-06-30 15:18:44.000000000 +0000
+@@ -402,7 +402,13 @@
+     }
+     if( !defaultSession())
+         restoreLegacySession(KGlobal::config().data());
+-    KNotification::event( "startkde" , QString() , QPixmap() , 0l , KNotification::DefaultEvent  ); // this is the time KDE is up, more or less
++    KNotification *n = KNotification::event( "startkde" , QString() , QPixmap() , 0l ,  KNotification::DefaultEvent  ); // this is the time KDE is up, more or less
++    connect(n, SIGNAL( closed() ) , this, SLOT(startupSoundFinished()) );
++}
++
++void KSMServer::startupSoundFinished()
++{
++	kDebug( 1218 ) << "Startup  event finished";
+ }
+ 
+ void KSMServer::runUserAutostart()
+--- kde-workspace-4.8.95/ksmserver/server.h.0305~	2012-05-22 23:52:43.000000000 +0000
++++ kde-workspace-4.8.95/ksmserver/server.h	2012-06-30 15:16:16.000000000 +0000
+@@ -135,6 +135,7 @@
+     void startupSuspendTimeout();
+     void wmProcessChange();
+     void logoutSoundFinished();
++    void startupSoundFinished();
+     void autoStart0Done();
+     void autoStart1Done();
+     void autoStart2Done();

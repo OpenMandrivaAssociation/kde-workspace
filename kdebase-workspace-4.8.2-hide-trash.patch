@@ -1,0 +1,11 @@
+diff -urN kde-workspace-4.8.2.orig/plasma/desktop/applets/trash/plasma-applet-trash.desktop kde-workspace-4.8.2/plasma/desktop/applets/trash/plasma-applet-trash.desktop
+--- kde-workspace-4.8.2.orig/plasma/desktop/applets/trash/plasma-applet-trash.desktop	2012-03-30 04:02:31.000000000 +0600
++++ kde-workspace-4.8.2/plasma/desktop/applets/trash/plasma-applet-trash.desktop	2012-04-24 12:13:13.762087732 +0600
+@@ -154,6 +154,7 @@
+ Comment[zh_TW]=存取已刪除的項目
+ Type=Service
+ Icon=user-trash
++NoDisplay=true
+ X-KDE-ServiceTypes=Plasma/Applet
+ 
+ X-KDE-Library=plasma_applet_trash

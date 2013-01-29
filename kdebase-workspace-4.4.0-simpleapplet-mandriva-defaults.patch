@@ -1,0 +1,20 @@
+--- a/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp.old	2010-06-21 00:22:43.000000000 +0200
++++ b/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2010-06-21 00:24:06.000000000 +0200
+@@ -338,7 +338,7 @@
+             //(if SimpleLauncher was never used before)
+         }
+         default: { //Default configuration
+-            d->viewtypes << "RecentlyUsedApplications" << "Applications" << "Favorites";
++	    d->viewtypes << "RecentlyUsedApplications" << "Applications" << "Favorites" << "RecentlyUsed" ;
+             if (KAuthorized::authorize("run_command")) {
+                 d->viewtypes << "RunCommand";
+             }
+@@ -924,7 +924,7 @@
+     d->formattype = (MenuLauncherApplet::FormatType) fte.keyToValue(ftb);
+ 
+     d->setMaxRecentApps(cg.readEntry("maxRecentApps", qMin(5, Kickoff::RecentApplications::self()->maximum())));
+-    d->showMenuTitles = cg.readEntry("showMenuTitles", false);
++    d->showMenuTitles = cg.readEntry("showMenuTitles", true);
+ 
+     d->icon->setIcon(KIcon(cg.readEntry("icon", d->iconname)));
+ 

@@ -1,0 +1,53 @@
+Index: powerdevil/daemon/BackendConfig.cmake
+===================================================================
+--- a/powerdevil/daemon/BackendConfig.cmake
++++ b/powerdevil/daemon/BackendConfig.cmake	2011-12-12 12:02:57.080116861 -0300
+@@ -39,18 +39,7 @@
+ kde4_install_auth_helper_files(backlighthelper org.kde.powerdevil.backlighthelper root)
+ kde4_install_auth_actions(org.kde.powerdevil.backlighthelper ${CMAKE_CURRENT_SOURCE_DIR}/backends/upower/backlight_helper_actions.actions)
+ 
+-########################## HAL Backend #####################################
+-
+-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/backends/hal)
+-
+-set(powerdevilhalbackend_SRCS
+-    backends/hal/halsuspendjob.cpp
+-    backends/hal/powerdevilhalbackend.cpp
+-)
+-
+-set(powerdevilhalbackend_LIBS ${KDE4_SOLID_LIBS})
+-
+ ########################## Daemon variables ################################
+ 
+-set(POWERDEVIL_BACKEND_SRCS ${powerdevilupowerbackend_SRCS} ${powerdevilhalbackend_SRCS})
+-set(POWERDEVIL_BACKEND_LIBS ${powerdevilupowerbackend_LIBS} ${powerdevilhalbackend_LIBS})
++set(POWERDEVIL_BACKEND_SRCS ${powerdevilupowerbackend_SRCS})
++set(POWERDEVIL_BACKEND_LIBS ${powerdevilupowerbackend_LIBS})
+Index: powerdevil/daemon/powerdevilbackendloader.cpp
+===================================================================
+--- a/powerdevil/daemon/powerdevilbackendloader.cpp
++++ b/powerdevil/daemon/powerdevilbackendloader.cpp	2011-12-12 12:04:23.258121719 -0300
+@@ -21,7 +21,6 @@
+ #include "powerdevilbackendloader.h"
+ 
+ #include "backends/upower/powerdevilupowerbackend.h"
+-#include "backends/hal/powerdevilhalbackend.h"
+ 
+ #include <KDebug>
+ 
+@@ -39,15 +38,6 @@
+ 
+     kDebug() << "Failed!";
+ 
+-    // If we are here, try HAL
+-    kDebug() << "Loading HAL backend...";
+-    if (PowerDevilHALBackend::isAvailable()) {
+-        kDebug() << "Success!";
+-        return new PowerDevilHALBackend(parent);
+-    }
+-
+-    // Fail...
+-    kDebug() << "Failed!";
+     return 0;
+ }
+ 
