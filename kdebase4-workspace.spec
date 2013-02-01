@@ -132,12 +132,6 @@ Support for running google-gadgets in Plasma
 %_datadir/kde4/services/plasma-packagestructure-googlegadgets.desktop
 %_datadir/kde4/services/plasma-scriptengine-googlegadgets.desktop
 
-%post
-%make_session
-
-%postun
-%make_session
-
 %files
 %{_sysconfdir}/X11/wmsession.d/*
 %{_sysconfdir}/profile.d/70kde4.sh
@@ -1626,6 +1620,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Fri Feb  1 2013 Per Øyvind Karlsen <peroyvind@mandriva.org> 4.9.98-2
+- fix empty-%%postun & empty-%%post
+
 * Sun Jan 13 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.9.5-1
 - New version 4.9.5
 - Re-diff l10n-ru patch
