@@ -104,7 +104,7 @@ Requires:	pm-utils
 Requires:	xdg-utils
 Requires:	rosapanel
 Requires:	setxkbmap
-Requires:	kde4-windeco-dekorator
+Requires:	kde4-windeco-dekorator = 0.5.1
 Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.9.1-2
 Suggests:	networkmanager
 Suggests:	plasma-applet-system-monitor-net
