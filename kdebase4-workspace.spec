@@ -5,31 +5,28 @@
 %{?_with_networkmanager: %{expand: %%global with_networkmanager 1}}
 
 %define kdm_version 2.7
-# Rosa's system tray (we use it instead of the default one)
-%define tray_version 1.2
 
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
-Version:	4.9.98
+Version:	4.10.0
 Release:	1
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
 URL:		http://www.kde.org
 %define is_beta %(if test `echo %version |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
-%if %is_beta
+%if %{is_beta}
 %define ftpdir unstable
 %else
 %define ftpdir stable
 %endif
-Source:		ftp://ftp.kde.org/pub/kde/%ftpdir/%{version}/src/kde-workspace-%{version}.tar.xz
+Source:		ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{version}.tar.xz
 Source1:	kde.pam
 Source2:	kde-np.pam
 Source3:	mandriva-startkde
 Source4:	systemsettings.desktop
 Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
-Source7:	kdebase-workspace-plasma-applet-systemtray-%{tray_version}.tar.gz
 Source10:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 Patch2:		kdebase-workspace-4.9.3-menu-toptile.patch
@@ -104,8 +101,7 @@ Requires:	pm-utils
 Requires:	xdg-utils
 Requires:	rosapanel
 Requires:	setxkbmap
-Requires:	kde4-windeco-dekorator = 0.5.1
-Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.9.1-2
+Requires:	kde4-windeco-dekorator
 Suggests:	networkmanager
 Suggests:	plasma-applet-system-monitor-net
 Suggests:	plasma-applet-system-monitor-hwinfo
@@ -117,20 +113,6 @@ Suggests:	kickoff
 
 %description
 This package contains the KDE 4 application workspace components.
-
-%package google-gadgets
-Summary:	Support for running google-gadgets in Plasma
-Group:		Graphical desktop/KDE
-Requires:	%name = %EVRD
-
-%description google-gadgets
-Support for running google-gadgets in Plasma
-
-%files google-gadgets
-%_libdir/kde4/plasma_package_ggl.so
-%_libdir/kde4/plasma_scriptengine_ggl.so
-%_datadir/kde4/services/plasma-packagestructure-googlegadgets.desktop
-%_datadir/kde4/services/plasma-scriptengine-googlegadgets.desktop
 
 %files
 %{_sysconfdir}/X11/wmsession.d/*
@@ -637,6 +619,25 @@ Support for running google-gadgets in Plasma
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
+
+#------------------------------------------------
+
+%package googlegadgets
+Summary:	Support for running google gadgets in Plasma
+Group:		Graphical desktop/KDE
+Requires:	%{name} = %{EVRD}
+Requires:	google-gadgets-qt
+# Temporary, as google-gadgets was only in 4.9.98
+Obsoletes:	kdebase4-workspace-google-gadgets < 2:4.10.0
+
+%description googlegadgets
+Support for running google-gadgets in Plasma
+
+%files googlegadgets
+%{_libdir}/kde4/plasma_package_ggl.so
+%{_libdir}/kde4/plasma_scriptengine_ggl.so
+%{_datadir}/kde4/services/plasma-packagestructure-googlegadgets.desktop
+%{_datadir}/kde4/services/plasma-scriptengine-googlegadgets.desktop
 
 #------------------------------------------------
 
@@ -1620,6 +1621,12 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Feb 07 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.0-1
+- New version 4.10.0
+- Update files
+- Restore googlegadgets subpackage
+- Don't use external system tray because it's merged in upstream in 4.10
+
 * Fri Feb  1 2013 Per Øyvind Karlsen <peroyvind@mandriva.org> 4.9.98-2
 - fix empty-%%postun & empty-%%post
 
