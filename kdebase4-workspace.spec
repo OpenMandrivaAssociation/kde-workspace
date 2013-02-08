@@ -32,8 +32,6 @@ Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 Patch2:		kdebase-workspace-4.9.3-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
 Patch3:		kde-workspace-4.9.4-fontconfig.patch
-# Add localization for powerdevil *.desktop files
-Patch4:		kde-workspace-4.9.5-l10n-ru.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
@@ -1626,6 +1624,7 @@ done
 - Update files
 - Restore googlegadgets subpackage
 - Don't use external system tray because it's merged in upstream in 4.10
+- Drop merged in upstream l10n-ru patch
 
 * Fri Feb  1 2013 Per Øyvind Karlsen <peroyvind@mandriva.org> 4.9.98-2
 - fix empty-%%postun & empty-%%post
