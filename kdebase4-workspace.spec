@@ -4,12 +4,12 @@
 %define with_networkmanager 1
 %{?_with_networkmanager: %{expand: %%global with_networkmanager 1}}
 
-%define kdm_version 2.7
+%define kdm_version 2.7.2
 
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.0
-Release:	1
+Release:	2
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -1619,6 +1619,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Feb 20 2012 Ural Mullabaev <ural.mullabaev@rosalab.ru> 2:4.10.0-2
+- Reverted back KDM greeter plugin header file
+
 * Thu Feb 07 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.0-1
 - New version 4.10.0
 - Update files
