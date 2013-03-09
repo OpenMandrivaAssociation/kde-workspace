@@ -8,8 +8,8 @@
 
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
-Version:	4.10.0
-Release:	2
+Version:	4.10.1
+Release:	1
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -1619,6 +1619,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sat Mar 09 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.1-1
+- New version 4.10.1
+
 * Wed Feb 20 2012 Ural Mullabaev <ural.mullabaev@rosalab.ru> 2:4.10.0-2
 - Reverted back KDM greeter plugin header file
 
