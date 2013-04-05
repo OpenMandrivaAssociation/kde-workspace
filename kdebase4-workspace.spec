@@ -51,7 +51,7 @@ BuildRequires:	boost-devel
 BuildRequires:	kdelibs4-devel
 BuildRequires:	kdepimlibs4-devel
 BuildRequires:	ieee1284-devel
-BuildRequires:	libsasl-devel
+BuildRequires:	sasl-devel
 BuildRequires:	lm_sensors-devel
 BuildRequires:	openldap-devel
 BuildRequires:	python-kde4-devel
@@ -1621,6 +1621,7 @@ done
 %changelog
 * Wed Apr 03 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-1
 - New version 4.10.2
+- Change libsasl-devel to sasl-devel in BuildRequires
 
 * Sat Mar 09 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.1-1
 - New version 4.10.1
