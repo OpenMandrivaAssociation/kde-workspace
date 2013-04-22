@@ -9,7 +9,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.2
-Release:	1
+Release:	2
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -20,13 +20,14 @@ URL:		http://www.kde.org
 %else
 %define ftpdir stable
 %endif
-Source:		ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{version}.tar.xz
+Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{version}.tar.xz
 Source1:	kde.pam
 Source2:	kde-np.pam
 Source3:	mandriva-startkde
 Source4:	systemsettings.desktop
 Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
+Source7:	kdm.service
 Source10:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 Patch2:		kdebase-workspace-4.9.3-menu-toptile.patch
@@ -1413,6 +1414,7 @@ chksession -K
 %{_kde_libdir}/kde4/libexec/backlighthelper
 %{_kde_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
 %{_kde_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
+%{_unitdir}/kdm.service
 %attr(0775,root,root) %dir %{_localstatedir}/spool/gdm
 %attr(0770, root, root) %dir %{_localstatedir}/lib/kdm
 
@@ -1592,6 +1594,10 @@ install -m 0755 %{SOURCE3} %{buildroot}%{_kde_bindir}/startkde
 sed -e 's,LIBDIR,%{_libdir},g' -i %{buildroot}%{_kde_bindir}/startkde
 sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_kde_bindir}/startkde
 
+#systemd implimentation
+install -d -m 0775 %{buildroot}%{_unitdir}
+install -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/kdm.service
+
 # logrotate
 mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
 cat << EOF > %{buildroot}%{_sysconfdir}/logrotate.d/kdm
@@ -1619,6 +1625,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Mon Apr 22 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-2
+- Add kdm.service file but don't enable this service yet
+
 * Wed Apr 03 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-1
 - New version 4.10.2
 - Change libsasl-devel to sasl-devel in BuildRequires
@@ -1626,7 +1635,7 @@ done
 * Sat Mar 09 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.1-1
 - New version 4.10.1
 
-* Wed Feb 20 2012 Ural Mullabaev <ural.mullabaev@rosalab.ru> 2:4.10.0-2
+* Wed Feb 20 2013 Ural Mullabaev <ural.mullabaev@rosalab.ru> 2:4.10.0-2
 - Reverted back KDM greeter plugin header file
 
 * Thu Feb 07 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.0-1
