@@ -9,7 +9,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.2
-Release:	2
+Release:	3
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -30,6 +30,8 @@ Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
 Source7:	kdm.service
 Source10:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
+# Use drakclock for time settings, patch from Mageia
+Patch1:		kdebase-workspace-4.6.2-mageia-drakclock.patch
 Patch2:		kdebase-workspace-4.9.3-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
 Patch3:		kde-workspace-4.9.4-fontconfig.patch
@@ -1625,6 +1627,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Apr 23 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-3
+- Add patch from Mageia to use drakclock for time settings
+
 * Mon Apr 22 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-2
 - Add kdm.service file but don't enable this service yet
 

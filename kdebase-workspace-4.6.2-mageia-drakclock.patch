@@ -1,0 +1,56 @@
+#
+# Description: This patch allow to use drakclock to configure the clock 
+# 
+# 
+#
+#
+
+Index: libs/plasmaclock/clockapplet.cpp
+===================================================================
+--- kdebase-workspace/libs/plasmaclock/clockapplet.cpp
++++ kdebase-workspace/libs/plasmaclock/clockapplet.cpp	2011-04-07 22:07:26.547038122 -0300
+@@ -37,7 +37,7 @@
+ #include <QtCore/QDate>
+ #include <QtCore/QTimer>
+ #include <QtDBus/QDBusConnectionInterface>
+-
++#include <QtCore/QProcess>
+ #include <KColorScheme>
+ #include <KConfigDialog>
+ #include <KConfigGroup>
+@@ -497,8 +497,8 @@
+             d->adjustSystemTimeAction = new QAction(this);
+             d->adjustSystemTimeAction->setText(i18n("Adjust Date and Time..."));
+             d->adjustSystemTimeAction->setIcon(KIcon(icon()));
+-            connect(d->adjustSystemTimeAction, SIGNAL(triggered()), this, SLOT(launchTimeControlPanel()));
+-        }
++	    connect(d->adjustSystemTimeAction, SIGNAL(triggered()), this, SLOT(callDrakClock()));
++	}
+     }
+ 
+     QList<QAction*> contextualActions;
+@@ -522,6 +522,12 @@
+     KService::Ptr service = offers.first();
+     KRun::run(*service, urls, 0);
+ }
++void ClockApplet::callDrakClock()
++{
++	QProcess *proc = new QProcess(this);
++	proc->start("drakclock");
++}
++
+ 
+ void ClockApplet::wheelEvent(QGraphicsSceneWheelEvent *event)
+ {
+Index: libs/plasmaclock/clockapplet.h
+===================================================================
+--- kdebase-workspace/libs/plasmaclock/clockapplet.h
++++ kdebase-workspace/libs/plasmaclock/clockapplet.h	2011-04-07 22:08:00.531485222 -0300
+@@ -89,6 +89,7 @@
+         void updateClockDefaultsTo();
+         void speakTime(const QTime &);
+         void launchTimeControlPanel();
++	void callDrakClock();
+ 
+     private Q_SLOTS:
+         void updateClipboardMenu();
