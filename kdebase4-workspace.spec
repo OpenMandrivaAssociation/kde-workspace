@@ -4,17 +4,20 @@
 %define with_networkmanager 1
 %{?_with_networkmanager: %{expand: %%global with_networkmanager 1}}
 
+%define with_drakclock 1
+%{?_with_networkmanager: %{expand: %%global with_networkmanager 1}}
+
 %define kdm_version 2.7.2
 
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.2
-Release:	3
+Release:	5
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
 URL:		http://www.kde.org
-%define is_beta %(if test `echo %version |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
+%define is_beta %(if test `echo %{version} |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
 %if %{is_beta}
 %define ftpdir unstable
 %else
@@ -28,13 +31,16 @@ Source4:	systemsettings.desktop
 Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
 Source7:	kdm.service
+Source8:	kcm_drakclock.desktop
 Source10:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 # Use drakclock for time settings, patch from Mageia
 Patch1:		kdebase-workspace-4.6.2-mageia-drakclock.patch
-Patch2:		kdebase-workspace-4.9.3-menu-toptile.patch
+# Don't build kcm_clock
+Patch2:		kde-workspace-4.10.2-no-kcm-clock.patch
+Patch3:		kdebase-workspace-4.9.3-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
-Patch3:		kde-workspace-4.9.4-fontconfig.patch
+Patch4:		kde-workspace-4.9.4-fontconfig.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
@@ -111,6 +117,7 @@ Suggests:	plasma-applet-system-monitor-cpu
 Suggests:	plasma-applet-system-monitor-temperature
 Suggests:	klipper
 Suggests:	kickoff
+Conflicts:	kdm < 2:4.10.2-4
 
 %description
 This package contains the KDE 4 application workspace components.
@@ -123,7 +130,9 @@ This package contains the KDE 4 application workspace components.
 %{_kde_appsdir}/printer-applet
 %endif
 %{_kde_sysconfdir}/dbus-1/system.d/org.kde.fontinst.conf
+%if !%{with_drakclock}
 %{_kde_sysconfdir}/dbus-1/system.d/org.kde.kcontrol.kcmclock.conf
+%endif
 %{_kde_sysconfdir}/dbus-1/system.d/org.kde.ksysguard.processlisthelper.conf
 %{_kde_sysconfdir}/ksysguarddrc
 %{_kde_bindir}/kaccess
@@ -174,7 +183,9 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/kcm_access.so
 %{_kde_libdir}/kde4/kcm_autostart.so
 %{_kde_libdir}/kde4/kcm_bell.so
+%if !%{with_drakclock}
 %{_kde_libdir}/kde4/kcm_clock.so
+%endif
 %{_kde_libdir}/kde4/kcm_colors.so
 %{_kde_libdir}/kde4/kcm_cursortheme.so
 %{_kde_libdir}/kde4/kcm_desktoppaths.so
@@ -243,6 +254,9 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/libexec/fontinst
 %{_kde_libdir}/kde4/libexec/fontinst_helper
 %{_kde_libdir}/kde4/libexec/fontinst_x11
+%if !%{with_drakclock}
+%{_kde_libdir}/kde4/libexec/kcmdatetimehelper
+%endif
 %{_kde_libdir}/kde4/libexec/ksysguardprocesslist_helper
 %{_kde_libdir}/kde4/libexec/kwin_killer_helper
 %{_kde_libdir}/kde4/libexec/kwin_opengl_test
@@ -387,7 +401,9 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/dbus-1/services/org.kde.fontinst.service
 %{_kde_datadir}/dbus-1/services/org.kde.krunner.service
 %{_kde_datadir}/dbus-1/system-services/org.kde.fontinst.service
+%if !%{with_drakclock}
 %{_kde_datadir}/dbus-1/system-services/org.kde.kcontrol.kcmclock.service
+%endif
 %{_kde_datadir}/dbus-1/system-services/org.kde.ksysguard.processlisthelper.service
 %doc %{_kde_docdir}/HTML/en/kcontrol
 %doc %{_kde_docdir}/HTML/en/kfontview
@@ -402,7 +418,11 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/ServiceMenus/installfont.desktop
 %{_kde_services}/autostart.desktop
 %{_kde_services}/bell.desktop
+%if %{with_drakclock}
+%{_kde_services}/kcm_drakclock.desktop
+%else
 %{_kde_services}/clock.desktop
+%endif
 %{_kde_services}/colors.desktop
 %{_kde_services}/cursortheme.desktop
 %{_kde_services}/desktop.desktop
@@ -616,7 +636,9 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/workspaceoptions.desktop
 %{_kde_servicetypes}/*.desktop
 %{_kde_datadir}/polkit-1/actions/org.kde.fontinst.policy
+%if !%{with_drakclock}
 %{_kde_datadir}/polkit-1/actions/org.kde.kcontrol.kcmclock.policy
+%endif
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
@@ -1393,7 +1415,6 @@ chksession -K
 %{_kde_bindir}/kdm
 %{_kde_bindir}/kdmctl
 %{_kde_bindir}/genkdmconf
-%{_kde_libdir}/kde4/libexec/kcmdatetimehelper
 %{_kde_libdir}/kde4/libexec/kdm_config
 %{_kde_libdir}/kde4/libexec/kdm_greet
 %{_kde_libdir}/kde4/libexec/kfontprint
@@ -1545,7 +1566,25 @@ based on kdebase.
 
 %prep
 %setup -q -n kde-workspace-%{version}
-%apply_patches
+%patch0 -p1
+
+%if %{with_drakclock}
+%patch1 -p1
+%patch2 -p1
+%endif
+
+%patch3 -p1
+%patch4 -p1
+%patch11 -p1
+%patch13 -p1
+%patch19 -p1
+%patch26 -p1
+%patch100 -p1
+%patch101 -p1
+%patch103 -p1
+%patch104 -p1
+%patch106 -p1
+%patch501 -p1
 
 rm -fr kdm/kfrontend libs/kdm
 
@@ -1557,6 +1596,10 @@ tar xvf %{SOURCE6}
 
 %install
 %makeinstall_std -C build
+
+%if %{with_drakclock}
+install -m 0644 %{SOURCE8} %{buildroot}%{_kde_services}/kcm_drakclock.desktop
+%endif
 
 rm -fr %{buildroot}%{_kde_appsdir}/kdm/sessions
 rm -fr %{buildroot}%{_kde_configdir}/kdm/X*
@@ -1627,6 +1670,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Apr 24 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-5
+- More work on drakclock integration
+
 * Tue Apr 23 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-3
 - Add patch from Mageia to use drakclock for time settings
 

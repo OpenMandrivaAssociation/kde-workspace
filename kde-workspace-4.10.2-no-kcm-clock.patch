@@ -1,0 +1,11 @@
+diff -urN kde-workspace-4.10.2/kcontrol/CMakeLists.txt kde-workspace-4.10.2-patched/kcontrol/CMakeLists.txt
+--- kde-workspace-4.10.2/kcontrol/CMakeLists.txt	2013-03-01 17:32:25.040847159 +1100
++++ kde-workspace-4.10.2-patched/kcontrol/CMakeLists.txt	2013-04-24 21:49:23.212576411 +1100
+@@ -19,7 +19,6 @@
+ add_subdirectory( input )
+ add_subdirectory( access )
+ add_subdirectory( screensaver )
+-add_subdirectory( dateandtime )
+ add_subdirectory( autostart )
+ endif(NOT WIN32)
+ 
