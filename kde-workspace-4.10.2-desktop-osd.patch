@@ -1,0 +1,12 @@
+diff -urN kde-workspace-4.10.2/kwin/scripts/desktopchangeosd/contents/ui/main.qml kde-workspace-4.10.2-patched/kwin/scripts/desktopchangeosd/contents/ui/main.qml
+--- kde-workspace-4.10.2/kwin/scripts/desktopchangeosd/contents/ui/main.qml	2013-03-01 17:32:24.508853714 +1100
++++ kde-workspace-4.10.2-patched/kwin/scripts/desktopchangeosd/contents/ui/main.qml	2013-04-26 01:50:17.000000000 +1100
+@@ -54,7 +54,7 @@
+ 
+         mainItem: Item {
+             id: dialogItem
+-            width: root.showGrid ? view.itemWidth * view.columns : textElement.width
++            width: root.showGrid ? view.itemWidth * view.columns : (textElement.width > 0) ? textElement.width : 100
+             height: root.showGrid ? view.itemHeight * view.rows + textElement.height : textElement.height
+             Plasma.Label {
+                 id: textElement

@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.2
-Release:	5
+Release:	6
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -41,6 +41,8 @@ Patch2:		kde-workspace-4.10.2-no-kcm-clock.patch
 Patch3:		kdebase-workspace-4.9.3-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
 Patch4:		kde-workspace-4.9.4-fontconfig.patch
+# Just a workaround to make sure text box size for OSD is always big enough
+Patch5:		kde-workspace-4.10.2-desktop-osd.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
@@ -1575,6 +1577,7 @@ based on kdebase.
 
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %patch11 -p1
 %patch13 -p1
 %patch19 -p1
@@ -1670,6 +1673,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Apr 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-6
+- Add workaround for OSD desktop switching issues
+
 * Wed Apr 24 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-5
 - More work on drakclock integration
 
