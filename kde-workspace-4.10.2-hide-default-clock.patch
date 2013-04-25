@@ -1,0 +1,14 @@
+diff -urN kde-workspace-4.10.2/kcontrol/dateandtime/clock.desktop kde-workspace-4.10.2-patched/kcontrol/dateandtime/clock.desktop
+--- kde-workspace-4.10.2/kcontrol/dateandtime/clock.desktop	2013-04-26 03:19:19.698747542 +1100
++++ kde-workspace-4.10.2-patched/kcontrol/dateandtime/clock.desktop	2013-04-26 03:19:45.394989289 +1100
+@@ -9,8 +9,8 @@
+ X-KDE-ParentApp=kcontrol
+ 
+ #should this be in system settings when we can get to it through the panel?
+-#Answer: Yes.
+-X-KDE-System-Settings-Parent-Category=system-administration
++#Answer: No.
++#X-KDE-System-Settings-Parent-Category=system-administration
+ 
+ Name=Date & Time
+ Name[af]=Datum & Tyd

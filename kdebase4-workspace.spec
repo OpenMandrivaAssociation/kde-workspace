@@ -36,8 +36,8 @@ Source10:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 # Use drakclock for time settings, patch from Mageia
 Patch1:		kdebase-workspace-4.6.2-mageia-drakclock.patch
-# Don't build kcm_clock
-Patch2:		kde-workspace-4.10.2-no-kcm-clock.patch
+# Hide native clock configurator as we have drakclock instead
+Patch2:		kde-workspace-4.10.2-hide-default-clock.patch
 Patch3:		kdebase-workspace-4.9.3-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
 Patch4:		kde-workspace-4.9.4-fontconfig.patch
@@ -132,9 +132,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_appsdir}/printer-applet
 %endif
 %{_kde_sysconfdir}/dbus-1/system.d/org.kde.fontinst.conf
-%if !%{with_drakclock}
 %{_kde_sysconfdir}/dbus-1/system.d/org.kde.kcontrol.kcmclock.conf
-%endif
 %{_kde_sysconfdir}/dbus-1/system.d/org.kde.ksysguard.processlisthelper.conf
 %{_kde_sysconfdir}/ksysguarddrc
 %{_kde_bindir}/kaccess
@@ -185,9 +183,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/kcm_access.so
 %{_kde_libdir}/kde4/kcm_autostart.so
 %{_kde_libdir}/kde4/kcm_bell.so
-%if !%{with_drakclock}
 %{_kde_libdir}/kde4/kcm_clock.so
-%endif
 %{_kde_libdir}/kde4/kcm_colors.so
 %{_kde_libdir}/kde4/kcm_cursortheme.so
 %{_kde_libdir}/kde4/kcm_desktoppaths.so
@@ -256,9 +252,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/libexec/fontinst
 %{_kde_libdir}/kde4/libexec/fontinst_helper
 %{_kde_libdir}/kde4/libexec/fontinst_x11
-%if !%{with_drakclock}
 %{_kde_libdir}/kde4/libexec/kcmdatetimehelper
-%endif
 %{_kde_libdir}/kde4/libexec/ksysguardprocesslist_helper
 %{_kde_libdir}/kde4/libexec/kwin_killer_helper
 %{_kde_libdir}/kde4/libexec/kwin_opengl_test
@@ -403,9 +397,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/dbus-1/services/org.kde.fontinst.service
 %{_kde_datadir}/dbus-1/services/org.kde.krunner.service
 %{_kde_datadir}/dbus-1/system-services/org.kde.fontinst.service
-%if !%{with_drakclock}
 %{_kde_datadir}/dbus-1/system-services/org.kde.kcontrol.kcmclock.service
-%endif
 %{_kde_datadir}/dbus-1/system-services/org.kde.ksysguard.processlisthelper.service
 %doc %{_kde_docdir}/HTML/en/kcontrol
 %doc %{_kde_docdir}/HTML/en/kfontview
@@ -420,11 +412,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/ServiceMenus/installfont.desktop
 %{_kde_services}/autostart.desktop
 %{_kde_services}/bell.desktop
-%if %{with_drakclock}
-%{_kde_services}/kcm_drakclock.desktop
-%else
 %{_kde_services}/clock.desktop
-%endif
 %{_kde_services}/colors.desktop
 %{_kde_services}/cursortheme.desktop
 %{_kde_services}/desktop.desktop
@@ -443,6 +431,9 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/ion-wettercom.desktop
 %{_kde_services}/joystick.desktop
 %{_kde_services}/kaccess.desktop
+%if %{with_drakclock}
+%{_kde_services}/kcm_drakclock.desktop
+%endif
 %{_kde_services}/kcm_keyboard.desktop
 %{_kde_services}/kcm_solid.desktop
 %{_kde_services}/kcmaccess.desktop
@@ -638,9 +629,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/workspaceoptions.desktop
 %{_kde_servicetypes}/*.desktop
 %{_kde_datadir}/polkit-1/actions/org.kde.fontinst.policy
-%if !%{with_drakclock}
 %{_kde_datadir}/polkit-1/actions/org.kde.kcontrol.kcmclock.policy
-%endif
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
@@ -702,7 +691,6 @@ KickOff is the KDE application launcher, or "start menu".
 %{_kde_services}/plasma-applet-simplelauncher.desktop
 
 #------------------------------------------------
-
 
 %package -n plasma-scriptengine-ruby
 Summary:	Support for ruby plasma applets
@@ -1675,6 +1663,7 @@ done
 %changelog
 * Thu Apr 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-6
 - Add workaround for OSD desktop switching issues
+- More work on drakclock integration
 
 * Wed Apr 24 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-5
 - More work on drakclock integration
