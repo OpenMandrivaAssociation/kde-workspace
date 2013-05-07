@@ -11,8 +11,8 @@
 
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
-Version:	4.10.2
-Release:	6
+Version:	4.10.3
+Release:	1
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -1661,6 +1661,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue May 07 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-1
+- New version 4.10.3
+
 * Thu Apr 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.2-6
 - Add workaround for OSD desktop switching issues
 - More work on drakclock integration
