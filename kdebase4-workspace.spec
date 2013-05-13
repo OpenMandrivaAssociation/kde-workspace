@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	1
+Release:	2
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -76,7 +76,6 @@ BuildRequires:	xrdb
 BuildRequires:	pkgconfig(avahi-compat-libdns_sd)
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(bluez)
-#BuildRequires:	pkgconfig(ck-connector)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(libdmtx)
@@ -1394,9 +1393,20 @@ KDE Desktop Login Manager.
 
 %post -n kdm
 chksession -K
+%if %{mdvver} < 201300
+/bin/systemctl enable kdm.service 2>&1 || :
+%endif
+
+%if %{mdvver} < 201300
+%preun -n kdm
+/bin/systemctl disable kdm.service 2>&1 || :
+%endif
 
 %postun -n kdm
 chksession -K
+%if %{mdvver} < 201300
+/bin/systemctl daemon-reload 2>&1 || :
+%endif
 
 %files -n kdm
 %config(noreplace) %{_sysconfdir}/pam.d/kde
@@ -1661,6 +1671,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Mon May 13 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-2
+- Turn kdm.service on/off on package install/uninstall in Rosa 2012.1
+
 * Tue May 07 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-1
 - New version 4.10.3
 
