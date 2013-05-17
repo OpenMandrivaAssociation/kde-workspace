@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	2
+Release:	3
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -45,6 +45,8 @@ Patch4:		kde-workspace-4.9.4-fontconfig.patch
 Patch5:		kde-workspace-4.10.2-desktop-osd.patch
 # Always show icons in pager widget, even if they don't fit window rectangle
 Patch6:		kde-workspace-4.10.3-pager-icons.patch
+# Fix action labels vertical alignment in Device Notifier applet
+Patch7:		kde-workspace-4.10.3-devicenotifier.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
@@ -1579,6 +1581,7 @@ based on kdebase.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %patch11 -p1
 %patch13 -p1
@@ -1675,6 +1678,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Fri May 17 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-3
+- Add patch 7 to fix action labels vertical alignment in Device Notifier applet
+
 * Mon May 13 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-2
 - Turn kdm.service on/off on package install/uninstall in Rosa 2012.1
 - Add patch 6 to always show icons in pager widget, even if they don't fit

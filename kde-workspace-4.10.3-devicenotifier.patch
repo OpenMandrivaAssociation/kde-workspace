@@ -1,0 +1,14 @@
+diff -urN kde-workspace-4.10.3/plasma/generic/applets/devicenotifier/package/contents/ui/ActionItem.qml kde-workspace-4.10.3-patched/plasma/generic/applets/devicenotifier/package/contents/ui/ActionItem.qml
+--- kde-workspace-4.10.3/plasma/generic/applets/devicenotifier/package/contents/ui/ActionItem.qml	2013-05-03 15:36:45.741116867 +1100
++++ kde-workspace-4.10.3-patched/plasma/generic/applets/devicenotifier/package/contents/ui/ActionItem.qml	2013-05-18 00:09:52.000000000 +1100
+@@ -48,8 +48,8 @@
+     PlasmaComponents.Label {
+         id: actionText
+         anchors {
+-            top: actionIcon.top
+-            bottom: actionIcon.bottom
++            top: parent.top
++            bottom: parent.bottom
+             left: actionIcon.right
+             leftMargin: 5
+             right: parent.right
