@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	3
+Release:	4
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -1398,18 +1398,19 @@ KDE Desktop Login Manager.
 %post -n kdm
 chksession -K
 %if %{mdvver} < 201300
+# todo - use native %systemd_post
 /bin/systemctl enable kdm.service 2>&1 || :
 %endif
 
 %if %{mdvver} < 201300
 %preun -n kdm
-/bin/systemctl disable kdm.service 2>&1 || :
+%systemd_preun kdm.service
 %endif
 
 %postun -n kdm
 chksession -K
 %if %{mdvver} < 201300
-/bin/systemctl daemon-reload 2>&1 || :
+%systemd_postun_with_restart kdm.service
 %endif
 
 %files -n kdm
@@ -1678,6 +1679,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sat May 18 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-4
+- Use native preun and postun systemd macros for KDM
+
 * Fri May 17 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-3
 - Add patch 7 to fix action labels vertical alignment in Device Notifier applet
 
