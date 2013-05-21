@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	4
+Release:	5
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -109,7 +109,6 @@ Requires:	xmessage
 Requires:	xprop
 Requires:	xset
 Requires:	mandriva-kde-translation
-Requires:	pm-utils
 Requires:	xdg-utils
 Requires:	rosapanel
 Requires:	setxkbmap
@@ -1679,6 +1678,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue May 21 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-5
+- Drop Requires pm-utils because it's obsolete
+
 * Sat May 18 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-4
 - Use native preun and postun systemd macros for KDM
 
