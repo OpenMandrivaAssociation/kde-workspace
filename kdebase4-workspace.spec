@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	6
+Release:	7
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -56,6 +56,9 @@ Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
 Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
 Patch106:	kdebase-workspace-4.7.90-mdv-no-hal.patch
+# Make systemd 194 handle upower stuff
+Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
+
 # Backports
 # Trunk
 # Testing
@@ -1592,6 +1595,11 @@ based on kdebase.
 %patch103 -p1
 %patch104 -p1
 %patch106 -p1
+
+%if %{mdvver} == 201210
+%patch107 -p1
+%endif
+
 %patch501 -p1
 
 rm -fr kdm/kfrontend libs/kdm
@@ -1678,6 +1686,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed May 22 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-7
+- Add patch to make systemd 194 handle upower stuff in Rosa 2012.1
+
 * Tue May 21 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-6
 - Drop Requires pm-utils because it's obsolete
 - Use systemd_postun instead of systemd_postun_with_restart for KDM

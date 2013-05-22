@@ -1,0 +1,20 @@
+--- a/powerdevil/daemon/backends/upower/powerdevilupowerbackend.cpp	2013-05-03 08:36:45.000000000 +0400
++++ b/powerdevil/daemon/backends/upower/powerdevilupowerbackend.cpp	2013-05-22 11:42:45.033840636 +0400
+@@ -138,7 +138,7 @@
+ 
+     // Supported suspend methods
+     SuspendMethods supported = UnknownSuspendMethod;
+-    if (m_login1Interface && checkSystemdVersion(195)) {
++    if (m_login1Interface && checkSystemdVersion(194)) {
+         QDBusPendingReply<QString> canSuspend = m_login1Interface.data()->asyncCall("CanSuspend");
+         canSuspend.waitForFinished();
+         if (canSuspend.isValid() && (canSuspend.value() == "yes" || canSuspend.value() == "challenge"))
+@@ -291,7 +291,7 @@
+ 
+ KJob* PowerDevilUPowerBackend::suspend(PowerDevil::BackendInterface::SuspendMethod method)
+ {
+-    if (m_login1Interface && checkSystemdVersion(195)) {
++    if (m_login1Interface && checkSystemdVersion(194)) {
+         return new Login1SuspendJob(m_login1Interface.data(), method, supportedSuspendMethods());
+     } else {
+         return new UPowerSuspendJob(m_upowerInterface, method, supportedSuspendMethods());
