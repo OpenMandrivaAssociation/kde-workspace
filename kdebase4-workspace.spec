@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	7
+Release:	8
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -47,6 +47,8 @@ Patch5:		kde-workspace-4.10.2-desktop-osd.patch
 Patch6:		kde-workspace-4.10.3-pager-icons.patch
 # Fix action labels vertical alignment in Device Notifier applet
 Patch7:		kde-workspace-4.10.3-devicenotifier.patch
+# Fix screenlocker greeter focus after Alt modifier is pressed (keyboard layout switching etc)
+Patch8:		kde-workspace-4.10.3-greeter.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
@@ -1585,6 +1587,7 @@ based on kdebase.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %patch11 -p1
 %patch13 -p1
@@ -1686,6 +1689,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu May 23 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-8
+- Add patch to fix screenlocker greeter focus after Alt modifier is pressed
+
 * Wed May 22 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-7
 - Add patch to make systemd 194 handle upower stuff in Rosa 2012.1
 
