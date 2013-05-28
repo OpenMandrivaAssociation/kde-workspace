@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	9
+Release:	10
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -51,6 +51,8 @@ Patch7:		kde-workspace-4.10.3-devicenotifier.patch
 Patch8:		kde-workspace-4.10.3-greeter.patch
 # Fix bug with KCM KDM resetting fonts, style and color to system defaults (KDE bug 254430)
 Patch9:		kde-workspace-4.10.3-fix-kcmkdm-config.patch
+# Prefer system locale for KDM when reading it from KDM config fails
+Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
@@ -1591,6 +1593,7 @@ based on kdebase.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %patch11 -p1
 %patch13 -p1
@@ -1692,6 +1695,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Mon May 27 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-10
+- Add patch to prefer system locale for KDM when reading it from config fails
+
 * Fri May 24 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-9
 - Add patch to fix bug with KCM KDM resetting fonts, style and color (#254430)
 
