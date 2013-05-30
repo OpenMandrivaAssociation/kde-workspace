@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#  DEFAULT KDE STARTUP SCRIPT ( 4.4.3 )
+#  DEFAULT KDE STARTUP SCRIPT ( 4.10.3 )
 #
 
 if test "x$1" = x--failsafe; then
@@ -19,22 +19,13 @@ trap 'echo GOT SIGHUP' HUP
 
 # Workaround of bko200301 we need to call the update script manually
 # kconfig_update won't run as we update kde with kde open most of the time
-UPDATE=`kreadconfig --group "Mandriva" --key "Update4.2-4.3" --default "false"`
+UPDATE=`kreadconfig --group "Rosa" --key "Update4.9-4.10" --default "false"`
 
 if [ "$UPDATE" = "false" ]; then
   if [ -f "LIBDIR/kconf_update_bin/plasma-to-plasma-desktop" ]; then
     LIBDIR/kconf_update_bin/plasma-to-plasma-desktop
   fi
-  kwriteconfig --group "Mandriva" --key "Update4.2-4.3" --type "bool" 1
-fi
-
-# first, migrate settings from kde3, if available
-MIGRATE=`kreadconfig --group "Mandriva" --key "MigrateConf" --default "false"`
-if [ "$MIGRATE" = "false" ]; then
-  if test -x /usr/bin/kde4-migrate; then
-    /usr/bin/kde4-migrate || true
-    kwriteconfig --group "Mandriva" --key "MigrateConf" --type "bool" 1
-  fi
+  kwriteconfig --group "Rosa" --key "Update4.9-4.10" --type "bool" 1
 fi
 
 # Check if a KDE session already is running and whether it's possible to connect to X
@@ -181,11 +172,14 @@ if test -z "$dl"; then
   export KLOCALE_LANGUAGES
   # the splashscreen and progress indicator
   case "$ksplashrc_ksplash_engine" in
-	kde4-splash-mdv)
-	  ksplash_pid=`kde4-splash-mdv --pid`
-	  ;;
+    kde4-splash-mdv)
+      ksplash_pid=`kde4-splash-mdv --pid`
+      ;;
     KSplashX)
       ksplash_pid=`ksplashx "${ksplashrc_ksplash_theme}" --pid`
+      ;;
+    KSplashQML)
+      ksplash_pid=`ksplashqml "${ksplashrc_ksplash_theme}" --pid`
       ;;
     None)
       ;;
@@ -374,29 +368,13 @@ export KDE_SESSION_UID
 # kdeinit unsets this variable before loading applications.
 # redirect to /dev/null to not DOS-attack the user's $HOME
 
-STARTKDE_SILENT=false
-
-if [ "$STARTKDE_SILENT" = "true" ]; then
-  LD_BIND_NOW=true KDE4_LIBEXEC_INSTALL_DIR/start_kdeinit_wrapper +kcminit_startup >/dev/null 2>&1
-else
-  LD_BIND_NOW=true KDE4_LIBEXEC_INSTALL_DIR/start_kdeinit_wrapper +kcminit_startup
-fi
+LD_BIND_NOW=true KDE4_LIBEXEC_INSTALL_DIR/start_kdeinit_wrapper +kcminit_startup
 if test $? -ne 0; then
   # Startup error
   echo 'startkde: Could not start kdeinit4. Check your installation.'  1>&2
   test -n "$ksplash_pid" && kill "$ksplash_pid" 2>/dev/null
   xmessage -geometry 500x100 "Could not start kdeinit4. Check your installation."
   exit 1
-fi
-
-# If the session should be locked from the start (locked autologin),
-# lock now and do the rest of the KDE startup underneath the locker.
-if test -n "$dl"; then
-  if ! kwrapper4 kscreenlocker --forcelock --showunlock --daemon; then
-    echo 'startkde: Initial session lock failed. Terminating for security reasons.' 1>&2
-    exit 1
-  fi
-
 fi
 
 # finally, give the session control to the session manager
@@ -406,17 +384,15 @@ fi
 # if KDEWM is not set, ksmserver will ensure kwin is started.
 # kwrapper4 is used to reduce startup time and memory usage
 # kwrapper4 does not return useful error codes such as the exit code of ksmserver.
-# We only check for 255 which means that the ksmserver process could not be 
-# started, any problems thereafter, e.g. ksmserver failing to initialize, 
+# We only check for 255 which means that the ksmserver process could not be
+# started, any problems thereafter, e.g. ksmserver failing to initialize,
 # will remain undetected.
-if [ "$STARTKDE_SILENT" = "true" ]; then
-  test -n "$KDEWM" && KDEWM="--windowmanager $KDEWM" >/dev/null 2>&1
-  # redirect to /dev/null to not DOS-attack the user's $HOME directory
-  kwrapper4 ksmserver $KDEWM >/dev/null 2>&1
-else
-  test -n "$KDEWM" && KDEWM="--windowmanager $KDEWM"
-  kwrapper4 ksmserver $KDEWM
-fi
+test -n "$KDEWM" && KDEWM="--windowmanager $KDEWM"
+# If the session should be locked from the start (locked autologin),
+# lock now and do the rest of the KDE startup underneath the locker.
+KSMSERVEROPTIONS=""
+test -n "$dl" && KSMSERVEROPTIONS=" --lockscreen"
+kwrapper4 ksmserver $KDEWM $KSMSERVEROPTIONS
 if test $? -eq 255; then
   # Startup error
   echo 'startkde: Could not start ksmserver. Check your installation.'  1>&2

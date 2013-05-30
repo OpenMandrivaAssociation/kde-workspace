@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	10
+Release:	11
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -26,7 +26,7 @@ URL:		http://www.kde.org
 Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{version}.tar.xz
 Source1:	kde.pam
 Source2:	kde-np.pam
-Source3:	mandriva-startkde
+Source3:	rosa-startkde
 Source4:	systemsettings.desktop
 Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
@@ -1657,7 +1657,7 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/pam.d/
 install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/kde
 install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pam.d/kde-np
 
-# Mandriva startkde
+# Rosa startkde
 install -m 0755 %{SOURCE3} %{buildroot}%{_kde_bindir}/startkde
 
 #We need to expand libdir into startkde
@@ -1695,6 +1695,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu May 30 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-11
+- Update custom startkde script (fix locker part, drop some ancient junk etc)
+
 * Mon May 27 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-10
 - Add patch to prefer system locale for KDM when reading it from config fails
 
