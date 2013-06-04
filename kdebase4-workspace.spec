@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	11.5
+Release:	12
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
