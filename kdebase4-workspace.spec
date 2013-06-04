@@ -12,7 +12,7 @@
 Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
 Version:	4.10.3
-Release:	11
+Release:	11.5
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -54,6 +54,8 @@ Patch9:		kde-workspace-4.10.3-fix-kcmkdm-config.patch
 # Prefer system locale for KDM when reading it from KDM config fails
 Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
+# Fix screenlocker greeter focus when screensaver is used
+Patch12:	kde-workspace-4.10.3-screenlocker-no-fake-focus.patch
 Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.4.0-simpleapplet-mandriva-defaults.patch
@@ -1594,8 +1596,8 @@ based on kdebase.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-
 %patch11 -p1
+%patch12 -p1
 %patch13 -p1
 %patch19 -p1
 %patch26 -p1
@@ -1695,6 +1697,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Jun 4 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-12
+- Add patch to fix screenlocker greeter focus when screensaver is used
+
 * Thu May 30 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-11
 - Update custom startkde script (fix locker part, drop some ancient junk etc)
 
