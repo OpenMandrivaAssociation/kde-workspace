@@ -9,14 +9,14 @@
 
 %define kdm_version 2.7.2
 
-Name:		kdebase4-workspace
 Summary:	KDE 4 application workspace components
-Version:	4.10.3
-Release:	12
+Name:		kdebase4-workspace
+Version:	4.10.4
+Release:	1
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
-URL:		http://www.kde.org
+Url:		http://www.kde.org
 %define is_beta %(if test `echo %{version} |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
 %if %{is_beta}
 %define ftpdir unstable
@@ -77,11 +77,11 @@ BuildRequires:	boost-devel
 BuildRequires:	kdelibs4-devel
 BuildRequires:	kdepimlibs4-devel
 BuildRequires:	ieee1284-devel
-BuildRequires:	sasl-devel
 BuildRequires:	lm_sensors-devel
 BuildRequires:	openldap-devel
 BuildRequires:	python-kde4-devel
 BuildRequires:	prison-devel
+BuildRequires:	sasl-devel
 BuildRequires:	automoc4
 BuildRequires:	bdftopcf
 BuildRequires:	imake
@@ -94,6 +94,8 @@ BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(libdmtx)
+BuildRequires:	pkgconfig(libggadget-1.0)
+BuildRequires:	pkgconfig(libggadget-qt-1.0)
 BuildRequires:	pkgconfig(libgpsd)
 BuildRequires:	pkgconfig(libkactivities)
 BuildRequires:	pkgconfig(libpci)
@@ -108,22 +110,22 @@ BuildRequires:	pkgconfig(NetworkManager)
 %endif
 BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(qimageblitz)
+BuildRequires:	pkgconfig(xcb-image)
+BuildRequires:	pkgconfig(xcb-renderutil)
 BuildRequires:	pkgconfig(xcomposite)
-BuildRequires:	pkgconfig(xcb-image) pkgconfig(xcb-renderutil)
 BuildRequires:	pkgconfig(xcursor)
-BuildRequires:	pkgconfig(libggadget-1.0) pkgconfig(libggadget-qt-1.0)
-Requires:	qt4-qtdbus
-Requires:	kdebase4-runtime
-Requires:	strigi
 Requires:	desktop-common-data
+Requires:	kdebase4-runtime
+Requires:	kde4-windeco-dekorator
+Requires:	mandriva-kde-translation
+Requires:	qt4-qtdbus
+Requires:	rosapanel
+Requires:	setxkbmap
+Requires:	strigi
+Requires:	xdg-utils
 Requires:	xmessage
 Requires:	xprop
 Requires:	xset
-Requires:	mandriva-kde-translation
-Requires:	xdg-utils
-Requires:	rosapanel
-Requires:	setxkbmap
-Requires:	kde4-windeco-dekorator
 Suggests:	networkmanager
 Suggests:	plasma-applet-system-monitor-net
 Suggests:	plasma-applet-system-monitor-hwinfo
@@ -1697,6 +1699,10 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Jun 05 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-1
+- New version 4.10.4
+- Sort Requires and BuildRequires
+
 * Tue Jun 4 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.3-12
 - Add patch to fix screenlocker greeter focus when screensaver is used
 
