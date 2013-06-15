@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.10.4
-Release:	1
+Release:	2
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -1630,6 +1630,9 @@ tar xvf %{SOURCE6}
 install -m 0644 %{SOURCE8} %{buildroot}%{_kde_services}/kcm_drakclock.desktop
 %endif
 
+# Remove it because all it does is adding Activities widget to existing panel
+rm -f %{buildroot}%{_kde_appsdir}/plasma-desktop/updates/addShowActivitiesManagerPlasmoid.js
+
 rm -fr %{buildroot}%{_kde_appsdir}/kdm/sessions
 rm -fr %{buildroot}%{_kde_configdir}/kdm/X*
 rm -fr %{buildroot}%{_kde_configdir}/kdm/backgroundrc
@@ -1664,11 +1667,11 @@ install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pam.d/kde-np
 # Rosa startkde
 install -m 0755 %{SOURCE3} %{buildroot}%{_kde_bindir}/startkde
 
-#We need to expand libdir into startkde
+# We need to expand libdir into startkde
 sed -e 's,LIBDIR,%{_libdir},g' -i %{buildroot}%{_kde_bindir}/startkde
 sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_kde_bindir}/startkde
 
-#systemd implimentation
+# systemd implimentation
 install -d -m 0775 %{buildroot}%{_unitdir}
 install -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/kdm.service
 
@@ -1699,6 +1702,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sat Jun 15 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-2
+- Remove addShowActivitiesManagerPlasmoid.js
+
 * Wed Jun 05 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-1
 - New version 4.10.4
 - Sort Requires and BuildRequires
