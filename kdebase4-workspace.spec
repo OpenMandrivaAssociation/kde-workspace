@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.10.4
-Release:	2
+Release:	3
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -56,7 +56,9 @@ Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 # Fix screenlocker greeter focus when screensaver is used
 Patch12:	kde-workspace-4.10.3-screenlocker-no-fake-focus.patch
-Patch13:	kdebase-workspace-4.8.95-startup-sound.patch
+# Use current wallpaper for screenlocker if it's a scaled image
+Patch13:	kde-workspace-4.10.4-screenlocker-background.patch
+Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.4.0-simpleapplet-mandriva-defaults.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
@@ -1601,6 +1603,7 @@ based on kdebase.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch18 -p1
 %patch19 -p1
 %patch26 -p1
 %patch100 -p1
@@ -1702,6 +1705,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Jun 20 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-3
+- Add patch to use current user's wallpaper for screenlocker if it's a scaled image
+
 * Sat Jun 15 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-2
 - Remove addShowActivitiesManagerPlasmoid.js
 

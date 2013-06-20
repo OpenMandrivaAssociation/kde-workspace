@@ -1,0 +1,69 @@
+diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.cpp kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.cpp
+--- kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.cpp	2013-06-20 14:22:47.432354674 +1100
++++ kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.cpp	2013-06-20 19:18:13.969492212 +1100
+@@ -165,6 +165,12 @@
+ 
+         connect(view->rootObject(), SIGNAL(unlockRequested()), SLOT(quit()));
+ 
++        QString wallpaper = getWallpaper();
++        if (!wallpaper.isEmpty()) {
++            QDeclarativeProperty backgroundProperty(view->rootObject(), "mainBackground");
++            backgroundProperty.write(wallpaper);
++        }
++
+         QDeclarativeProperty sleepProperty(view->rootObject(), "suspendToRamSupported");
+         sleepProperty.write(spdMethods.contains(Solid::PowerManagement::SuspendState));
+         if (spdMethods.contains(Solid::PowerManagement::SuspendState) &&
+@@ -393,6 +399,30 @@
+     }
+ }
+ 
++QString UnlockApp::getWallpaper()
++{
++    QString wallpaper;
++    QString wallpaperPosition;
++    KConfig plasmaConfig("plasma-desktop-appletsrc", KConfig::NoGlobals);
++    KConfigGroup mainGroup = KConfigGroup(&plasmaConfig, "Containments");
++    foreach (const QString &containment, mainGroup.groupList()) {
++        KConfigGroup containmentsGroup = KConfigGroup(&mainGroup, containment);
++        if (containmentsGroup.groupList().contains("Wallpaper")) {
++            if (containmentsGroup.readEntry("wallpaperplugin") == "image") {
++                KConfigGroup wallpaperGroup = KConfigGroup(&containmentsGroup, "Wallpaper");
++                KConfigGroup imageGroup = KConfigGroup(&wallpaperGroup, "image");
++                wallpaperPosition = imageGroup.readEntry("wallpaperposition");
++                // Ignore wallpaper if it's not scaled to avoid possible ugly result
++                if ((wallpaperPosition == "0") || (wallpaperPosition == "2") || (wallpaperPosition == "5")) {
++                    wallpaper = imageGroup.readEntry("wallpaper");
++                    break;
++                }
++            }
++        }
++    }
++    return wallpaper;
++}
++
+ } // namespace
+ 
+ #include "greeterapp.moc"
+diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.h kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.h
+--- kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.h	2013-06-20 14:22:47.433354691 +1100
++++ kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.h	2013-06-20 17:30:55.356233253 +1100
+@@ -59,6 +59,7 @@
+ private:
+     void initialize();
+     void capsLocked();
++    QString getWallpaper();
+ 
+     QString m_mainQmlPath;
+     QList<QDeclarativeView*> m_views;
+diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml
+--- kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml	2013-06-20 14:22:47.432354674 +1100
++++ kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml	2013-06-20 17:30:17.030559071 +1100
+@@ -27,6 +27,7 @@
+     id: lockScreen
+     signal unlockRequested()
+     property alias capsLockOn: unlockUI.capsLockOn
++    property alias mainBackground: background.source
+ 
+     PlasmaCore.Theme {
+         id: theme
