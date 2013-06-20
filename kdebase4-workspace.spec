@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.10.4
-Release:	3
+Release:	4
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -124,6 +124,8 @@ Requires:	qt4-qtdbus
 Requires:	rosapanel
 Requires:	setxkbmap
 Requires:	strigi
+# Require it until kdelibs build switches to udisks2
+Requires:	udisks
 Requires:	xdg-utils
 Requires:	xmessage
 Requires:	xprop
@@ -1705,6 +1707,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Jun 20 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-4
+- Add udisks to Requires to make sure it's installed
+
 * Thu Jun 20 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-3
 - Add patch to use current user's wallpaper for screenlocker if it's a scaled image
 
