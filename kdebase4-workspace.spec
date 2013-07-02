@@ -11,8 +11,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.10.4
-Release:	5
+Version:	4.10.5
+Release:	1
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPL
@@ -1707,6 +1707,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Jul 03 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-1
+- New version 4.10.5
+
 * Thu Jun 20 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.4-4
 - Add udisks to Requires to make sure it's installed
 
