@@ -11,9 +11,9 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.10.5
-Release:	1
 Epoch:		2
+Version:	4.10.5
+Release:	2
 Group:		Graphical desktop/KDE
 License:	GPL
 Url:		http://www.kde.org
@@ -81,6 +81,7 @@ BuildRequires:	kdepimlibs4-devel
 BuildRequires:	ieee1284-devel
 BuildRequires:	lm_sensors-devel
 BuildRequires:	openldap-devel
+BuildRequires:	pam-devel
 BuildRequires:	python-kde4-devel
 BuildRequires:	prison-devel
 BuildRequires:	sasl-devel
@@ -106,16 +107,17 @@ BuildRequires:	pkgconfig(libraw1394)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(libxklavier)
 BuildRequires:	pkgconfig(lua)
-BuildRequires:	pkgconfig(xtst)
 %if %{with_networkmanager}
 BuildRequires:	pkgconfig(NetworkManager)
 %endif
-BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(qimageblitz)
+BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(xcb-image)
 BuildRequires:	pkgconfig(xcb-renderutil)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(xcursor)
+BuildRequires:	pkgconfig(xft)
+BuildRequires:	pkgconfig(xtst)
 Requires:	desktop-common-data
 Requires:	kdebase4-runtime
 Requires:	kde4-windeco-dekorator
@@ -1707,6 +1709,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
+- Update BuildRequires
+
 * Wed Jul 03 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-1
 - New version 4.10.5
 
