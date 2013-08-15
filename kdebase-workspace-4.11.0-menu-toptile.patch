@@ -1,6 +1,6 @@
-diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/CMakeLists.txt kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/CMakeLists.txt
---- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/CMakeLists.txt	2012-08-13 19:53:51.000000000 +1100
-+++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/CMakeLists.txt	2012-11-23 14:59:34.945436595 +1100
+diff -urN kde-workspace-4.11.0/plasma/desktop/applets/kickoff/CMakeLists.txt kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/CMakeLists.txt
+--- kde-workspace-4.11.0/plasma/desktop/applets/kickoff/CMakeLists.txt	2013-07-10 09:44:32.000000000 +1100
++++ kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/CMakeLists.txt	2013-08-15 17:49:52.874930254 +1100
 @@ -71,6 +71,7 @@
  set(SimpleApplet_SRCS
      ui/contextmenufactory.cpp
@@ -9,9 +9,9 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/CMakeLists.txt kde-
      simpleapplet/simpleapplet.cpp
  )
  kde4_add_plugin(plasma_applet_simplelauncher ${SimpleApplet_SRCS})
-diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp
---- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2012-08-13 19:53:51.000000000 +1100
-+++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2012-11-23 15:00:57.962581259 +1100
+diff -urN kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp
+--- kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2013-07-10 09:44:32.000000000 +1100
++++ kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2013-08-15 17:54:46.093803649 +1100
 @@ -22,6 +22,7 @@
  // Own
  #include "simpleapplet/simpleapplet.h"
@@ -48,7 +48,7 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simple
      MenuLauncherApplet *q;
  
      QWeakPointer<Kickoff::MenuView> menuview;
-@@ -127,19 +135,8 @@
+@@ -129,20 +137,8 @@
  
      bool delayedConfigLoad;
  
@@ -62,15 +62,16 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simple
 -              iconButton(0),
 -              formatComboBox(0),
 -              showMenuTitlesCheckBox(0),
+-              showRecentlyInstalledCheckBox(0),
 -              switcher(0),
 -              contextMenuFactory(0)
 -    {}
 +    explicit Private(MenuLauncherApplet *q);
-+    //{}
++//    {}
  
      ~Private()
      {
-@@ -269,6 +266,47 @@
+@@ -272,6 +268,48 @@
      }
  };
  
@@ -110,6 +111,7 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simple
 +   iconButton(0),
 +   formatComboBox(0),
 +   showMenuTitlesCheckBox(0),
++   showRecentlyInstalledCheckBox(0),
 +   switcher(0),
 +   contextMenuFactory(0)
 +{
@@ -118,7 +120,7 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simple
  MenuLauncherApplet::MenuLauncherApplet(QObject *parent, const QVariantList &args)
          : Plasma::Applet(parent, args),
          d(new Private(this))
-@@ -606,6 +644,47 @@
+@@ -623,6 +661,47 @@
                  this, SLOT(customContextMenuRequested(QMenu*,QPoint)));
          //connect(menuview, SIGNAL(afterBeingHidden()), menuview, SLOT(deleteLater()));
  
@@ -166,9 +168,9 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/simple
          //Kickoff::MenuView::ModelOptions options = d->viewtypes.count() < 2 ? Kickoff::MenuView::MergeFirstLevel : Kickoff::MenuView::None;
          foreach(const QString &vtname, d->viewtypes) {
              if(vtname == "Applications") {
-diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp
---- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp	1970-01-01 10:00:00.000000000 +1000
-+++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp	2012-11-23 14:59:34.945936595 +1100
+diff -urN kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp
+--- kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp	1970-01-01 10:00:00.000000000 +1000
++++ kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.cpp	2013-08-15 17:49:52.875930264 +1100
 @@ -0,0 +1,50 @@
 +/*
 + * Copyright 2008 Gustavo Pichorim Boiko <boiko@mandriva.com>
@@ -220,9 +222,9 @@ diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptil
 +	r2.moveTopRight(r.topRight());
 +	p.drawPixmap(r2.topLeft(), m_rightPix);
 +}
-diff -urN kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.h kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.h
---- kde-workspace-4.9.3/plasma/desktop/applets/kickoff/simpleapplet/toptile.h	1970-01-01 10:00:00.000000000 +1000
-+++ kde-workspace-4.9.3-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.h	2012-11-23 14:59:34.945936595 +1100
+diff -urN kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/toptile.h kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.h
+--- kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/toptile.h	1970-01-01 10:00:00.000000000 +1000
++++ kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/toptile.h	2013-08-15 17:49:52.875930264 +1100
 @@ -0,0 +1,41 @@
 +/*
 + * Copyright 2008 Gustavo Pichorim Boiko <boiko@mandriva.com>

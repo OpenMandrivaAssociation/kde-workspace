@@ -38,7 +38,7 @@ Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 Patch1:		kdebase-workspace-4.6.2-mageia-drakclock.patch
 # Hide native clock configurator as we have drakclock instead
 Patch2:		kde-workspace-4.10.2-hide-default-clock.patch
-Patch3:		kdebase-workspace-4.9.3-menu-toptile.patch
+Patch3:		kdebase-workspace-4.11.0-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
 Patch4:		kde-workspace-4.9.4-fontconfig.patch
 # Just a workaround to make sure text box size for OSD is always big enough
@@ -1711,6 +1711,7 @@ done
 %changelog
 * Wed Aug 14 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-1
 - New version 4.11.0
+- Re-diff menu toptile patch
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires
