@@ -42,7 +42,7 @@ Patch3:		kdebase-workspace-4.11.0-menu-toptile.patch
 # Add checkbox to enable/disable bytecode interpreter in KDE4 font anti-aliasing settings
 Patch4:		kde-workspace-4.9.4-fontconfig.patch
 # Just a workaround to make sure text box size for OSD is always big enough
-Patch5:		kde-workspace-4.10.2-desktop-osd.patch
+Patch5:		kde-workspace-4.11.0-desktop-osd.patch
 # Always show icons in pager widget, even if they don't fit window rectangle
 Patch6:		kde-workspace-4.10.3-pager-icons.patch
 # Fix action labels vertical alignment in Device Notifier applet
@@ -1712,6 +1712,7 @@ done
 * Wed Aug 14 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-1
 - New version 4.11.0
 - Re-diff menu toptile patch
+- Re-diff desktop osd patch
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires

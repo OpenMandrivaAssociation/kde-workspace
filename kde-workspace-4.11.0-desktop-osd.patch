@@ -1,0 +1,12 @@
+diff -urN kde-workspace-4.11.0/kwin/scripts/desktopchangeosd/contents/ui/osd.qml kde-workspace-4.11.0-patched/kwin/scripts/desktopchangeosd/contents/ui/osd.qml
+--- kde-workspace-4.11.0/kwin/scripts/desktopchangeosd/contents/ui/osd.qml	2013-08-15 18:02:26.734496812 +1100
++++ kde-workspace-4.11.0-patched/kwin/scripts/desktopchangeosd/contents/ui/osd.qml	2013-08-15 18:02:04.000000000 +1100
+@@ -72,7 +72,7 @@
+         property int animationDuration: 1000
+         property bool showGrid: true
+ 
+-        width: dialogItem.showGrid ? view.itemWidth * view.columns : textElement.width
++        width: dialogItem.showGrid ? view.itemWidth * view.columns : (textElement.width > 0) ? textElement.width : 100
+         height: dialogItem.showGrid ? view.itemHeight * view.rows + textElement.height : textElement.height
+ 
+         Plasma.Label {
