@@ -1,6 +1,7 @@
---- a/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp.old	2010-06-21 00:22:43.000000000 +0200
-+++ b/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2010-06-21 00:24:06.000000000 +0200
-@@ -338,7 +338,7 @@
+diff -urN kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp
+--- kde-workspace-4.11.0/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2013-07-10 09:44:32.000000000 +1100
++++ kde-workspace-4.11.0-patched/plasma/desktop/applets/kickoff/simpleapplet/simpleapplet.cpp	2013-08-15 18:08:51.912933103 +1100
+@@ -303,7 +303,7 @@
              //(if SimpleLauncher was never used before)
          }
          default: { //Default configuration
@@ -9,12 +10,12 @@
              if (KAuthorized::authorize("run_command")) {
                  d->viewtypes << "RunCommand";
              }
-@@ -924,7 +924,7 @@
+@@ -890,7 +890,7 @@
      d->formattype = (MenuLauncherApplet::FormatType) fte.keyToValue(ftb);
  
      d->setMaxRecentApps(cg.readEntry("maxRecentApps", qMin(5, Kickoff::RecentApplications::self()->maximum())));
 -    d->showMenuTitles = cg.readEntry("showMenuTitles", false);
 +    d->showMenuTitles = cg.readEntry("showMenuTitles", true);
+     d->showRecentlyInstalled = cg.readEntry("showRecentlyInstalled", true);
  
      d->icon->setIcon(KIcon(cg.readEntry("icon", d->iconname)));
- 

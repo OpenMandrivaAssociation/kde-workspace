@@ -60,7 +60,7 @@ Patch12:	kde-workspace-4.10.3-screenlocker-no-fake-focus.patch
 Patch13:	kde-workspace-4.10.4-screenlocker-background.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
-Patch26:	kdebase-workspace-4.4.0-simpleapplet-mandriva-defaults.patch
+Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
@@ -1713,6 +1713,7 @@ done
 - New version 4.11.0
 - Re-diff menu toptile patch
 - Re-diff desktop osd patch
+- Re-diff simpleapplet defaults patch
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires
