@@ -65,7 +65,7 @@ Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
 Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
-Patch106:	kdebase-workspace-4.7.90-mdv-no-hal.patch
+Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 # Make systemd 194 handle upower stuff
 Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
 
@@ -1714,6 +1714,7 @@ done
 - Re-diff menu toptile patch
 - Re-diff desktop osd patch
 - Re-diff simpleapplet defaults patch
+- Re-diff no-hal patch
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires
