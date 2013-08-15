@@ -140,6 +140,10 @@ Suggests:	plasma-applet-system-monitor-temperature
 Suggests:	klipper
 Suggests:	kickoff
 Conflicts:	kdm < 2:4.10.2-4
+Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
+Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
+Obsoletes:	%{_lib}solidcontrol4 < 2:4.11.0
+Obsoletes:	%{_lib}kwinnvidiahack4 < 2:4.11.0
 
 %description
 This package contains the KDE 4 application workspace components.
@@ -187,7 +191,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_bindir}/plasma-overlay
 %{_kde_bindir}/plasma-windowed
 %{_kde_bindir}/solid-action-desktop-gen
-%{_kde_bindir}/solid-network
 %{_kde_bindir}/startkde
 %{_kde_bindir}/oxygen-shadow-demo
 %{_kde_bindir}/systemsettings
@@ -219,6 +222,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/kcm_krunner_kill.so
 %{_kde_libdir}/kde4/kcm_ksplashthemes.so
 %{_kde_libdir}/kde4/kcm_kwin4_effect_builtins.so
+%{_kde_libdir}/kde4/kcm_kwin4_genericscripted.so
 %{_kde_libdir}/kde4/kwin4_effect_gles_builtins.so
 %{_kde_libdir}/kde4/kcm_kwincompositing.so
 %{_kde_libdir}/kde4/kcm_kwindecoration.so
@@ -232,7 +236,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/kcm_randr.so
 %{_kde_libdir}/kde4/kcm_screensaver.so
 %{_kde_libdir}/kde4/kcm_smserver.so
-%{_kde_libdir}/kde4/kcm_solid.so
 %{_kde_libdir}/kde4/kcm_solid_actions.so
 %{_kde_libdir}/kde4/kcm_standard_actions.so
 %{_kde_libdir}/kde4/kcm_style.so
@@ -329,7 +332,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/plasma_engine_metadata.so
 %{_kde_libdir}/kde4/plasma_engine_mouse.so
 %{_kde_libdir}/kde4/plasma_engine_mpris2.so
-%{_kde_libdir}/kde4/plasma_engine_network.so
 %{_kde_libdir}/kde4/plasma_engine_notifications.so
 %{_kde_libdir}/kde4/plasma_engine_nowplaying.so
 %{_kde_libdir}/kde4/plasma_engine_places.so
@@ -353,10 +355,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/plasma_wallpaper_image.so
 %{_kde_libdir}/kde4/plugins/gui_platform/libkde.so
 %{_kde_libdir}/kde4/plugins/styles/oxygen.so
-%{_kde_libdir}/kde4/solid_fakenet.so
-%{_kde_libdir}/kde4/solid_modemmanager04.so
-%{_kde_libdir}/kde4/solid_networkmanager*.so
-%{_kde_libdir}/kde4/solid_wicd.so
+%{_kde_libdir}/kde4/powerdevilkeyboardbrightnesscontrolaction_config.so
 %{_kde_libdir}/kde4/ion_debianweather.so
 %{_kde_libdir}/kde4/krunner_activities.so
 %{_kde_libdir}/libkdeinit4_*.so
@@ -395,7 +394,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_appsdir}/plasma-desktop
 %{_kde_appsdir}/plasma-netbook
 %{_kde_appsdir}/solid/*/*.desktop
-%{_kde_appsdir}/solidfakenetbackend/fakenetworking.xml
 %{_kde_appsdir}/systemsettings
 %{_kde_appsdir}/kcmkeyboard
 %{_kde_autostart}/*.desktop
@@ -426,6 +424,7 @@ This package contains the KDE 4 application workspace components.
 %doc %{_kde_docdir}/HTML/en/plasma-desktop
 %doc %{_kde_docdir}/HTML/en/systemsettings
 %{_kde_iconsdir}/Oxygen_*
+%{_kde_iconsdir}/KDE_Classic
 %{_kde_iconsdir}/*/*/*/*
 %{_kde_services}/ScreenSavers/kblank.desktop
 %{_kde_services}/ScreenSavers/krandom.desktop
@@ -446,6 +445,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/fontthumbnail.desktop
 %{_kde_services}/graphicalinfocategory.desktop
 %{_kde_services}/ion-bbcukmet.desktop
+%{_kde_services}/ion-debianweather.desktop
 %{_kde_services}/ion-envcan.desktop
 %{_kde_services}/ion-noaa.desktop
 %{_kde_services}/ion-wettercom.desktop
@@ -455,7 +455,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/kcm_drakclock.desktop
 %endif
 %{_kde_services}/kcm_keyboard.desktop
-%{_kde_services}/kcm_solid.desktop
 %{_kde_services}/kcmaccess.desktop
 %{_kde_services}/kcmlaunch.desktop
 %{_kde_services}/kcmsmserver.desktop
@@ -533,12 +532,12 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/plasma-dataengine-keystate.desktop
 %{_kde_services}/plasma-dataengine-mouse.desktop
 %{_kde_services}/plasma-dataengine-mpris2.desktop
-%{_kde_services}/plasma-dataengine-network.desktop
 %{_kde_services}/plasma-dataengine-notifications.desktop
 %{_kde_services}/plasma-dataengine-nowplaying.desktop
 %{_kde_services}/plasma-dataengine-places.desktop
 %{_kde_services}/plasma-dataengine-powermanagement.desktop
 %{_kde_services}/plasma-dataengine-rss.desktop
+%{_kde_services}/plasma-dataengine-share-addon-im9.desktop
 %{_kde_services}/plasma-dataengine-share-addon-imgur.desktop
 %{_kde_services}/plasma-dataengine-share-addon-pastebincom.desktop
 %{_kde_services}/plasma-dataengine-share-addon-pasteopensuseorg.desktop
@@ -604,13 +603,13 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/plasma-wallpaper-image.desktop
 %{_kde_services}/plasma_applet_keyboard.desktop
 %{_kde_services}/plasma_engine_statusnotifieritem.desktop
-%{_kde_services}/ion-debianweather.desktop
 %{_kde_services}/plasma-applet-org.kde.showActivityManager.desktop
 %{_kde_services}/plasma-dataengine-share-addon-imgsusepasteorg.desktop
 %{_kde_services}/plasma-dataengine-share-addon-kde.desktop
 %{_kde_services}/plasma-layout-org.kde.plasma-desktop.SaL.desktop
 %{_kde_services}/plasma-layout-org.kde.plasma-desktop.desktopIcons.desktop
 %{_kde_services}/plasma-runner-activityrunner.desktop
+%{_kde_services}/powerdevilkeyboardbrightnesscontrolaction.desktop
 %{_kde_services}/randr.desktop
 %{_kde_services}/recentdocuments.desktop
 %{_kde_services}/screensaver.desktop
@@ -643,7 +642,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/settings-workspace-appearance-and-behavior.desktop
 %{_kde_services}/settings-workspace-behavior.desktop
 %{_kde_services}/solid-actions.desktop
-%{_kde_services}/solidbackends
 %{_kde_services}/standard_actions.desktop
 %{_kde_services}/style.desktop
 %{_kde_services}/workspaceoptions.desktop
@@ -653,25 +651,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
-
-#------------------------------------------------
-
-%package googlegadgets
-Summary:	Support for running google gadgets in Plasma
-Group:		Graphical desktop/KDE
-Requires:	%{name} = %{EVRD}
-Requires:	google-gadgets-qt
-# Temporary, as google-gadgets was only in 4.9.98
-Obsoletes:	kdebase4-workspace-google-gadgets < 2:4.10.0
-
-%description googlegadgets
-Support for running google-gadgets in Plasma
-
-%files googlegadgets
-%{_libdir}/kde4/plasma_package_ggl.so
-%{_libdir}/kde4/plasma_scriptengine_ggl.so
-%{_datadir}/kde4/services/plasma-packagestructure-googlegadgets.desktop
-%{_datadir}/kde4/services/plasma-scriptengine-googlegadgets.desktop
 
 #------------------------------------------------
 
@@ -749,21 +728,6 @@ This package allow kde4 to use plasma applets written in python.
 
 #-------------------------------------------------
 
-%define libsolidcontrolifaces_major 4
-%define libsolidcontrolifaces %mklibname solidcontrolifaces %{libsolidcontrolifaces_major}
-
-%package -n %{libsolidcontrolifaces}
-Summary:	KDE 4 core library
-Group:		System/Libraries
-
-%description -n %{libsolidcontrolifaces}
-KDE 4 core library.
-
-%files -n %{libsolidcontrolifaces}
-%{_kde_libdir}/libsolidcontrolifaces.so.%{libsolidcontrolifaces_major}*
-
-#-------------------------------------------------
-
 %define liboxygenstyle_major 4
 %define liboxygenstyle %mklibname oxygenstyle %{liboxygenstyle_major}
 
@@ -776,21 +740,6 @@ KDE 4 core library.
 
 %files -n %{liboxygenstyle}
 %{_kde_libdir}/liboxygenstyle.so.%{liboxygenstyle_major}*
-
-#------------------------------------------------
-
-%define libsolidcontrol_major 4
-%define libsolidcontrol %mklibname solidcontrol %{libsolidcontrol_major}
-
-%package -n %{libsolidcontrol}
-Summary:	KDE 4 core library
-Group:		System/Libraries
-
-%description -n %{libsolidcontrol}
-KDE 4 core library.
-
-%files -n %{libsolidcontrol}
-%{_kde_libdir}/libsolidcontrol.so.%{libsolidcontrol_major}*
 
 #------------------------------------------------
 
@@ -1001,21 +950,6 @@ KDE 4 core library.
 
 %files -n %{libtaskmanager}
 %{_kde_libdir}/libtaskmanager.so.%{libtaskmanager_major}*
-
-#------------------------------------------------
-
-%define libkwinnvidiahack_major 4
-%define libkwinnvidiahack %mklibname kwinnvidiahack %{libkwinnvidiahack_major}
-
-%package -n %{libkwinnvidiahack}
-Summary:	KDE 4 core library
-Group:		System/Libraries
-
-%description -n %{libkwinnvidiahack}
-KDE 4 core library.
-
-%files -n %{libkwinnvidiahack}
-%{_kde_libdir}/libkwinnvidiahack.so.%{libkwinnvidiahack_major}*
 
 #------------------------------------------------
 
@@ -1515,8 +1449,6 @@ Summary:	Devel stuff for kdebase 4
 Group:		Development/KDE and Qt
 Requires:	kde4-macros
 Requires:	kdelibs4-devel
-Requires:	%{libsolidcontrolifaces} = %{EVRD}
-Requires:	%{libsolidcontrol} = %{EVRD}
 Requires:	%{libkdecorations} = %{EVRD}
 Requires:	%{libkscreensaver} = %{EVRD}
 Requires:	%{libksgrd} = %{EVRD}
@@ -1564,8 +1496,6 @@ based on kdebase.
 %{_kde_libdir}/libpowerdevilcore.so
 %{_kde_libdir}/libprocesscore.so
 %{_kde_libdir}/libprocessui.so
-%{_kde_libdir}/libsolidcontrol.so
-%{_kde_libdir}/libsolidcontrolifaces.so
 %{_kde_libdir}/libtaskmanager.so
 %{_kde_libdir}/libweather_ion.so
 %{_kde_libdir}/liblsofui.so
@@ -1714,6 +1644,9 @@ done
 - Re-diff no-hal patch
 - Drop no longer needed systemd-shutdown patch
 - Add pkgconfig(xcb-keysyms) to BuildRequires
+- Drop googlegadgets subpackage as upstream did
+- Drop libkwinnvidiahack, libsolidcontrol and libsolidcontrolifaces subpackages
+- Update files
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires
