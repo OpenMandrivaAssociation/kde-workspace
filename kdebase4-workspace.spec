@@ -72,8 +72,6 @@ Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
 # Backports
 # Trunk
 # Testing
-#From Fedora for systemd adopt
-Patch501:	kde-workspace-4.8.0-systemd-shutdown.patch
 
 BuildRequires:	boost-devel
 BuildRequires:	kdelibs4-devel
@@ -1620,8 +1618,6 @@ based on kdebase.
 %patch107 -p1
 %endif
 
-%patch501 -p1
-
 rm -fr kdm/kfrontend libs/kdm
 
 tar xvf %{SOURCE6}
@@ -1715,6 +1711,7 @@ done
 - Re-diff desktop osd patch
 - Re-diff simpleapplet defaults patch
 - Re-diff no-hal patch
+- Drop no longer needed systemd-shutdown patch
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires
