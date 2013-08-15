@@ -111,6 +111,7 @@ BuildRequires:	pkgconfig(NetworkManager)
 BuildRequires:	pkgconfig(qimageblitz)
 BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(xcb-image)
+BuildRequires:	pkgconfig(xcb-keysyms)
 BuildRequires:	pkgconfig(xcb-renderutil)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(xcursor)
@@ -1712,6 +1713,7 @@ done
 - Re-diff simpleapplet defaults patch
 - Re-diff no-hal patch
 - Drop no longer needed systemd-shutdown patch
+- Add pkgconfig(xcb-keysyms) to BuildRequires
 
 * Fri Jul 19 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.10.5-2
 - Update BuildRequires
