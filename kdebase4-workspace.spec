@@ -13,7 +13,7 @@ Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Epoch:		2
 Version:	4.11.0
-Release:	1
+Release:	2
 Group:		Graphical desktop/KDE
 License:	GPL
 Url:		http://www.kde.org
@@ -61,6 +61,9 @@ Patch13:	kde-workspace-4.10.4-screenlocker-background.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
+# See http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=c1469413f36d4e4cd9dd49e70bc5d660cf2f3c55
+# We partially revert it because we need at least deKorator to work
+Patch50:	kde-workspace-4.11.0-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
@@ -1539,6 +1542,7 @@ based on kdebase.
 %patch18 -p1
 %patch19 -p1
 %patch26 -p1
+%patch50 -p1
 %patch100 -p1
 %patch101 -p1
 %patch103 -p1
@@ -1636,6 +1640,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sun Aug 18 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-2
+- Add decorations patch to make kde4-windeco-dekorator compile again
+
 * Wed Aug 14 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-1
 - New version 4.11.0
 - Re-diff menu toptile patch

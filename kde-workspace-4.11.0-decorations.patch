@@ -1,0 +1,21 @@
+diff -urN kde-workspace-4.11.0/kwin/libkdecorations/CMakeLists.txt kde-workspace-4.11.0-patched/kwin/libkdecorations/CMakeLists.txt
+--- kde-workspace-4.11.0/kwin/libkdecorations/CMakeLists.txt	2013-08-18 12:29:19.479452484 +1100
++++ kde-workspace-4.11.0-patched/kwin/libkdecorations/CMakeLists.txt	2013-08-18 12:29:57.955096642 +1100
+@@ -24,4 +24,5 @@
+     kdecoration.h
+     kdecorationfactory.h
+     kcommondecoration.h
++    kdecorationbridge.h
+     DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel )
+diff -urN kde-workspace-4.11.0/kwin/libkdecorations/kdecorationbridge.h kde-workspace-4.11.0-patched/kwin/libkdecorations/kdecorationbridge.h
+--- kde-workspace-4.11.0/kwin/libkdecorations/kdecorationbridge.h	2013-08-18 12:29:19.480452500 +1100
++++ kde-workspace-4.11.0-patched/kwin/libkdecorations/kdecorationbridge.h	2013-08-18 12:32:27.418641734 +1100
+@@ -86,7 +86,7 @@
+     virtual void grabXServer(bool grab) = 0;
+ };
+ 
+-class KDecorationBridgeUnstable
++class KWIN_EXPORT KDecorationBridgeUnstable
+     : public KDecorationBridge
+ {
+ public:
