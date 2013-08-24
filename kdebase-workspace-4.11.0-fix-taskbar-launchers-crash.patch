@@ -1,0 +1,13 @@
+diff --git a/plasma/desktop/applets/tasks/tasks.cpp b/plasma/desktop/applets/tasks/tasks.cpp
+index c4aef4b..257058e 100644
+--- a/plasma/desktop/applets/tasks/tasks.cpp
++++ b/plasma/desktop/applets/tasks/tasks.cpp
+@@ -301,7 +301,7 @@ void Tasks::itemGeometryChanged(int id, int x, int y, int width, int height)
+ {
+     TaskManager::TaskItem* taskItem = static_cast<TaskManager::TaskItem*>(m_groupManager->rootGroup()->getMemberById(id));
+ 
+-    if (!taskItem || !taskItem->task() || !scene())
++    if (!taskItem || !taskItem->task() || !scene() || taskItem->itemType() == TaskManager::LauncherItemType)
+     {
+         return;
+     }

@@ -13,7 +13,7 @@ Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Epoch:		2
 Version:	4.11.0
-Release:	3
+Release:	4
 Group:		Graphical desktop/KDE
 License:	GPL
 Url:		http://www.kde.org
@@ -76,6 +76,8 @@ Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
 
 # Backports
 # Trunk
+# https://git.reviewboard.kde.org/r/112241/ and https://bugs.kde.org/show_bug.cgi?id=322283
+Patch200:	kdebase-workspace-4.11.0-fix-taskbar-launchers-crash.patch
 # Testing
 
 BuildRequires:	boost-devel
@@ -1556,6 +1558,8 @@ based on kdebase.
 %patch107 -p1
 %endif
 
+%patch200 -p1
+
 rm -fr kdm/kfrontend libs/kdm
 
 tar xvf %{SOURCE6}
@@ -1643,6 +1647,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sat Aug 24 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-4
+- Add patch to fix plasma crash when there are launchers on taskbar
+
 * Tue Aug 20 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-3
 - Add patch to remove activities and launchers from standard panel by default
 
