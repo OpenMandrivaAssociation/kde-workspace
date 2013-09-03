@@ -12,8 +12,8 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Epoch:		2
-Version:	4.11.0
-Release:	5
+Version:	4.11.1
+Release:	1
 Group:		Graphical desktop/KDE
 License:	GPL
 Url:		http://www.kde.org
@@ -1647,6 +1647,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Sep 03 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.1-1
+- New version 4.11.1
+
 * Sat Aug 24 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.0-4
 - Add patch to fix plasma crash when there are launchers on taskbar
 
