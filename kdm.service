@@ -2,7 +2,7 @@
 Description=K Display Manager
 After=livesys-late.service systemd-user-sessions.service
 
-# On OMV gdm/X11 is on tty7. We explicitly cancel the getty here to
+# Our X11 is on tty7. We explicitly cancel the getty here to
 # avoid any races around that.
 # Do not stop plymouth, it is done in prefdm if required (or left to the dm)
 Conflicts=getty@tty7.service plymouth-quit.service
