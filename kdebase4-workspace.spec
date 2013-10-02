@@ -12,8 +12,8 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Epoch:		2
-Version:	4.11.1
-Release:	3
+Version:	4.11.2
+Release:	1
 Group:		Graphical desktop/KDE
 License:	GPL
 Url:		http://www.kde.org
@@ -1652,6 +1652,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Oct 02 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-1
+- New version 4.11.2
+
 * Wed Sep 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.1-3
 - Backport patch200 from 4.11.2 to fix application icons loading
 
