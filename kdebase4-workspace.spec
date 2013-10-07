@@ -75,8 +75,6 @@ Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
 
 # Backports
-# Fix application icons (/usr/share/apps/name/icons/), fixed in 4.11.2
-Patch200:	0001-Delay-KDE-class-initialization-to-main-loop.patch
 
 # Trunk
 # Testing
@@ -1559,8 +1557,6 @@ based on kdebase.
 %patch107 -p1
 %endif
 
-%patch200 -p1
-
 rm -fr kdm/kfrontend libs/kdm
 
 tar xvf %{SOURCE6}
@@ -1654,6 +1650,7 @@ done
 %changelog
 * Wed Oct 02 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-1
 - New version 4.11.2
+- Drop temporary upstream patch200
 
 * Wed Sep 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.1-3
 - Backport patch200 from 4.11.2 to fix application icons loading
