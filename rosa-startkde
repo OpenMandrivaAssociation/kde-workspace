@@ -19,13 +19,14 @@ trap 'echo GOT SIGHUP' HUP
 
 # Workaround of bko200301 we need to call the update script manually
 # kconfig_update won't run as we update kde with kde open most of the time
-UPDATE=`kreadconfig --group "Rosa" --key "Update4.9-4.10" --default "false"`
+UPDATE=`kreadconfig --group "Rosa" --key "Update4.10-4.11" --default "false"`
 
 if [ "$UPDATE" = "false" ]; then
   if [ -f "LIBDIR/kconf_update_bin/plasma-to-plasma-desktop" ]; then
     LIBDIR/kconf_update_bin/plasma-to-plasma-desktop
   fi
-  kwriteconfig --group "Rosa" --key "Update4.9-4.10" --type "bool" 1
+  kwriteconfig --group "Rosa" --key "Update4.10-4.11" --type "bool" 1
+  rm -f $HOME/.config/Trolltech.conf
 fi
 
 # Check if a KDE session already is running and whether it's possible to connect to X

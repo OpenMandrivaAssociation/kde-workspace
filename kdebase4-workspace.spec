@@ -11,11 +11,11 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Epoch:		2
 Version:	4.11.2
-Release:	1
+Release:	2
+Epoch:		2
 Group:		Graphical desktop/KDE
-License:	GPL
+License:	GPLv2+
 Url:		http://www.kde.org
 %define is_beta %(if test `echo %{version} |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
 %if %{is_beta}
@@ -1648,6 +1648,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Oct 10 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-2
+- Update startkde script to fix issues with messed up Qt4 style
+
 * Wed Oct 02 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-1
 - New version 4.11.2
 - Drop temporary upstream patch200
