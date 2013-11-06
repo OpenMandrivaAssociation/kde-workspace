@@ -62,8 +62,9 @@ Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # See http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=c1469413f36d4e4cd9dd49e70bc5d660cf2f3c55
+# And http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=dcc70fbb55919ac56ae188ceb3d5bf7b94c2dbcd
 # We partially revert it because we need at least deKorator to work
-Patch50:	kde-workspace-4.11.0-decorations.patch
+Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
@@ -1556,7 +1557,7 @@ based on kdebase.
 
 rm -fr kdm/kfrontend libs/kdm
 
-tar xvf %{SOURCE6}
+tar xf %{SOURCE6}
 
 %build
 %cmake_kde4 -DKDE4_XDMCP:BOOL=ON -DKWIN_BUILD_WITH_OPENGLES=ON
@@ -1648,6 +1649,7 @@ done
 * Wed Nov 06 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-1
 - New version 4.11.3
 - Drop fix-kcmkdm-config patch because it's merged in upstream
+- Update decorations patch
 
 * Thu Oct 10 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-2
 - Update startkde script to fix issues with messed up Qt4 style
