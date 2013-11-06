@@ -49,8 +49,6 @@ Patch6:		kde-workspace-4.10.3-pager-icons.patch
 Patch7:		kde-workspace-4.10.3-devicenotifier.patch
 # Fix screenlocker greeter focus after Alt modifier is pressed (keyboard layout switching etc)
 Patch8:		kde-workspace-4.10.3-greeter.patch
-# Fix bug with KCM KDM resetting fonts, style and color to system defaults (KDE bug 254430)
-Patch9:		kde-workspace-4.10.3-fix-kcmkdm-config.patch
 # Prefer system locale for KDM when reading it from KDM config fails
 Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
@@ -1537,7 +1535,6 @@ based on kdebase.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -1650,6 +1647,7 @@ done
 %changelog
 * Wed Nov 06 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-1
 - New version 4.11.3
+- Drop fix-kcmkdm-config patch because it's merged in upstream
 
 * Thu Oct 10 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-2
 - Update startkde script to fix issues with messed up Qt4 style
