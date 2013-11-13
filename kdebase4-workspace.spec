@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.3
-Release:	1
+Release:	2
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPLv2+
@@ -1646,6 +1646,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Nov 13 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-2
+- Add XDG_CURRENT_DESKTOP export to startkde script
+
 * Wed Nov 06 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-1
 - New version 4.11.3
 - Drop fix-kcmkdm-config patch because it's merged in upstream
