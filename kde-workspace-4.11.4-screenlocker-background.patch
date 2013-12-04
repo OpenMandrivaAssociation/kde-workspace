@@ -1,9 +1,9 @@
-diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.cpp kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.cpp
---- kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.cpp	2013-06-20 14:22:47.432354674 +1100
-+++ kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.cpp	2013-06-20 19:18:13.969492212 +1100
-@@ -165,6 +165,12 @@
- 
-         connect(view->rootObject(), SIGNAL(unlockRequested()), SLOT(quit()));
+diff -urN kde-workspace-4.11.4/ksmserver/screenlocker/greeter/greeterapp.cpp kde-workspace-4.11.4-patched/ksmserver/screenlocker/greeter/greeterapp.cpp
+--- kde-workspace-4.11.4/ksmserver/screenlocker/greeter/greeterapp.cpp	2013-11-29 01:46:36.609007286 +1100
++++ kde-workspace-4.11.4-patched/ksmserver/screenlocker/greeter/greeterapp.cpp	2013-12-05 09:12:59.528342580 +1100
+@@ -196,6 +196,12 @@
+             lockProperty.write(false);
+         }
  
 +        QString wallpaper = getWallpaper();
 +        if (!wallpaper.isEmpty()) {
@@ -14,7 +14,7 @@ diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.cp
          QDeclarativeProperty sleepProperty(view->rootObject(), "suspendToRamSupported");
          sleepProperty.write(spdMethods.contains(Solid::PowerManagement::SuspendState));
          if (spdMethods.contains(Solid::PowerManagement::SuspendState) &&
-@@ -393,6 +399,30 @@
+@@ -508,6 +514,30 @@
      }
  }
  
@@ -45,24 +45,24 @@ diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.cp
  } // namespace
  
  #include "greeterapp.moc"
-diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.h kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.h
---- kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/greeterapp.h	2013-06-20 14:22:47.433354691 +1100
-+++ kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/greeterapp.h	2013-06-20 17:30:55.356233253 +1100
-@@ -59,6 +59,7 @@
- private:
+diff -urN kde-workspace-4.11.4/ksmserver/screenlocker/greeter/greeterapp.h kde-workspace-4.11.4-patched/ksmserver/screenlocker/greeter/greeterapp.h
+--- kde-workspace-4.11.4/ksmserver/screenlocker/greeter/greeterapp.h	2013-11-29 01:46:36.609007286 +1100
++++ kde-workspace-4.11.4-patched/ksmserver/screenlocker/greeter/greeterapp.h	2013-12-05 09:14:35.281875469 +1100
+@@ -64,6 +64,7 @@
      void initialize();
      void capsLocked();
+     void shareEvent(QEvent *e, QDeclarativeView *from);
 +    QString getWallpaper();
  
      QString m_mainQmlPath;
      QList<QDeclarativeView*> m_views;
-diff -urN kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml
---- kde-workspace-4.10.4-orig/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml	2013-06-20 14:22:47.432354674 +1100
-+++ kde-workspace-4.10.4-patched/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml	2013-06-20 17:30:17.030559071 +1100
-@@ -27,6 +27,7 @@
-     id: lockScreen
+diff -urN kde-workspace-4.11.4/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml kde-workspace-4.11.4-patched/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml
+--- kde-workspace-4.11.4/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml	2013-11-29 01:46:36.610007279 +1100
++++ kde-workspace-4.11.4-patched/ksmserver/screenlocker/greeter/themes/org.kde.passworddialog/contents/ui/main.qml	2013-12-05 09:15:38.210878138 +1100
+@@ -28,6 +28,7 @@
      signal unlockRequested()
      property alias capsLockOn: unlockUI.capsLockOn
+     property bool locked: false
 +    property alias mainBackground: background.source
  
      PlasmaCore.Theme {

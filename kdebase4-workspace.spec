@@ -55,7 +55,7 @@ Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 # Fix screenlocker greeter focus when screensaver is used
 Patch12:	kde-workspace-4.10.3-screenlocker-no-fake-focus.patch
 # Use current wallpaper for screenlocker if it's a scaled image
-Patch13:	kde-workspace-4.10.4-screenlocker-background.patch
+Patch13:	kde-workspace-4.11.4-screenlocker-background.patch
 # Don't add activities and launchers to standard panel by default
 Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
@@ -1648,6 +1648,7 @@ done
 %changelog
 * Wed Dec 04 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.4-1
 - New version 4.11.4
+- Re-diff screenlocker-background patch
 
 * Mon Nov 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-3
 - Disable screenlocker-no-fake-focus patch as it seems to be no longer needed
