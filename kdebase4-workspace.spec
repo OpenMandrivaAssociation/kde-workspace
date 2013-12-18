@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.4
-Release:	1
+Release:	6
 Epoch:		2
 Group:		Graphical desktop/KDE
 License:	GPLv2+
@@ -53,7 +53,7 @@ Patch8:		kde-workspace-4.10.3-greeter.patch
 Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 # Fix screenlocker greeter focus when screensaver is used
-Patch12:	kde-workspace-4.10.3-screenlocker-no-fake-focus.patch
+Patch12:	kde-workspace-4.11.4-screenlocker-handle-fake-focus.patch
 # Use current wallpaper for screenlocker if it's a scaled image
 Patch13:	kde-workspace-4.11.4-screenlocker-background.patch
 # Don't add activities and launchers to standard panel by default
@@ -1162,7 +1162,7 @@ Provides:	plasma-krunner
 Provides:	powerdevil = %{EVRD}
 
 %description -n plasma-krunner-powerdevil
-KDE power management applet
+KDE power management applet.
 
 %files -n plasma-krunner-powerdevil
 %{_kde_libdir}/kde4/kded_powerdevil.so
@@ -1199,7 +1199,7 @@ Requires:	kdebase4-workspace
 Provides:	plasma-runner
 
 %description -n plasma-runner-places
-Plasma runner places
+Plasma runner places.
 
 %files -n plasma-runner-places
 %{_kde_libdir}/kde4/krunner_placesrunner.so
@@ -1238,7 +1238,7 @@ Requires:	plasma-krunner-powerdevil
 Provides:	plasma-applet
 
 %description -n plasma-applet-battery
-Simple plasma battery applet
+Simple plasma battery applet.
 
 %files -n plasma-applet-battery
 %{_kde_datadir}/kde4/services/plasma-applet-batterymonitor.desktop
@@ -1252,7 +1252,7 @@ Requires:	kdebase4-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-webbrowser
-A simple webbrowser applet
+A simple webbrowser applet.
 
 %files -n plasma-applet-webbrowser
 %{_kde_libdir}/kde4/plasma_applet_webbrowser.so
@@ -1269,7 +1269,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-temperature
-A system temperature monitor
+A system temperature monitor.
 
 %files -n plasma-applet-system-monitor-temperature
 %{_kde_libdir}/kde4/plasma_applet_sm_temperature.so
@@ -1284,7 +1284,7 @@ Requires:	kdebase4-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-net
-A network usage monitor
+A network usage monitor.
 
 %files -n plasma-applet-system-monitor-net
 %{_kde_libdir}/kde4/plasma_applet_sm_net.so
@@ -1300,7 +1300,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-hwinfo
-Plasma applet that Show hardware informations
+Plasma applet that Show hardware informations.
 
 %files -n plasma-applet-system-monitor-hwinfo
 %{_kde_libdir}/kde4/plasma_applet_sm_hwinfo.so
@@ -1316,7 +1316,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-hdd
-A hard disk usage monitor
+A hard disk usage monitor.
 
 %files -n plasma-applet-system-monitor-hdd
 %{_kde_libdir}/kde4/plasma_applet_sm_hdd.so
@@ -1332,7 +1332,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-cpu
-A CPU usage monitor
+A CPU usage monitor.
 
 %files -n plasma-applet-system-monitor-cpu
 %{_kde_libdir}/kde4/plasma_applet_sm_cpu.so
@@ -1538,7 +1538,7 @@ based on kdebase.
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
-#patch12 -p1
+%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch18 -p1
@@ -1646,6 +1646,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Dec 18 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.4-6
+- Replace screenlocker-no-fake-focus patch with screenlocker-handle-fake-focus
+
 * Wed Dec 04 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.4-1
 - New version 4.11.4
 - Re-diff screenlocker-background patch
