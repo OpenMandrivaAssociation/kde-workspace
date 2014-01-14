@@ -11,11 +11,11 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.4
-Release:	6
+Version:	4.11.5
+Release:	1
 Epoch:		2
-Group:		Graphical desktop/KDE
 License:	GPLv2+
+Group:		Graphical desktop/KDE
 Url:		http://www.kde.org
 %define is_beta %(if test `echo %{version} |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
 %if %{is_beta}
@@ -1646,6 +1646,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Jan 14 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.5-1
+- New version 4.11.5
+
 * Wed Dec 18 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.4-6
 - Replace screenlocker-no-fake-focus patch with screenlocker-handle-fake-focus
 
