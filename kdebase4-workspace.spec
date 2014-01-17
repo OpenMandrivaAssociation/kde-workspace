@@ -11,11 +11,11 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.2
-Release:	2
+Version:	4.11.5
+Release:	1
 Epoch:		2
-Group:		Graphical desktop/KDE
 License:	GPLv2+
+Group:		Graphical desktop/KDE
 Url:		http://www.kde.org
 %define is_beta %(if test `echo %{version} |cut -d. -f3` -ge 70; then echo -n 1; else echo -n 0; fi)
 %if %{is_beta}
@@ -49,23 +49,22 @@ Patch6:		kde-workspace-4.10.3-pager-icons.patch
 Patch7:		kde-workspace-4.10.3-devicenotifier.patch
 # Fix screenlocker greeter focus after Alt modifier is pressed (keyboard layout switching etc)
 Patch8:		kde-workspace-4.10.3-greeter.patch
-# Fix bug with KCM KDM resetting fonts, style and color to system defaults (KDE bug 254430)
-Patch9:		kde-workspace-4.10.3-fix-kcmkdm-config.patch
 # Prefer system locale for KDM when reading it from KDM config fails
 Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
 # Fix screenlocker greeter focus when screensaver is used
-Patch12:	kde-workspace-4.10.3-screenlocker-no-fake-focus.patch
+Patch12:	kde-workspace-4.11.4-screenlocker-handle-fake-focus.patch
 # Use current wallpaper for screenlocker if it's a scaled image
-Patch13:	kde-workspace-4.10.4-screenlocker-background.patch
+Patch13:	kde-workspace-4.11.4-screenlocker-background.patch
 # Don't add activities and launchers to standard panel by default
 Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # See http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=c1469413f36d4e4cd9dd49e70bc5d660cf2f3c55
+# And http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=dcc70fbb55919ac56ae188ceb3d5bf7b94c2dbcd
 # We partially revert it because we need at least deKorator to work
-Patch50:	kde-workspace-4.11.0-decorations.patch
+Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
@@ -1163,7 +1162,7 @@ Provides:	plasma-krunner
 Provides:	powerdevil = %{EVRD}
 
 %description -n plasma-krunner-powerdevil
-KDE power management applet
+KDE power management applet.
 
 %files -n plasma-krunner-powerdevil
 %{_kde_libdir}/kde4/kded_powerdevil.so
@@ -1200,7 +1199,7 @@ Requires:	kdebase4-workspace
 Provides:	plasma-runner
 
 %description -n plasma-runner-places
-Plasma runner places
+Plasma runner places.
 
 %files -n plasma-runner-places
 %{_kde_libdir}/kde4/krunner_placesrunner.so
@@ -1239,7 +1238,7 @@ Requires:	plasma-krunner-powerdevil
 Provides:	plasma-applet
 
 %description -n plasma-applet-battery
-Simple plasma battery applet
+Simple plasma battery applet.
 
 %files -n plasma-applet-battery
 %{_kde_datadir}/kde4/services/plasma-applet-batterymonitor.desktop
@@ -1253,7 +1252,7 @@ Requires:	kdebase4-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-webbrowser
-A simple webbrowser applet
+A simple webbrowser applet.
 
 %files -n plasma-applet-webbrowser
 %{_kde_libdir}/kde4/plasma_applet_webbrowser.so
@@ -1270,7 +1269,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-temperature
-A system temperature monitor
+A system temperature monitor.
 
 %files -n plasma-applet-system-monitor-temperature
 %{_kde_libdir}/kde4/plasma_applet_sm_temperature.so
@@ -1285,7 +1284,7 @@ Requires:	kdebase4-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-net
-A network usage monitor
+A network usage monitor.
 
 %files -n plasma-applet-system-monitor-net
 %{_kde_libdir}/kde4/plasma_applet_sm_net.so
@@ -1301,7 +1300,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-hwinfo
-Plasma applet that Show hardware informations
+Plasma applet that Show hardware informations.
 
 %files -n plasma-applet-system-monitor-hwinfo
 %{_kde_libdir}/kde4/plasma_applet_sm_hwinfo.so
@@ -1317,7 +1316,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-hdd
-A hard disk usage monitor
+A hard disk usage monitor.
 
 %files -n plasma-applet-system-monitor-hdd
 %{_kde_libdir}/kde4/plasma_applet_sm_hdd.so
@@ -1333,7 +1332,7 @@ Requires:	lm_sensors
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-cpu
-A CPU usage monitor
+A CPU usage monitor.
 
 %files -n plasma-applet-system-monitor-cpu
 %{_kde_libdir}/kde4/plasma_applet_sm_cpu.so
@@ -1537,7 +1536,6 @@ based on kdebase.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -1559,7 +1557,7 @@ based on kdebase.
 
 rm -fr kdm/kfrontend libs/kdm
 
-tar xvf %{SOURCE6}
+tar xf %{SOURCE6}
 
 %build
 %cmake_kde4 -DKDE4_XDMCP:BOOL=ON -DKWIN_BUILD_WITH_OPENGLES=ON
@@ -1648,6 +1646,27 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Jan 14 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.5-1
+- New version 4.11.5
+
+* Wed Dec 18 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.4-6
+- Replace screenlocker-no-fake-focus patch with screenlocker-handle-fake-focus
+
+* Wed Dec 04 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.4-1
+- New version 4.11.4
+- Re-diff screenlocker-background patch
+
+* Mon Nov 25 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-3
+- Disable screenlocker-no-fake-focus patch as it seems to be no longer needed
+
+* Wed Nov 13 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-2
+- Add XDG_CURRENT_DESKTOP export to startkde script
+
+* Wed Nov 06 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.3-1
+- New version 4.11.3
+- Drop fix-kcmkdm-config patch because it's merged in upstream
+- Update decorations patch
+
 * Thu Oct 10 2013 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.2-2
 - Update startkde script to fix issues with messed up Qt4 style
 
