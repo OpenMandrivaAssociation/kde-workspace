@@ -1,0 +1,56 @@
+diff -urN kde-workspace-4.11.6/plasma/desktop/shell/dbus/org.kde.plasma.App.xml kde-workspace-4.11.6-patched/plasma/desktop/shell/dbus/org.kde.plasma.App.xml
+--- kde-workspace-4.11.6/plasma/desktop/shell/dbus/org.kde.plasma.App.xml	2014-01-31 06:25:09.000000000 +1100
++++ kde-workspace-4.11.6-patched/plasma/desktop/shell/dbus/org.kde.plasma.App.xml	2014-02-08 01:10:03.179710359 +1100
+@@ -6,6 +6,10 @@
+     <method name="showDashboard">
+       <arg name="show" type="b" direction="in"/>
+     </method>
++    <method name="setWallpaperImage">
++      <arg name="screenId" type="i" direction="in"/>
++      <arg name="url" type="s" direction="in"/>
++    </method>
+     <method name="showInteractiveConsole">
+     </method>
+     <method name="loadScriptInInteractiveConsole">
+diff -urN kde-workspace-4.11.6/plasma/desktop/shell/plasmaapp.cpp kde-workspace-4.11.6-patched/plasma/desktop/shell/plasmaapp.cpp
+--- kde-workspace-4.11.6/plasma/desktop/shell/plasmaapp.cpp	2014-01-31 06:25:09.000000000 +1100
++++ kde-workspace-4.11.6-patched/plasma/desktop/shell/plasmaapp.cpp	2014-02-08 01:10:03.180710375 +1100
+@@ -396,6 +396,26 @@
+     KGlobal::config()->sync();
+ }
+ 
++void PlasmaApp::setWallpaperImage(int screenId, const QString &url)
++{
++    int currentDesktop;
++
++    if (AppSettings::perVirtualDesktopViews()) {
++	currentDesktop = KWindowSystem::currentDesktop() - 1;
++    } else {
++	currentDesktop = -1;
++    }
++
++    Plasma::Containment *currentContainment = PlasmaApp::self()->corona()->containmentForScreen(screenId, currentDesktop);
++
++    if (currentContainment) {
++	currentContainment->setWallpaper("image", "SingleImage");
++	if (!url.isEmpty()) {
++	    currentContainment->wallpaper()->setUrls(KUrl(url));
++	}
++    }
++}
++
+ void PlasmaApp::toggleDashboard()
+ {
+     // we don't want to listen to dashboard closure signals when toggling
+diff -urN kde-workspace-4.11.6/plasma/desktop/shell/plasmaapp.h kde-workspace-4.11.6-patched/plasma/desktop/shell/plasmaapp.h
+--- kde-workspace-4.11.6/plasma/desktop/shell/plasmaapp.h	2014-01-31 06:25:09.000000000 +1100
++++ kde-workspace-4.11.6-patched/plasma/desktop/shell/plasmaapp.h	2014-02-08 01:10:03.179710359 +1100
+@@ -110,6 +110,8 @@
+     void toggleDashboard();
+     void showDashboard(bool show);
+ 
++    void setWallpaperImage(int screenId, const QString &url);
++
+     void showInteractiveConsole();
+     void loadScriptInInteractiveConsole(const QString &script);
+     void showInteractiveKWinConsole();

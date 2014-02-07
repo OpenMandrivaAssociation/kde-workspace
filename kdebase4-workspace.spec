@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.6
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -61,6 +61,9 @@ Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
+# Make it possible to set wallpaper via dbus
+# See https://bugs.kde.org/show_bug.cgi?id=217950#c15
+Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 # See http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=c1469413f36d4e4cd9dd49e70bc5d660cf2f3c55
 # And http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=dcc70fbb55919ac56ae188ceb3d5bf7b94c2dbcd
 # We partially revert it because we need at least deKorator to work
@@ -1543,6 +1546,7 @@ based on kdebase.
 %patch18 -p1
 %patch19 -p1
 %patch26 -p1
+%patch27 -p1
 %patch50 -p1
 %patch100 -p1
 %patch101 -p1
@@ -1645,6 +1649,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Fri Feb 07 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-2
+- Add dbus-wallpaper patch to make it possible to set wallpaper via dbus
+
 * Tue Feb 04 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-1
 - New version 4.11.6
 
