@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.6
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -130,7 +130,6 @@ Requires:	kdebase4-runtime
 Requires:	kde4-windeco-dekorator
 Requires:	mandriva-kde-translation
 Requires:	qt4-qtdbus
-Requires:	rosapanel
 Requires:	setxkbmap
 Requires:	strigi
 Requires:	udisks2
@@ -138,14 +137,15 @@ Requires:	xdg-utils
 Requires:	xmessage
 Requires:	xprop
 Requires:	xset
+Suggests:	kickoff
+Suggests:	klipper
 Suggests:	networkmanager
 Suggests:	plasma-applet-system-monitor-net
 Suggests:	plasma-applet-system-monitor-hwinfo
 Suggests:	plasma-applet-system-monitor-hdd
 Suggests:	plasma-applet-system-monitor-cpu
 Suggests:	plasma-applet-system-monitor-temperature
-Suggests:	klipper
-Suggests:	kickoff
+Suggests:	rosapanel
 Conflicts:	kdm < 2:4.10.2-4
 Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
@@ -1617,10 +1617,6 @@ sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_
 # systemd implimentation
 install -d -m 0775 %{buildroot}%{_unitdir}
 install -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/kdm.service
-# It's different in Rosa and Cooker
-%if %{mdvver} == 201210
-sed s,tty7,tty1,g -i %{buildroot}%{_unitdir}/kdm.service
-%endif
 
 # logrotate
 mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
@@ -1649,6 +1645,10 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Feb 13 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-3
+- Update kdm.service to use tty1, no longer require hack for 2012.1 in spec
+- Change rosapanel from Requires to Suggests
+
 * Fri Feb 07 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-2
 - Add dbus-wallpaper patch to make it possible to set wallpaper via dbus
 
