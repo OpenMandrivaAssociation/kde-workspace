@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.6
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -62,7 +62,7 @@ Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # Make it possible to set wallpaper via dbus
-# See https://bugs.kde.org/show_bug.cgi?id=217950#c15
+# See https://bugs.kde.org/show_bug.cgi?id=217950
 Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 # See http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=c1469413f36d4e4cd9dd49e70bc5d660cf2f3c55
 # And http://quickgit.kde.org/?p=kde-workspace.git&a=commitdiff&h=dcc70fbb55919ac56ae188ceb3d5bf7b94c2dbcd
@@ -1645,6 +1645,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Feb 18 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-4
+- Re-work dbus-wallpaper patch to support more features
+
 * Thu Feb 13 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-3
 - Update kdm.service to use tty1, no longer require hack for 2012.1 in spec
 - Change rosapanel from Requires to Suggests
