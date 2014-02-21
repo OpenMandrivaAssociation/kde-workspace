@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.6
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -145,7 +145,6 @@ Suggests:	plasma-applet-system-monitor-hwinfo
 Suggests:	plasma-applet-system-monitor-hdd
 Suggests:	plasma-applet-system-monitor-cpu
 Suggests:	plasma-applet-system-monitor-temperature
-Suggests:	rosapanel
 Conflicts:	kdm < 2:4.10.2-4
 Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
