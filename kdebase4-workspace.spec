@@ -137,6 +137,7 @@ Requires:	xdg-utils
 Requires:	xmessage
 Requires:	xprop
 Requires:	xset
+Requires:	homerun
 Suggests:	kickoff
 Suggests:	klipper
 Suggests:	networkmanager
