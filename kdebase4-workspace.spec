@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.6
-Release:	4
+Release:	6
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -26,13 +26,14 @@ Url:		http://www.kde.org
 Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{version}.tar.xz
 Source1:	kde.pam
 Source2:	kde-np.pam
-Source3:	rosa-startkde
 Source4:	systemsettings.desktop
 Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
 Source7:	kdm.service
 Source8:	kcm_drakclock.desktop
-Source10:	%{name}.rpmlintrc
+Source9:	omv-startkde
+Source10:	rosa-startkde
+Source20:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 # Use drakclock for time settings, patch from Mageia
 Patch1:		kdebase-workspace-4.6.2-mageia-drakclock.patch
@@ -145,7 +146,11 @@ Suggests:	plasma-applet-system-monitor-hwinfo
 Suggests:	plasma-applet-system-monitor-hdd
 Suggests:	plasma-applet-system-monitor-cpu
 Suggests:	plasma-applet-system-monitor-temperature
+%if %{distsuffix} == "omv"
+Requires:	homerun
+%else
 Suggests:	rosapanel
+%endif
 Conflicts:	kdm < 2:4.10.2-4
 Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
@@ -1607,8 +1612,13 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/pam.d/
 install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/kde
 install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pam.d/kde-np
 
+%if %{distsuffix} == "omv"
+# OpenMandriva startkde
+install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
+%else
 # Rosa startkde
-install -m 0755 %{SOURCE3} %{buildroot}%{_kde_bindir}/startkde
+install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
+%endif
 
 # We need to expand libdir into startkde
 sed -e 's,LIBDIR,%{_libdir},g' -i %{buildroot}%{_kde_bindir}/startkde
@@ -1645,6 +1655,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sun Mar 02 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-6
+- Use different startkde scripts and Requires for ROSA and OpenMandriva
+
 * Tue Feb 18 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.6-4
 - Re-work dbus-wallpaper patch to support more features
 
