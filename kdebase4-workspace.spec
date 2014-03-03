@@ -146,7 +146,7 @@ Suggests:	plasma-applet-system-monitor-hwinfo
 Suggests:	plasma-applet-system-monitor-hdd
 Suggests:	plasma-applet-system-monitor-cpu
 Suggests:	plasma-applet-system-monitor-temperature
-%if %{distsuffix} == "omv"
+%if %{disttag} == "omv"
 Requires:	homerun
 %else
 Suggests:	rosapanel
@@ -1612,7 +1612,7 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/pam.d/
 install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/kde
 install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pam.d/kde-np
 
-%if %{distsuffix} == "omv"
+%if %{disttag} == "omv"
 # OpenMandriva startkde
 install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
 %else
