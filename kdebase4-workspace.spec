@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.7
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1627,6 +1627,10 @@ sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_
 # systemd implimentation
 install -d -m 0775 %{buildroot}%{_unitdir}
 install -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/kdm.service
+# It's different in OMV
+%if %{disttag} == "omv"
+sed s,tty1,tty7,g -i %{buildroot}%{_unitdir}/kdm.service
+%endif
 
 # logrotate
 mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
