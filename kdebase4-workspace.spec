@@ -11,8 +11,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.7
-Release:	4
+Version:	4.11.8
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1661,6 +1661,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Apr 02 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-1
+- New version 4.11.8
+
 * Thu Mar 20 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.7-3
 - Use different kdm.service for ROSA and OpenMandriva
 
