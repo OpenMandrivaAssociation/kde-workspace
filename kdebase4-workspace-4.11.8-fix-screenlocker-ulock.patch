@@ -1,0 +1,116 @@
+diff --git ksmserver/screenlocker/greeter/greeterapp.cpp ksmserver/screenlocker/greeter/greeterapp.cpp
+index c5e2f85..475d223 100644
+--- ksmserver/screenlocker/greeter/greeterapp.cpp
++++ ksmserver/screenlocker/greeter/greeterapp.cpp
+@@ -383,6 +383,12 @@ void UnlockApp::setImmediateLock(bool immediate)
+     m_immediateLock = immediate;
+ }
+ 
++void UnlockApp::switchToImmediateLock()
++{
++    setImmediateLock(true);
++    setLockedPropertyOnViews();
++}
++
+ bool UnlockApp::eventFilter(QObject *obj, QEvent *event)
+ {
+     if (obj != this && event->type() == QEvent::Show) {
+diff --git ksmserver/screenlocker/greeter/greeterapp.h ksmserver/screenlocker/greeter/greeterapp.h
+index 8b79188..895337e 100644
+--- ksmserver/screenlocker/greeter/greeterapp.h
++++ ksmserver/screenlocker/greeter/greeterapp.h
+@@ -44,6 +44,7 @@ public:
+ 
+     void setTesting(bool enable);
+     void setImmediateLock(bool immediateLock);
++    void switchToImmediateLock();
+ 
+ public Q_SLOTS:
+     void desktopResized();
+diff --git ksmserver/screenlocker/greeter/main.cpp ksmserver/screenlocker/greeter/main.cpp
+index d898734..d5c6a2b 100644
+--- ksmserver/screenlocker/greeter/main.cpp
++++ ksmserver/screenlocker/greeter/main.cpp
+@@ -24,11 +24,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ #include <iostream>
+ 
++#include <signal.h>
++
+ #include "greeterapp.h"
+ 
+ static const char description[] = I18N_NOOP( "Greeter for the KDE Plasma Workspaces Screen locker" );
+ static const char version[] = "0.1";
+ 
++ScreenLocker::UnlockApp *m_instance;
++
++static void signalhandler(int signum)
++{
++    switch(signum)
++    {
++      case SIGTERM: //SIGHUP:
++        m_instance->exit(1);
++        break;
++      case SIGUSR1:
++        m_instance->switchToImmediateLock();
++        break;
++    }
++}
++
+ int main(int argc, char* argv[])
+ {
+     KAboutData aboutData( "kscreenlocker_greet", 0, ki18n( "KScreenLocker Greeter" ),
+@@ -60,6 +77,7 @@ int main(int argc, char* argv[])
+     KCmdLineArgs::addCmdLineOptions(options);
+ 
+     ScreenLocker::UnlockApp app;
++    m_instance = &app;
+     KGlobal::locale()->insertCatalog(QLatin1String( "libkworkspace" ));
+     app.disableSessionManagement(); // manually-started
+     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+@@ -75,5 +93,12 @@ int main(int argc, char* argv[])
+     // This allow ksmserver to know when the applicaion has actually finished setting itself up.
+     // Crucial for blocking until it is ready, ensuring locking happens before sleep, e.g.
+     std::cout << "Locked at " << QDateTime::currentDateTime().toTime_t() << std::endl;
++
++    struct sigaction sa;
++    sa.sa_handler = signalhandler;
++    sigemptyset(&sa.sa_mask);
++    sa.sa_flags = 0;
++    sigaction(SIGTERM /*SIGHUP*/, &sa, 0);
++    sigaction(SIGUSR1, &sa, 0);
+     return app.exec();
+ }
+diff --git ksmserver/screenlocker/ksldapp.cpp ksmserver/screenlocker/ksldapp.cpp
+index 3dfcc9e..d43fde7 100644
+--- ksmserver/screenlocker/ksldapp.cpp
++++ ksmserver/screenlocker/ksldapp.cpp
+@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include <X11/Xlib.h>
+ // other
+ #include <unistd.h>
++#include <signal.h>
+ 
+ namespace ScreenLocker
+ {
+@@ -174,6 +175,10 @@ void KSldApp::lock(bool immediateLock)
+         // already locked or acquiring lock, no need to lock again
+         // but make sure it's really locked
+         endGraceTime();
++        if (immediateLock) {
++            // signal the greeter to switch to immediateLock mode
++            kill(m_lockProcess->pid(), SIGUSR1);
++        }
+         return;
+     }
+ 
+@@ -369,7 +374,8 @@ void KSldApp::unlock()
+         return;
+     }
+     s_graceTimeKill = true;
+-    m_lockProcess->kill();
++    // signal greeter to quit
++    m_lockProcess->reminate(); //kill(m_lockProcess->pid(), SIGHUP);
+ }
+ 
+ void KSldApp::inhibit()

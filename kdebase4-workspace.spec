@@ -77,7 +77,7 @@ Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
 Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 # Make systemd 194 handle upower stuff
 Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
-
+Patch108:	kdebase4-workspace-4.11.8-fix-screenlocker-ulock.patch
 # Backports
 
 # Trunk
@@ -1563,6 +1563,8 @@ based on kdebase.
 %if %{mdvver} == 201210
 %patch107 -p1
 %endif
+
+%patch108 -p0
 
 rm -fr kdm/kfrontend libs/kdm
 
