@@ -1,0 +1,18 @@
+[Unit]
+Description=K Display Manager
+After=livesys-late.service systemd-user-sessions.service
+
+# Our X11 is on tty7. We explicitly cancel the getty here to
+# avoid any races around that.
+# Do not stop plymouth, it is done in prefdm if required (or left to the dm)
+Conflicts=getty@tty7.service
+After=systemd-user-sessions.service getty@tty7.service plymouth-quit.service
+
+[Service]
+ExecStart=/usr/bin/kdm -nodaemon
+Restart=always
+RestartSec=0
+IgnoreSIGPIPE=no
+
+[Install]
+Alias=display-manager.service

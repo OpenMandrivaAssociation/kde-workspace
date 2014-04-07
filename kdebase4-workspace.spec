@@ -11,8 +11,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.7
-Release:	2
+Version:	4.11.8
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -29,10 +29,11 @@ Source2:	kde-np.pam
 Source4:	systemsettings.desktop
 Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
-Source7:	kdm.service
 Source8:	kcm_drakclock.desktop
 Source9:	omv-startkde
 Source10:	rosa-startkde
+Source11:	omv-kdm.service
+Source12:	rosa-kdm.service
 Source20:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 # Use drakclock for time settings, patch from Mageia
@@ -1626,10 +1627,11 @@ sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_
 
 # systemd implimentation
 install -d -m 0775 %{buildroot}%{_unitdir}
-install -m 0644 %{SOURCE7} %{buildroot}%{_unitdir}/kdm.service
-# It's different in OMV
+# It's different in OMV and ROSA
 %if %{disttag} == "omv"
-sed s,tty1,tty7,g -i %{buildroot}%{_unitdir}/kdm.service
+install -m 0644 %{SOURCE11} %{buildroot}%{_unitdir}/kdm.service
+%else
+install -m 0644 %{SOURCE12} %{buildroot}%{_unitdir}/kdm.service
 %endif
 
 # logrotate
@@ -1659,6 +1661,12 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Apr 02 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-1
+- New version 4.11.8
+
+* Thu Mar 20 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.7-3
+- Use different kdm.service for ROSA and OpenMandriva
+
 * Tue Mar 04 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.7-1
 - New version 4.11.7
 
