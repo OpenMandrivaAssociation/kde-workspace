@@ -110,7 +110,7 @@ index 3dfcc9e..d43fde7 100644
      s_graceTimeKill = true;
 -    m_lockProcess->kill();
 +    // signal greeter to quit
-+    m_lockProcess->reminate(); //kill(m_lockProcess->pid(), SIGHUP);
++    m_lockProcess->terminate(); //kill(m_lockProcess->pid(), SIGHUP);
  }
  
  void KSldApp::inhibit()
