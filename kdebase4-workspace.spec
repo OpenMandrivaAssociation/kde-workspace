@@ -1361,21 +1361,17 @@ KDE Desktop Login Manager.
 
 %post -n kdm
 chksession -K
-%if %{mdvver} < 201300
 # todo - use native %systemd_post
-/bin/systemctl enable kdm.service 2>&1 || :
-%endif
+if [ ! -e /etc/systemd/system/display-manager.service ] ; then
+  /bin/systemctl enable kdm.service 2>&1 || :
+fi
 
-%if %{mdvver} < 201300
 %preun -n kdm
 %systemd_preun kdm.service
-%endif
 
 %postun -n kdm
 chksession -K
-%if %{mdvver} < 201300
 %systemd_postun kdm.service
-%endif
 
 %files -n kdm
 %config(noreplace) %{_sysconfdir}/pam.d/kde
