@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.8
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -78,7 +78,6 @@ Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
-Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
 Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
 Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 # Make systemd 194 handle upower stuff
@@ -1559,7 +1558,6 @@ based on kdebase.
 %patch50 -p1
 %patch100 -p1
 %patch101 -p1
-%patch103 -p1
 %patch104 -p1
 %patch106 -p1
 
