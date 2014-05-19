@@ -12,7 +12,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.8
-Release:	2
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -51,6 +51,12 @@ Patch6:		kde-workspace-4.10.3-pager-icons.patch
 Patch7:		kde-workspace-4.10.3-devicenotifier.patch
 # Fix screenlocker greeter focus after Alt modifier is pressed (keyboard layout switching etc)
 Patch8:		kde-workspace-4.10.3-greeter.patch
+# Patch from OpenSUSE, fixes 2 issues:
+# * password input dialog was not shown under certain circumstances
+#  (kde#327947, kde#329076, bnc#864305)
+# * screensaver processes might keep running in background when
+#  unlocking the screen (kde#224200, bnc#809835)
+Patch9:		kdebase4-workspace-4.11.8-fix-screenlocker-ulock.patch
 # Prefer system locale for KDM when reading it from KDM config fails
 Patch10:	kde-workspace-4.10.3-fix-kcmkdm-locale.patch
 Patch11:	kdebase-workspace-4.2.0-fix_gtkrc_iaora.patch
@@ -72,12 +78,11 @@ Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
-Patch103:	kdebase-workspace-4.8.2-hide-trash.patch
 Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
 Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 # Make systemd 194 handle upower stuff
 Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
-Patch108:	kdebase4-workspace-4.11.8-fix-screenlocker-ulock.patch
+
 # Backports
 
 # Trunk
@@ -1540,6 +1545,7 @@ based on kdebase.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p0
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -1552,15 +1558,12 @@ based on kdebase.
 %patch50 -p1
 %patch100 -p1
 %patch101 -p1
-%patch103 -p1
 %patch104 -p1
 %patch106 -p1
 
 %if %{mdvver} == 201210
 %patch107 -p1
 %endif
-
-%patch108 -p0
 
 rm -fr kdm/kfrontend libs/kdm
 
@@ -1659,6 +1662,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Apr 08 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-2
+- Add fix-screenlocker-ulock patch from OpenSUSE to fix issues with unlock
+
 * Wed Apr 02 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-1
 - New version 4.11.8
 
