@@ -74,8 +74,6 @@ Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
 Patch106:	kdebase-workspace-4.11.0-no-hal.patch
-# Make systemd 194 handle upower stuff
-Patch107:	kde-workspace-4.10.3-powerdevil-systemd.patch
 
 # Backports
 
@@ -1554,10 +1552,6 @@ based on kdebase.
 %patch104 -p1
 %patch106 -p1
 
-%if %{mdvver} == 201210
-%patch107 -p1
-%endif
-
 rm -fr kdm/kfrontend libs/kdm
 
 tar xf %{SOURCE6}
@@ -1659,6 +1653,7 @@ done
 - New version 4.11.10
 - Drop hide-trash patch because of OpenMandriva bug #770
 - Drop no longer needed fix-screenlocker-ulock patch
+- Drop no longer needed powerdevil-systemd patch
 
 * Tue Apr 08 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-2
 - Add fix-screenlocker-ulock patch from OpenSUSE to fix issues with unlock
