@@ -11,8 +11,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.8
-Release:	4
+Version:	4.11.10
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1662,6 +1662,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Jun 12 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.10-1
+- Drop hide-trash patch because of OpenMandriva bug #770
+
 * Tue Apr 08 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-2
 - Add fix-screenlocker-ulock patch from OpenSUSE to fix issues with unlock
 
