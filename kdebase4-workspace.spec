@@ -115,6 +115,7 @@ BuildRequires:	pkgconfig(lua)
 %if %{with_networkmanager}
 BuildRequires:	pkgconfig(NetworkManager)
 %endif
+BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(qimageblitz)
 BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(xcb-image)
@@ -1654,6 +1655,7 @@ done
 - Drop hide-trash patch because of OpenMandriva bug #770
 - Drop no longer needed fix-screenlocker-ulock patch
 - Drop no longer needed powerdevil-systemd patch
+- Add pkgconfig(python) to BuildRequires
 
 * Tue Apr 08 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.8-2
 - Add fix-screenlocker-ulock patch from OpenSUSE to fix issues with unlock
