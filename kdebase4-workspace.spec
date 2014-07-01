@@ -9,10 +9,12 @@
 
 %define kdm_version 2.7.2
 
+%bcond_without kscreen
+
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.10
-Release:	1
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -27,7 +29,6 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{vers
 Source1:	kde.pam
 Source2:	kde-np.pam
 Source4:	systemsettings.desktop
-Source5:	krandrtray.desktop
 Source6:	kdebase-workspace-kdm-%{kdm_version}.tar.bz2
 Source8:	kcm_drakclock.desktop
 Source9:	omv-startkde
@@ -62,6 +63,7 @@ Patch13:	kde-workspace-4.11.4-screenlocker-background.patch
 Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
+Patch20:	kde-workspace-4.10.2-BUILD_KCM_RANDR.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # Make it possible to set wallpaper via dbus
 # See https://bugs.kde.org/show_bug.cgi?id=217950
@@ -145,6 +147,11 @@ Suggests:	plasma-applet-system-monitor-hwinfo
 Suggests:	plasma-applet-system-monitor-hdd
 Suggests:	plasma-applet-system-monitor-cpu
 Suggests:	plasma-applet-system-monitor-temperature
+%if %{with kscreen}
+Requires:	kscreen
+%else
+Requires:	krandr
+%endif
 %if %{disttag} == "omv"
 Requires:	homerun
 %else
@@ -181,8 +188,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_bindir}/kfontview
 %{_kde_bindir}/kmenuedit
 %{_kde_bindir}/krandom.kss
-%{_kde_bindir}/krandrstartup
-%{_kde_bindir}/krandrtray
 %{_kde_bindir}/krdb
 %{_kde_bindir}/krunner
 %{_kde_bindir}/ksmserver
@@ -244,7 +249,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/kcm_kwin_scripts.so
 %{_kde_libdir}/kde4/kcm_kwintabbox.so
 %{_kde_libdir}/kde4/kcm_launch.so
-%{_kde_libdir}/kde4/kcm_randr.so
 %{_kde_libdir}/kde4/kcm_screensaver.so
 %{_kde_libdir}/kde4/kcm_smserver.so
 %{_kde_libdir}/kde4/kcm_solid_actions.so
@@ -256,7 +260,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/kded_keyboard.so
 %{_kde_libdir}/kde4/kded_khotkeys.so
 %{_kde_libdir}/kde4/kded_kwrited.so
-%{_kde_libdir}/kde4/kded_randrmonitor.so
 %{_kde_libdir}/kde4/kded_statusnotifierwatcher.so
 %{_kde_libdir}/kde4/keyboard_layout_widget.so
 %{_kde_libdir}/kde4/kfontviewpart.so
@@ -373,7 +376,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/strigi/strigita_font.so
 %{_kde_applicationsdir}/kfontview.desktop
 %{_kde_applicationsdir}/kmenuedit.desktop
-%{_kde_applicationsdir}/krandrtray.desktop
 %{_kde_applicationsdir}/ksysguard.desktop
 %{_kde_applicationsdir}/systemsettings.desktop
 %{_kde_applicationsdir}/kdesystemsettings.desktop
@@ -476,7 +478,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/kded/khotkeys.desktop
 %{_kde_services}/kded/kwrited.desktop
 %{_kde_services}/kded/ktouchpadenabler.desktop
-%{_kde_services}/kded/randrmonitor.desktop
 %{_kde_services}/kded/statusnotifierwatcher.desktop
 %{_kde_services}/keys.desktop
 %{_kde_services}/kfontviewpart.desktop
@@ -621,7 +622,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/plasma-layout-org.kde.plasma-desktop.desktopIcons.desktop
 %{_kde_services}/plasma-runner-activityrunner.desktop
 %{_kde_services}/powerdevilkeyboardbrightnesscontrolaction.desktop
-%{_kde_services}/randr.desktop
 %{_kde_services}/recentdocuments.desktop
 %{_kde_services}/screensaver.desktop
 %{_kde_services}/settings-accessibility.desktop
@@ -699,6 +699,26 @@ KickOff is the KDE application launcher, or "start menu".
 %{_kde_libdir}/kde4/plasma_applet_simplelauncher.so
 %{_kde_services}/plasma-applet-launcher.desktop
 %{_kde_services}/plasma-applet-simplelauncher.desktop
+
+#------------------------------------------------
+
+%package -n krandr
+Summary:	KDE screen management tools
+Group:		Graphical desktop/KDE
+Requires:	kdebase4-runtime
+Conflicts:	%{name} < 2:4.11.10-4
+
+%description -n krandr
+KDE screen management tools.
+
+%files -n krandr
+%{_kde_bindir}/krandrstartup
+%{_kde_bindir}/krandrtray
+%{_kde_libdir}/kde4/kcm_randr.so
+%{_kde_libdir}/kde4/kded_randrmonitor.so
+%{_kde_applicationsdir}/krandrtray.desktop
+%{_kde_services}/kded/randrmonitor.desktop
+%{_kde_services}/randr.desktop
 
 #------------------------------------------------
 
@@ -1545,6 +1565,7 @@ based on kdebase.
 %patch14 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 %patch26 -p1
 %patch27 -p1
 %patch50 -p1
@@ -1558,7 +1579,10 @@ rm -fr kdm/kfrontend libs/kdm
 tar xf %{SOURCE6}
 
 %build
-%cmake_kde4 -DKDE4_XDMCP:BOOL=ON -DKWIN_BUILD_WITH_OPENGLES=ON
+%cmake_kde4 \
+	-DBUILD_KCM_RANDR:BOOL=ON \
+	-DKDE4_XDMCP:BOOL=ON \
+	-DKWIN_BUILD_WITH_OPENGLES=ON
 %make
 
 %install
@@ -1650,6 +1674,14 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Jul 01 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.10-4
+- Enable krandr and move krandr to separate package
+- Adjust startkde scripts to work without krandr
+
+* Tue Jul 01 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.10-3
+- Make krandr build optional and disable it
+- Require kscreen when krandr is not built
+
 * Thu Jun 12 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.10-1
 - New version 4.11.10
 - Drop hide-trash patch because of OpenMandriva bug #770
