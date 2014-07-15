@@ -13,8 +13,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.10
-Release:	4
+Version:	4.11.11
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1674,6 +1674,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Tue Jul 15 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-1
+- New version 4.11.11
+
 * Tue Jul 01 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.10-4
 - Enable krandr and move krandr to separate package
 - Adjust startkde scripts to work without krandr
