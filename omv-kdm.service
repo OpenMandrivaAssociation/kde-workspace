@@ -6,7 +6,7 @@ After=livesys-late.service systemd-user-sessions.service
 # avoid any races around that.
 # Do not stop plymouth, it is done in prefdm if required (or left to the dm)
 Conflicts=getty@tty7.service
-After=systemd-user-sessions.service getty@tty7.service plymouth-quit.service
+After=systemd-user-sessions.service getty@tty7.service
 
 [Service]
 ExecStart=/usr/bin/kdm -nodaemon
