@@ -74,13 +74,22 @@ Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
-Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
+# (tpg) updated from Fedora
+Patch104:	kde-workspace-4.11.1-kdm_plymouth081.patch
 Patch106:	kdebase-workspace-4.11.0-no-hal.patch
+# (tpg) from Fedora - make use of systemd multiseat
+Patch107:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
 
 # Backports
 
 # Trunk
 # Testing
+# (tpg) needed for patch 107
+BuildRequires:	pkgconfig(libsystemd-journal)
+BuildRequires:	pkgconfig(libsystemd-daemon)
+BuildRequires:	pkgconfig(libsystemd-login)
+BuildRequires:	pkgconfig(libsystemd-id128)
+
 
 BuildRequires:	boost-devel
 BuildRequires:	kdelibs4-devel
@@ -1573,6 +1582,7 @@ based on kdebase.
 %patch101 -p1
 %patch104 -p1
 %patch106 -p1
+%patch107 -p1
 
 rm -fr kdm/kfrontend libs/kdm
 
