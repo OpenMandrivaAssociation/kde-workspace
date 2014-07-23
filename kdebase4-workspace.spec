@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	1
+Release:	3
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -74,14 +74,20 @@ Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
-Patch104:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
-Patch106:	kdebase-workspace-4.11.0-no-hal.patch
+# (tpg) updated from Fedora
+Patch104:	kde-workspace-4.11.1-kdm_plymouth081.patch
+# (tpg) from Fedora - make use of systemd multiseat
+Patch105:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
+# older Fedora patch, let's keep it for Rosa
+Patch106:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
+Patch107:	kdebase-workspace-4.11.0-no-hal.patch
 
-# Backports
-
-# Trunk
-# Testing
-
+BuildRequires:	automoc4
+BuildRequires:	bdftopcf
+BuildRequires:	imake
+BuildRequires:	libxml2-utils
+BuildRequires:	qt4-qtdbus
+BuildRequires:	xrdb
 BuildRequires:	boost-devel
 BuildRequires:	kdelibs4-devel
 BuildRequires:	kdepimlibs4-devel
@@ -92,12 +98,6 @@ BuildRequires:	pam-devel
 BuildRequires:	python-kde4-devel
 BuildRequires:	prison-devel
 BuildRequires:	sasl-devel
-BuildRequires:	automoc4
-BuildRequires:	bdftopcf
-BuildRequires:	imake
-BuildRequires:	libxml2-utils
-BuildRequires:	qt4-qtdbus
-BuildRequires:	xrdb
 BuildRequires:	pkgconfig(avahi-compat-libdns_sd)
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(bluez)
@@ -111,6 +111,12 @@ BuildRequires:	pkgconfig(libkactivities)
 BuildRequires:	pkgconfig(libpci)
 BuildRequires:	pkgconfig(libqalculate)
 BuildRequires:	pkgconfig(libraw1394)
+# (tpg) needed for patch 107
+BuildRequires:	pkgconfig(libsystemd-daemon)
+BuildRequires:	pkgconfig(libsystemd-id128)
+BuildRequires:	pkgconfig(libsystemd-journal)
+BuildRequires:	pkgconfig(libsystemd-login)
+
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(libxklavier)
 BuildRequires:	pkgconfig(lua)
@@ -1571,8 +1577,17 @@ based on kdebase.
 %patch50 -p1
 %patch100 -p1
 %patch101 -p1
+
+%if %{disttag} == "omv"
+# OpenMandriva Plymouth and KDM patches
 %patch104 -p1
+%patch105 -p1
+%else
+# ROSA Plymouth and KDM patches
 %patch106 -p1
+%endif
+
+%patch107 -p1
 
 rm -fr kdm/kfrontend libs/kdm
 
@@ -1674,6 +1689,16 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Jul 23 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-3
+- Use new kdm patches from Fedora only for OpenMandriva
+- Keep older kdm_plymouth patch for Rosa
+
+* Wed Jul 23 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-2
+- Update kdm_plymouth patch from Fedora
+- Add kdm-logind-multiseat patch from Fedora
+- Add systemd-ralated BuildRequires
+- Disable LD_BIND_NOW for omv-startkde
+
 * Tue Jul 15 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-1
 - New version 4.11.11
 
