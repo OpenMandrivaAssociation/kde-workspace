@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -76,9 +76,11 @@ Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 # (tpg) updated from Fedora
 Patch104:	kde-workspace-4.11.1-kdm_plymouth081.patch
-Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 # (tpg) from Fedora - make use of systemd multiseat
-Patch107:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
+Patch105:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
+# older Fedora patch, let's keep it for Rosa
+Patch106:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
+Patch107:	kdebase-workspace-4.11.0-no-hal.patch
 
 BuildRequires:	automoc4
 BuildRequires:	bdftopcf
@@ -1575,8 +1577,16 @@ based on kdebase.
 %patch50 -p1
 %patch100 -p1
 %patch101 -p1
+
+%if %{disttag} == "omv"
+# OpenMandriva Plymouth and KDM patches
 %patch104 -p1
+%patch105 -p1
+%else
+# ROSA Plymouth and KDM patches
 %patch106 -p1
+%endif
+
 %patch107 -p1
 
 rm -fr kdm/kfrontend libs/kdm
@@ -1679,6 +1689,10 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Jul 23 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-3
+- Use new kdm patches from Fedora only for OpenMandriva
+- Keep older kdm_plymouth patch for Rosa
+
 * Wed Jul 23 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-2
 - Update kdm_plymouth patch from Fedora
 - Add kdm-logind-multiseat patch from Fedora
