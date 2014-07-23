@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -80,17 +80,12 @@ Patch106:	kdebase-workspace-4.11.0-no-hal.patch
 # (tpg) from Fedora - make use of systemd multiseat
 Patch107:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
 
-# Backports
-
-# Trunk
-# Testing
-# (tpg) needed for patch 107
-BuildRequires:	pkgconfig(libsystemd-journal)
-BuildRequires:	pkgconfig(libsystemd-daemon)
-BuildRequires:	pkgconfig(libsystemd-login)
-BuildRequires:	pkgconfig(libsystemd-id128)
-
-
+BuildRequires:	automoc4
+BuildRequires:	bdftopcf
+BuildRequires:	imake
+BuildRequires:	libxml2-utils
+BuildRequires:	qt4-qtdbus
+BuildRequires:	xrdb
 BuildRequires:	boost-devel
 BuildRequires:	kdelibs4-devel
 BuildRequires:	kdepimlibs4-devel
@@ -101,12 +96,6 @@ BuildRequires:	pam-devel
 BuildRequires:	python-kde4-devel
 BuildRequires:	prison-devel
 BuildRequires:	sasl-devel
-BuildRequires:	automoc4
-BuildRequires:	bdftopcf
-BuildRequires:	imake
-BuildRequires:	libxml2-utils
-BuildRequires:	qt4-qtdbus
-BuildRequires:	xrdb
 BuildRequires:	pkgconfig(avahi-compat-libdns_sd)
 BuildRequires:	pkgconfig(avahi-client)
 BuildRequires:	pkgconfig(bluez)
@@ -120,6 +109,12 @@ BuildRequires:	pkgconfig(libkactivities)
 BuildRequires:	pkgconfig(libpci)
 BuildRequires:	pkgconfig(libqalculate)
 BuildRequires:	pkgconfig(libraw1394)
+# (tpg) needed for patch 107
+BuildRequires:	pkgconfig(libsystemd-daemon)
+BuildRequires:	pkgconfig(libsystemd-id128)
+BuildRequires:	pkgconfig(libsystemd-journal)
+BuildRequires:	pkgconfig(libsystemd-login)
+
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(libxklavier)
 BuildRequires:	pkgconfig(lua)
@@ -1684,6 +1679,12 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Jul 23 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-2
+- Update kdm_plymouth patch from Fedora
+- Add kdm-logind-multiseat patch from Fedora
+- Add systemd-ralated BuildRequires
+- Disable LD_BIND_NOW for omv-startkde
+
 * Tue Jul 15 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-1
 - New version 4.11.11
 
