@@ -1189,7 +1189,6 @@ Plasma Calendar applet.
 Summary:	KDE power management applet
 Group:		Graphical desktop/KDE
 Requires:	kdebase4-runtime
-Requires:	upower
 Provides:	plasma-krunner
 Provides:	powerdevil = %{EVRD}
 
