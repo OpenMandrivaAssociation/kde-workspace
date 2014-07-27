@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1688,6 +1688,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Sun Jul 27 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-4
+- Remove requires on upower, as kde talks directly to systemd
+
 * Wed Jul 23 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-3
 - Use new kdm patches from Fedora only for OpenMandriva
 - Keep older kdm_plymouth patch for Rosa
