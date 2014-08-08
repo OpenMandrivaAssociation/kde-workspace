@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -135,6 +135,7 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xtst)
 Requires:	desktop-common-data
 Requires:	kdebase4-runtime
+Requires:	upower
 Requires:	kde4-windeco-dekorator
 Requires:	mandriva-kde-translation
 Requires:	qt4-qtdbus
@@ -1688,6 +1689,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Fri Aug 08 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-5
+- Revert 0b20110486 as upower is still needed
+
 * Sun Jul 27 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-4
 - Remove requires on upower, as kde talks directly to systemd
 
