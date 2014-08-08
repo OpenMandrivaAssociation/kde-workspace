@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -135,6 +135,7 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xtst)
 Requires:	desktop-common-data
 Requires:	kdebase4-runtime
+Requires:	upower
 Requires:	kde4-windeco-dekorator
 Requires:	mandriva-kde-translation
 Requires:	qt4-qtdbus
