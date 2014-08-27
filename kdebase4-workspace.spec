@@ -135,7 +135,6 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xtst)
 Requires:	desktop-common-data
 Requires:	kdebase4-runtime
-Requires:	upower
 Requires:	kde4-windeco-dekorator
 Requires:	mandriva-kde-translation
 Requires:	qt4-qtdbus
@@ -1190,6 +1189,7 @@ Plasma Calendar applet.
 Summary:	KDE power management applet
 Group:		Graphical desktop/KDE
 Requires:	kdebase4-runtime
+Requires:	upower
 Provides:	plasma-krunner
 Provides:	powerdevil = %{EVRD}
 
