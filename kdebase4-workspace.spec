@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -61,6 +61,10 @@ Patch12:	kde-workspace-4.11.4-screenlocker-handle-fake-focus.patch
 Patch13:	kde-workspace-4.11.4-screenlocker-background.patch
 # Don't add activities and launchers to standard panel by default
 Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
+# Load session files from /usr/share/xsessions by default
+Patch15:	kde-workspace-4.11.11-xsessions.patch
+# Adjust session name in kde-plasma.desktop
+Patch16:	kde-workspace-4.11.11-desktop-session.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch20:	kde-workspace-4.10.2-BUILD_KCM_RANDR.patch
@@ -173,7 +177,6 @@ Obsoletes:	%{_lib}kwinnvidiahack4 < 2:4.11.0
 This package contains the KDE 4 application workspace components.
 
 %files
-%{_sysconfdir}/X11/wmsession.d/*
 %{_sysconfdir}/profile.d/70kde4.sh
 %if %{with_printer_applet}
 %{_kde_bindir}/printer-applet
@@ -668,6 +671,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
+%{_datadir}/xsessions/kde-plasma.desktop
 
 #------------------------------------------------
 
@@ -1551,6 +1555,10 @@ based on kdebase.
 
 %prep
 %setup -q -n kde-workspace-%{version}
+
+rm -fr kdm/kfrontend libs/kdm
+tar xf %{SOURCE6}
+
 %patch0 -p1
 
 %if %{with_drakclock}
@@ -1569,6 +1577,8 @@ based on kdebase.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
+%patch16 -p1
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
@@ -1589,10 +1599,6 @@ based on kdebase.
 
 %patch107 -p1
 
-rm -fr kdm/kfrontend libs/kdm
-
-tar xf %{SOURCE6}
-
 %build
 %cmake_kde4 \
 	-DBUILD_KCM_RANDR:BOOL=ON \
@@ -1610,20 +1616,13 @@ install -m 0644 %{SOURCE8} %{buildroot}%{_kde_services}/kcm_drakclock.desktop
 # Remove it because all it does is adding Activities widget to existing panel
 rm -f %{buildroot}%{_kde_appsdir}/plasma-desktop/updates/addShowActivitiesManagerPlasmoid.js
 
+install -d -m 0755 %{buildroot}%{_datadir}/xsessions/
+install -m 0644 %{buildroot}%{_kde_appsdir}/kdm/sessions/kde-plasma.desktop %{buildroot}%{_datadir}/xsessions/kde-plasma.desktop
+
 rm -fr %{buildroot}%{_kde_appsdir}/kdm/sessions
 rm -fr %{buildroot}%{_kde_configdir}/kdm/X*
 rm -fr %{buildroot}%{_kde_configdir}/kdm/backgroundrc
 rm -fr %{buildroot}%{_kde_configdir}/kdm/kdmrc
-
-install -d -m 0775 %{buildroot}/etc/X11/wmsession.d/
-cat << EOF > %{buildroot}/etc/X11/wmsession.d/01KDE
-NAME=KDE4
-ICON=kde-wmsession.xpm
-DESC=The K Desktop Environment
-EXEC=%{_kde_bindir}/startkde
-SCRIPT:
-exec %{_kde_bindir}/startkde
-EOF
 
 # Env entry for start kde4
 install -d -m 0755 %{buildroot}/etc/profile.d
@@ -1689,11 +1688,10 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
-* Fri Aug 08 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-5
-- Revert 0b20110486 as upower is still needed
-
-* Sun Jul 27 2014 Tomasz Paweł Gajc <tpgxyz@gmail.com> 2:4.11.11-4
-- Remove requires on upower, as kde talks directly to systemd
+* Thu Aug 28 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-6
+- Add xsessions patch to load files from /usr/share/xsessions by default
+- Add desktop-session patch to adjust session name in kde-plasma.desktop
+- Use kde-plasma.desktop from /usr/share/xsessions as session file
 
 * Wed Jul 23 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-3
 - Use new kdm patches from Fedora only for OpenMandriva
