@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	6
+Release:	7
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -35,6 +35,7 @@ Source9:	omv-startkde
 Source10:	rosa-startkde
 Source11:	omv-kdm.service
 Source12:	rosa-kdm.service
+Source13:	kde4-default.desktop
 Source20:	%{name}.rpmlintrc
 Patch0:		kdebase-workspace-4.5.76-mdv-adopt-ldetect-path.patch
 # Use drakclock for time settings, patch from Mageia
@@ -172,6 +173,7 @@ Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrol4 < 2:4.11.0
 Obsoletes:	%{_lib}kwinnvidiahack4 < 2:4.11.0
+Requires(post,preun):	update-alternatives
 
 %description
 This package contains the KDE 4 application workspace components.
@@ -672,6 +674,15 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
 %{_datadir}/xsessions/kde-plasma.desktop
+%{_datadir}/custom-xsessions/kde4-default.desktop
+
+%post
+%{_sbindir}/update-alternatives --install %{_datadir}/xsessions/default.desktop default.desktop %{_datadir}/custom-xsessions/kde4-default.desktop 10
+
+%preun
+if [ $1 -eq 0 ]; then
+    %{_sbindir}/update-alternatives --remove default.desktop %{_datadir}/custom-xsessions/kde4-default.desktop
+fi
 
 #------------------------------------------------
 
@@ -682,10 +693,9 @@ Requires:	kdebase4-runtime
 Conflicts:	%{name} < 2:4.7.97
 
 %description -n klipper
-Klipper is a clipboard manager for the KDE interface. 
-It allows users of Unix-like operating systems running 
-the KDE desktop environment to access a history of X 
-Selections, any item of which can be reselected for pasting. 
+Klipper is a clipboard manager for the KDE interface. It allows users of
+Unix-like operating systems running the KDE desktop environment to access
+a history of X Selections, any item of which can be reselected for pasting.
 
 %files -n klipper
 %{_kde_bindir}/klipper
@@ -1618,6 +1628,8 @@ rm -f %{buildroot}%{_kde_appsdir}/plasma-desktop/updates/addShowActivitiesManage
 
 install -d -m 0755 %{buildroot}%{_datadir}/xsessions/
 install -m 0644 %{buildroot}%{_kde_appsdir}/kdm/sessions/kde-plasma.desktop %{buildroot}%{_datadir}/xsessions/kde-plasma.desktop
+install -d -m 0755 %{buildroot}%{_datadir}/custom-xsessions/
+install -m 0644 %{SOURCE13} %{buildroot}%{_datadir}/custom-xsessions/kde4-default.desktop
 
 rm -fr %{buildroot}%{_kde_appsdir}/kdm/sessions
 rm -fr %{buildroot}%{_kde_configdir}/kdm/X*
@@ -1688,6 +1700,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Wed Sep 03 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-7
+- Add default session file via alternatives
+
 * Thu Aug 28 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-6
 - Add xsessions patch to load files from /usr/share/xsessions by default
 - Add desktop-session patch to adjust session name in kde-plasma.desktop
