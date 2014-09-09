@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	4
+Release:	4.1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -74,8 +74,8 @@ Patch27:	kde-workspace-4.11.6-dbus-wallpaper.patch
 Patch50:	kde-workspace-4.11.3-decorations.patch
 Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
-# (tpg) updated from Fedora
-Patch104:	kde-workspace-4.11.1-kdm_plymouth081.patch
+# (tpg) use original patch https://bugs.kde.org/show_bug.cgi?id=206089
+Patch104:	kdm-plymouth.patch
 # (tpg) from Fedora - make use of systemd multiseat
 Patch105:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
 # older Fedora patch, let's keep it for Rosa
