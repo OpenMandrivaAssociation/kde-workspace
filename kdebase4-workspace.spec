@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.11
-Release:	4.2
+Release:	4.3
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -64,6 +64,7 @@ Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch20:	kde-workspace-4.10.2-BUILD_KCM_RANDR.patch
+Patch21:	kde-workspace-4.11.10-kwin-intel-kde336589.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # Make it possible to set wallpaper via dbus
 # See https://bugs.kde.org/show_bug.cgi?id=217950
@@ -1573,6 +1574,7 @@ based on kdebase.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 %patch26 -p1
 %patch27 -p1
 %patch50 -p1
