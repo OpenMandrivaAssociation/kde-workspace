@@ -13,8 +13,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.11
-Release:	10
+Version:	4.11.12
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1703,6 +1703,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Mon Sep 29 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-1
+- New version 4.11.12
+
 * Wed Sep 17 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-10
 - Add kwin-intel-kde336589 patch to fix fullscreen issue with Intel video
 
