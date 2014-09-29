@@ -1394,7 +1394,8 @@ Group:		Graphical desktop/KDE
 Requires:	kdebase4-runtime
 Requires:	kde4-config-file
 Provides:	dm
-Requires:	kdmfprintplugin
+# Broken for now
+#Requires:	kdmfprintplugin
 
 %description -n kdm
 KDE Desktop Login Manager.
@@ -1705,6 +1706,7 @@ done
 %changelog
 * Mon Sep 29 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-1
 - New version 4.11.12
+- Don't require kdmfprintplugin because it's broken
 
 * Wed Sep 17 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-10
 - Add kwin-intel-kde336589 patch to fix fullscreen issue with Intel video
