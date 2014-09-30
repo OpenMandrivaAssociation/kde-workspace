@@ -69,7 +69,6 @@ Patch16:	kde-workspace-4.11.11-desktop-session.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch20:	kde-workspace-4.10.2-BUILD_KCM_RANDR.patch
-Patch21:	kde-workspace-4.11.10-kwin-intel-kde336589.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # Make it possible to set wallpaper via dbus
 # See https://bugs.kde.org/show_bug.cgi?id=217950
@@ -1595,7 +1594,6 @@ tar xf %{SOURCE6}
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
 %patch26 -p1
 %patch27 -p1
 %patch50 -p1
@@ -1707,6 +1705,7 @@ done
 * Mon Sep 29 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-1
 - New version 4.11.12
 - Don't require kdmfprintplugin because it's broken
+- Drop kwin-intel-kde336589 patch (fixed upsteam)
 
 * Wed Sep 17 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.11-10
 - Add kwin-intel-kde336589 patch to fix fullscreen issue with Intel video
