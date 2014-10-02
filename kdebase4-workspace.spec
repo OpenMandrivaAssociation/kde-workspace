@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.12
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1702,6 +1702,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Thu Oct 02 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-2
+- Adjust startkde script to delete baloofilerc config from KDE 4.13
+
 * Mon Sep 29 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-1
 - New version 4.11.12
 - Don't require kdmfprintplugin because it's broken
