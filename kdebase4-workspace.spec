@@ -164,7 +164,7 @@ Requires:	kscreen
 %else
 Requires:	krandr
 %endif
-%if %{disttag} == "omv"
+%if "%{disttag}" == "omv"
 Requires:	homerun
 %else
 Suggests:	rosapanel
@@ -1600,7 +1600,7 @@ tar xf %{SOURCE6}
 %patch100 -p1
 %patch101 -p1
 
-%if %{disttag} == "omv"
+%if "%{disttag}" == "omv"
 # OpenMandriva Plymouth and KDM patches
 %patch104 -p1
 %patch105 -p1
@@ -1654,7 +1654,7 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/pam.d/
 install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/kde
 install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pam.d/kde-np
 
-%if %{disttag} == "omv"
+%if "%{disttag}" == "omv"
 # OpenMandriva startkde
 install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
 %else
@@ -1669,7 +1669,7 @@ sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_
 # systemd implimentation
 install -d -m 0775 %{buildroot}%{_unitdir}
 # It's different in OMV and ROSA
-%if %{disttag} == "omv"
+%if "%{disttag}" == "omv"
 install -m 0644 %{SOURCE11} %{buildroot}%{_unitdir}/kdm.service
 %else
 install -m 0644 %{SOURCE12} %{buildroot}%{_unitdir}/kdm.service
