@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.13
-Release:	1
+Release:	3
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -130,7 +130,7 @@ BuildRequires:	pkgconfig(lua)
 BuildRequires:	pkgconfig(NetworkManager)
 %endif
 BuildRequires:	pkgconfig(python)
-BuildRequires:	pkgconfig(qimageblitz)
+BuildRequires:	pkgconfig(qimageblitz) < 5.0.0
 BuildRequires:	pkgconfig(smbclient)
 BuildRequires:	pkgconfig(xcb-image)
 BuildRequires:	pkgconfig(xcb-keysyms)
@@ -1702,6 +1702,9 @@ for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
 done
 
 %changelog
+* Fri Oct 24 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-3
+- Use pkgconfig(qimageblitz) < 5.0.0 to force Qt4 version
+
 * Wed Oct 15 2014 Andrey Bondrov <andrey.bondrov@rosalab.ru> 2:4.11.12-1
 - New version 4.11.13
 
