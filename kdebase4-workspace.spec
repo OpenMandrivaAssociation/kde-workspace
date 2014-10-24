@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.13
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1612,6 +1612,8 @@ tar xf %{SOURCE6}
 %patch107 -p1
 
 %build
+%global optflags %{optflags} -g
+
 %cmake_kde4 \
 	-DBUILD_KCM_RANDR:BOOL=ON \
 	-DKDE4_XDMCP:BOOL=ON \
