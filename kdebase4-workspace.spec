@@ -1612,7 +1612,7 @@ tar xf %{SOURCE6}
 %endif
 
 %patch107 -p1
-%patch108 -p1
+#% patch108 -p1
 
 %build
 %cmake_kde4 \
