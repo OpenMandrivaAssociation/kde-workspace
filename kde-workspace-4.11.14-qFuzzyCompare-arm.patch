@@ -1,5 +1,5 @@
 diff --git a/kwin/effects/blur/blur.cpp b/kwin/effects/blur/blur.cpp
-index 9854930..446418d 100644
+index 9854930..d30db31 100644
 --- a/kwin/effects/blur/blur.cpp
 +++ b/kwin/effects/blur/blur.cpp
 @@ -387,7 +387,7 @@ bool BlurEffect::shouldBlur(const EffectWindow *w, int mask, const WindowPaintDa
@@ -7,7 +7,7 @@ index 9854930..446418d 100644
          return false;
  
 -    bool scaled = !qFuzzyCompare(data.xScale(), 1.0) && !qFuzzyCompare(data.yScale(), 1.0);
-+    bool scaled = !qFuzzyCompare(data.xScale(), (1.0)) && !qFuzzyCompare(data.yScale(), qreal(1.0));
++    bool scaled = !qFuzzyCompare(data.xScale(), qreal((1.0))) && !qFuzzyCompare(data.yScale(), qreal(1.0));
      bool translated = data.xTranslation() || data.yTranslation();
  
      if (scaled || ((translated || (mask & PAINT_WINDOW_TRANSFORMED)) && !w->data(WindowForceBlurRole).toBool()))
