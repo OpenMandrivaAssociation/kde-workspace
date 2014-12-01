@@ -1,0 +1,13 @@
+diff --git a/kwin/scene_xrender.cpp b/kwin/scene_xrender.cpp
+index fb53288..62e5826 100644
+--- a/kwin/scene_xrender.cpp
++++ b/kwin/scene_xrender.cpp
+@@ -392,7 +392,7 @@ void SceneXrender::Window::performPaint(int mask, QRegion region, WindowPaintDat
+ {
+     setTransformedShape(QRegion());  // maybe nothing will be painted
+     // check if there is something to paint
+-    bool opaque = isOpaque() && qFuzzyCompare(data.opacity(), 1.0);
++    bool opaque = isOpaque() && qFuzzyCompare(data.opacity(), qreal(1.0));
+     /* HACK: It seems this causes painting glitches, disable temporarily
+     if (( mask & PAINT_WINDOW_OPAQUE ) ^ ( mask & PAINT_WINDOW_TRANSLUCENT ))
+         { // We are only painting either opaque OR translucent windows, not both
