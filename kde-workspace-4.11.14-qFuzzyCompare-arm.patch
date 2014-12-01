@@ -1,5 +1,18 @@
+diff --git a/kwin/effects/blur/blur.cpp b/kwin/effects/blur/blur.cpp
+index 9854930..446418d 100644
+--- a/kwin/effects/blur/blur.cpp
++++ b/kwin/effects/blur/blur.cpp
+@@ -387,7 +387,7 @@ bool BlurEffect::shouldBlur(const EffectWindow *w, int mask, const WindowPaintDa
+     if (w->isDesktop())
+         return false;
+ 
+-    bool scaled = !qFuzzyCompare(data.xScale(), 1.0) && !qFuzzyCompare(data.yScale(), 1.0);
++    bool scaled = !qFuzzyCompare(data.xScale(), (1.0)) && !qFuzzyCompare(data.yScale(), qreal(1.0));
+     bool translated = data.xTranslation() || data.yTranslation();
+ 
+     if (scaled || ((translated || (mask & PAINT_WINDOW_TRANSFORMED)) && !w->data(WindowForceBlurRole).toBool()))
 diff --git a/kwin/scene_xrender.cpp b/kwin/scene_xrender.cpp
-index fb53288..66ccff2 100644
+index fb53288..c4e8d14 100644
 --- a/kwin/scene_xrender.cpp
 +++ b/kwin/scene_xrender.cpp
 @@ -392,7 +392,7 @@ void SceneXrender::Window::performPaint(int mask, QRegion region, WindowPaintDat
@@ -16,7 +29,7 @@ index fb53288..66ccff2 100644
          yscale *= screen_paint.yScale();
      }
 -    if (!qFuzzyCompare(xscale, 1.0) || !qFuzzyCompare(yscale, 1.0)) {
-+    if (!qFuzzyCompare(xscale, 1.0) || !qFuzzyCompare(yscale, qreal(1.0))) {
++    if (!qFuzzyCompare(xscale, qreal(1.0)) || !qFuzzyCompare(yscale, qreal(1.0))) {
          scaled = true;
          xform.matrix11 = DOUBLE_TO_FIXED(1.0 / xscale);
          xform.matrix22 = DOUBLE_TO_FIXED(1.0 / yscale);
