@@ -1379,7 +1379,7 @@ Group:		Graphical desktop/KDE
 Requires:	kdebase4-runtime
 Requires:	kde4-config-file
 Provides:	dm
-Requires:	kdmfprintplugin
+#Requires:	kdmfprintplugin
 
 %description -n kdm
 KDE Desktop Login Manager.
