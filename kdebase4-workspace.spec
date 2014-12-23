@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.14
-Release:	1.1
+Release:	1.2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -734,7 +734,6 @@ KDE screen management tools.
 Summary:	Support for ruby plasma applets
 Group:		Graphical desktop/KDE
 Requires:	kdebase4-runtime
-Requires:	ruby-kde4
 Conflicts:	%{name} < 2:4.5.80
 
 %description -n plasma-scriptengine-ruby
