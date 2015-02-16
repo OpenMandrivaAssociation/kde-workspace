@@ -13,8 +13,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
-Version:	4.11.14
-Release:	3
+Version:	4.11.15
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -681,10 +681,14 @@ This package contains the KDE 4 application workspace components.
 
 %post
 %{_sbindir}/update-alternatives --install %{_datadir}/xsessions/default.desktop default.desktop %{_datadir}/custom-xsessions/kde4-default.desktop 10
+%{_sbindir}/update-alternatives --install %{_kde_autostart}/krunner-alt.desktop krunner.desktop %{_kde_appsdir}/plasma/autostart/krunner.desktop 10
+%{_sbindir}/update-alternatives --install %{_kde_autostart}/plasma-desktop-alt.desktop plasma-desktop.desktop %{_kde_appsdir}/plasma/autostart/plasma-desktop.desktop 10
 
 %preun
 if [ $1 -eq 0 ]; then
     %{_sbindir}/update-alternatives --remove default.desktop %{_datadir}/custom-xsessions/kde4-default.desktop
+    %{_sbindir}/update-alternatives --remove krunner.desktop %{_kde_appsdir}/plasma/autostart/krunner.desktop
+    %{_sbindir}/update-alternatives --remove plasma-desktop.desktop %{_kde_appsdir}/plasma/autostart/plasma-desktop.desktop
 fi
 
 #------------------------------------------------
@@ -1698,6 +1702,11 @@ mkdir -p -m770 %{buildroot}%{_localstatedir}/lib/kdm
 
 sed -i 's!preferences-other!preferences-app-run!g' \
   %{buildroot}%{_kde_services}/settings-startup-and-shutdown.desktop
+
+# Provide these files via alternatives to avoid file conflicts with BE::Shell
+mkdir -p %{buildroot}%{_kde_appsdir}/plasma/autostart
+mv %{buildroot}%{_kde_autostart}/krunner.desktop %{buildroot}%{_kde_appsdir}/plasma/autostart/
+mv %{buildroot}%{_kde_autostart}/plasma-desktop.desktop %{buildroot}%{_kde_appsdir}/plasma/autostart/
 
 %check
 for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
