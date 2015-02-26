@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kdebase4-workspace
 Version:	4.11.15
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1407,17 +1407,11 @@ KDE Desktop Login Manager.
 
 %post -n kdm
 chksession -K
-# todo - use native %systemd_post
-if [ ! -e /etc/systemd/system/display-manager.service ] ; then
-  /bin/systemctl enable kdm.service 2>&1 || :
-fi
 
 %preun -n kdm
-%systemd_preun kdm.service
 
 %postun -n kdm
 chksession -K
-%systemd_postun kdm.service
 
 %files -n kdm
 %config(noreplace) %{_sysconfdir}/pam.d/kde
