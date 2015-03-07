@@ -1408,8 +1408,6 @@ KDE Desktop Login Manager.
 %post -n kdm
 chksession -K
 
-%preun -n kdm
-
 %postun -n kdm
 chksession -K
 
