@@ -12,7 +12,7 @@
 %bcond_without kscreen
 
 Summary:	KDE 4 application workspace components
-Name:		kdebase4-workspace
+Name:		kde-workspace
 Version:	4.11.17
 Release:	1
 Epoch:		2
@@ -25,7 +25,7 @@ Url:		http://www.kde.org
 %else
 %define ftpdir stable
 %endif
-Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/kde-workspace-%{version}.tar.xz
+Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/%{name}-%{version}.tar.xz
 Source1:	kde.pam
 Source2:	kde-np.pam
 Source4:	systemsettings.desktop
@@ -142,7 +142,7 @@ BuildRequires:	pkgconfig(xcursor)
 BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xtst)
 Requires:	desktop-common-data
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	kde4-windeco-dekorator
 Requires:	mandriva-kde-translation
 Requires:	qt4-qtdbus
@@ -696,7 +696,7 @@ fi
 %package -n klipper
 Summary:	Clipboard manager for KDE
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Conflicts:	%{name} < 2:4.7.97
 
 %description -n klipper
@@ -714,7 +714,7 @@ a history of X Selections, any item of which can be reselected for pasting.
 %package -n kickoff
 Summary:	KDE application launcher
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Conflicts:	%{name} < 2:4.8.97-2
 
 %description -n kickoff
@@ -732,7 +732,7 @@ KickOff is the KDE application launcher, or "start menu".
 %package -n krandr
 Summary:	KDE screen management tools
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Conflicts:	%{name} < 2:4.11.10-4
 
 %description -n krandr
@@ -752,7 +752,7 @@ KDE screen management tools.
 %package -n plasma-scriptengine-ruby
 Summary:	Support for ruby plasma applets
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	ruby-kde4
 Conflicts:	%{name} < 2:4.5.80
 
@@ -769,7 +769,7 @@ This package allow kde4 to use plasma applets written in ruby.
 %package -n plasma-scriptengine-python
 Summary:	Support for ruby python applets
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	python-kde4
 Conflicts:	%{name} < 2:4.5.80
 
@@ -1194,7 +1194,7 @@ KDE 4 core library.
 %package -n plasma-applet-calendar
 Summary:	Plasma applet calendar
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-calendar
@@ -1209,7 +1209,7 @@ Plasma Calendar applet.
 %package -n plasma-krunner-powerdevil
 Summary:	KDE power management applet
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	upower
 Provides:	plasma-krunner
 Provides:	powerdevil = %{EVRD}
@@ -1286,7 +1286,7 @@ Features:
 %package -n plasma-applet-battery
 Summary:	Simple plasma battery applet
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	plasma-krunner-powerdevil
 Provides:	plasma-applet
 
@@ -1301,7 +1301,7 @@ Simple plasma battery applet.
 %package -n plasma-applet-webbrowser
 Summary:	A simple webbrowser applet
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-webbrowser
@@ -1316,7 +1316,7 @@ A simple webbrowser applet.
 %package -n plasma-applet-system-monitor-temperature
 Summary:	A system temperature monitor
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	hddtemp
 Requires:	lm_sensors
 Provides:	plasma-applet
@@ -1333,7 +1333,7 @@ A system temperature monitor.
 %package -n plasma-applet-system-monitor-net
 Summary:	A network usage monitor
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Provides:	plasma-applet
 
 %description -n plasma-applet-system-monitor-net
@@ -1348,7 +1348,7 @@ A network usage monitor.
 %package -n plasma-applet-system-monitor-hwinfo
 Summary:	Plasma applet that Show hardware informations
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	lm_sensors
 Provides:	plasma-applet
 
@@ -1364,7 +1364,7 @@ Plasma applet that Show hardware informations.
 %package -n plasma-applet-system-monitor-hdd
 Summary:	A hard disk usage monitor
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	lm_sensors
 Provides:	plasma-applet
 
@@ -1380,7 +1380,7 @@ A hard disk usage monitor.
 %package -n plasma-applet-system-monitor-cpu
 Summary:	A CPU usage monitor
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	lm_sensors
 Provides:	plasma-applet
 
@@ -1396,7 +1396,7 @@ A CPU usage monitor.
 %package -n kdm
 Summary:	KDE Desktop Login Manager
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Requires:	kde4-config-file
 Provides:	dm
 # Broken for now
@@ -1449,7 +1449,7 @@ chksession -K
 %package -n kinfocenter
 Summary:	Kinfocenter
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-runtime
+Requires:	kde-runtime
 Provides:	kinfocenter4
 Requires:	ldetect-lst
 
