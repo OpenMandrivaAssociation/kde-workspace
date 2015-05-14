@@ -64,6 +64,7 @@ Patch14:	kde-workspace-4.11.0-default-panel-layout.patch
 Patch18:	kdebase-workspace-4.8.95-startup-sound.patch
 Patch19:	kdebase-workspace-4.2.1-use-mdvicon.patch
 Patch20:	kde-workspace-4.10.2-BUILD_KCM_RANDR.patch
+Patch22:	kde-workspace-4.11.13-fix-translation-strings.patch
 Patch26:	kdebase-workspace-4.11.0-simpleapplet-defaults.patch
 # Make it possible to set wallpaper via dbus
 # See https://bugs.kde.org/show_bug.cgi?id=217950
@@ -1571,6 +1572,7 @@ based on kdebase.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch22 -p1
 %patch26 -p1
 %patch27 -p1
 %patch50 -p1
