@@ -13,7 +13,7 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
-Version:	4.11.17
+Version:	4.11.19
 Release:	1
 Epoch:		2
 License:	GPLv2+
@@ -96,7 +96,7 @@ BuildRequires:	libxml2-utils
 BuildRequires:	qt4-qtdbus
 BuildRequires:	xrdb
 BuildRequires:	boost-devel
-BuildRequires:	kdelibs4-devel
+BuildRequires:	kdelibs4-devel >= 5:4.14.8
 BuildRequires:	kdepimlibs4-devel
 BuildRequires:	ieee1284-devel
 BuildRequires:	lm_sensors-devel
