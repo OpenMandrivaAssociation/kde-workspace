@@ -1,0 +1,106 @@
+diff -ur kde-workspace-4.11.15/doc/kdm/kdmrc-ref.docbook kde-workspace-4.11.15.new/doc/kdm/kdmrc-ref.docbook
+--- kde-workspace-4.11.15/doc/kdm/kdmrc-ref.docbook	2015-01-06 14:37:25.000000000 +0300
++++ kde-workspace-4.11.15.new/doc/kdm/kdmrc-ref.docbook	2015-03-30 07:52:47.386827799 +0300
+@@ -2221,7 +2221,8 @@
+ </para>
+ 
+ <para>
+-In addition to any specified by <option>ExportList</option>,
++In addition to any specified by <option>ExportList</option>
++and locale-related variables,
+ the following environment variables are passed:</para>
+ <variablelist>
+  <varlistentry>
+@@ -2265,7 +2266,8 @@
+ modern systems, many of these tasks are already taken care of by
+ <acronym>PAM</acronym> modules).</para>
+ 
+-<para>In addition to any specified by <option>ExportList</option>,
++<para>In addition to any specified by <option>ExportList</option>
++and locale-related variables,
+ the following environment variables are passed:</para>
+ <variablelist>
+  <varlistentry>
+@@ -2317,7 +2319,8 @@
+ or <literal>custom</literal>, or a string to <command>eval</command> by a
+ Bourne-compatible shell is passed as the first argument.</para>
+ 
+-<para>In addition to any specified by <option>ExportList</option>,
++<para>In addition to any specified by <option>ExportList</option>
++and locale-related variables,
+ the following environment variables are passed:</para>
+ <variablelist>
+  <varlistentry>
+diff -ur kde-workspace-4.11.15/kdm/backend/session.c kde-workspace-4.11.15.new/kdm/backend/session.c
+--- kde-workspace-4.11.15/kdm/backend/session.c	2015-01-06 14:37:25.000000000 +0300
++++ kde-workspace-4.11.15.new/kdm/backend/session.c	2015-03-30 07:56:08.379315047 +0300
+@@ -794,11 +794,35 @@
+     return env;
+ }
+ 
++/*
++ * Extra variables that should be passed to client, Xsetup, and Xstartup
++ */
++static const char *extraExports[] = {
++    /* Locale-related variables that can be defined for the system */
++    "LANG",
++    "LANGUAGE",
++    "LC_CTYPE",
++    "LC_NUMERIC",
++    "LC_TIME",
++    "LC_COLLATE",
++    "LC_MONETARY",
++    "LC_MESSAGES",
++    "LC_PAPER",
++    "LC_NAME",
++    "LC_ADDRESS",
++    "LC_TELEPHONE",
++    "LC_MEASUREMENT",
++    "LC_IDENTIFICATION",
++    0
++};
++
+ char **
+ baseEnv(char **env, const char *user)
+ {
+-    if (!env)
++    if (!env) {
+         env = inheritEnv(0, (const char **)exportList);
++        env = inheritEnv(env, extraExports);
++    }
+ 
+     if (user) {
+         env = setEnv(env, "USER", user);
+diff -ur kde-workspace-4.11.15/kdm/config.def kde-workspace-4.11.15.new/kdm/config.def
+--- kde-workspace-4.11.15/kdm/config.def	2015-01-06 14:37:25.000000000 +0300
++++ kde-workspace-4.11.15.new/kdm/config.def	2015-03-30 07:52:28.394065241 +0300
+@@ -496,7 +496,8 @@
+ </para>
+ 
+ <para>
+-In addition to any specified by <option>ExportList</option>,
++In addition to any specified by <option>ExportList</option>
++and locale-related variables,
+ the following environment variables are passed:</para>
+ <variablelist>
+  <varlistentry>
+@@ -540,7 +541,8 @@
+ modern systems, many of these tasks are already taken care of by
+ <acronym>PAM</acronym> modules).</para>
+ 
+-<para>In addition to any specified by <option>ExportList</option>,
++<para>In addition to any specified by <option>ExportList</option>
++and locale-related variables,
+ the following environment variables are passed:</para>
+ <variablelist>
+  <varlistentry>
+@@ -592,7 +594,8 @@
+ or <literal>custom</literal>, or a string to <command>eval</command> by a
+ Bourne-compatible shell is passed as the first argument.</para>
+ 
+-<para>In addition to any specified by <option>ExportList</option>,
++<para>In addition to any specified by <option>ExportList</option>
++and locale-related variables,
+ the following environment variables are passed:</para>
+ <variablelist>
+  <varlistentry>

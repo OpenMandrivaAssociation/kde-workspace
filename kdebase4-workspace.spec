@@ -82,6 +82,8 @@ Patch105:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
 # older Fedora patch, let's keep it for Rosa
 Patch106:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
 Patch107:	kdebase-workspace-4.11.0-no-hal.patch
+# See http://bugs.rosalinux.ru/show_bug.cgi?id=5189
+Patch108:	kde-workspace-4.11.15-pass-locale-env.patch
 
 BuildRequires:	automoc4
 BuildRequires:	bdftopcf
@@ -1585,6 +1587,7 @@ based on kdebase.
 %endif
 
 %patch107 -p1
+%patch108 -p1
 
 rm -fr kdm/kfrontend libs/kdm
 
