@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.19
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1212,7 +1212,6 @@ Group:		Graphical desktop/KDE
 Requires:	kde-runtime
 Requires:	upower
 Provides:	plasma-krunner
-Provides:	powerdevil = %{EVRD}
 
 %description -n plasma-krunner-powerdevil
 KDE power management applet.
@@ -1495,7 +1494,7 @@ about a computer system.
 Summary:	Devel stuff for kdebase 4
 Group:		Development/KDE and Qt
 Requires:	kde4-macros
-Requires:	kdelibs4-devel
+Requires:	kdelibs-devel
 Requires:	%{libkdecorations} = %{EVRD}
 Requires:	%{libkscreensaver} = %{EVRD}
 Requires:	%{libksgrd} = %{EVRD}
@@ -1523,6 +1522,7 @@ Requires:	%{liboxygenstyle} = %{EVRD}
 Requires:	%{libpowerdevilcore} = %{EVRD}
 Requires:	%{libpowerdevilconfigcommonprivate} = %{EVRD}
 Requires:	%{libpowerdevilui} = %{EVRD}
+%rename		kdebase4-workspace-devel
 
 %description devel
 This package contains header files needed if you wish to build applications
