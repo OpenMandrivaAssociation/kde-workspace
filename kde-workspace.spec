@@ -177,6 +177,7 @@ Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrol4 < 2:4.11.0
 Obsoletes:	%{_lib}kwinnvidiahack4 < 2:4.11.0
 Requires(post,preun):	update-alternatives
+%rename		kdebase4-workspace
 
 %description
 This package contains the KDE 4 application workspace components.
@@ -1247,7 +1248,7 @@ KDE power management applet.
 %package -n plasma-runner-places
 Summary:	Plasma applet places
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-workspace
+Requires:	kde-workspace
 Provides:	plasma-runner
 
 %description -n plasma-runner-places
@@ -1262,7 +1263,7 @@ Plasma runner places.
 %package -n plasma-applet-quicklaunch
 Summary:	Launch your favourite Applications
 Group:		Graphical desktop/KDE
-Requires:	kdebase4-workspace
+Requires:	kde-workspace
 Provides:	plasma-applet
 Obsoletes:	plasma-applet-quicklauncher
 
