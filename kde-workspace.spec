@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.20
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -143,6 +143,7 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xtst)
 Requires:	desktop-common-data
 Requires:	kde-runtime
+Requires:	kde4-integration
 Requires:	kde4-windeco-dekorator
 Requires:	mandriva-kde-translation
 Requires:	qt4-qtdbus
@@ -382,7 +383,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/plasma_toolbox_paneltoolbox.so
 %{_kde_libdir}/kde4/plasma_wallpaper_color.so
 %{_kde_libdir}/kde4/plasma_wallpaper_image.so
-%{_kde_libdir}/kde4/plugins/gui_platform/libkde.so
 %{_kde_libdir}/kde4/plugins/styles/oxygen.so
 %{_kde_libdir}/kde4/powerdevilkeyboardbrightnesscontrolaction_config.so
 %{_kde_libdir}/kde4/ion_debianweather.so
@@ -1390,6 +1390,19 @@ A CPU usage monitor.
 %files -n plasma-applet-system-monitor-cpu
 %{_kde_libdir}/kde4/plasma_applet_sm_cpu.so
 %{_kde_services}/plasma-applet-sm_cpu.desktop
+
+#-----------------------------------------------------------------------------
+
+%package -n kde4-integration	
+Summary:	KDE4 integration plugin
+Group:		Graphical desktop/KDE
+Conflicts:	kde-workspace < 2:4.11.20	
+
+%description -n kde4-integration	
+This plugin provides integration of pure Qt4 applications with KDE4 Workspace.
+
+%files -n kde4-integration
+%{_kde_libdir}/kde4/plugins/gui_platform/libkde.so
 
 #-----------------------------------------------------------------------------
 
