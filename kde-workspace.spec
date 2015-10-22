@@ -1393,12 +1393,12 @@ A CPU usage monitor.
 
 #-----------------------------------------------------------------------------
 
-%package -n kde4-integration	
+%package -n kde4-integration
 Summary:	KDE4 integration plugin
 Group:		Graphical desktop/KDE
-Conflicts:	kde-workspace < 2:4.11.20	
+Conflicts:	kde-workspace < 2:4.11.20
 
-%description -n kde4-integration	
+%description -n kde4-integration
 This plugin provides integration of pure Qt4 applications with KDE4 Workspace.
 
 %files -n kde4-integration
@@ -1625,7 +1625,7 @@ tar xf %{SOURCE6}
 %patch108 -p1
 
 %build
-%cmake_kde4 \
+%cmake_kde4 -Wno-dev \
 	-DBUILD_KCM_RANDR:BOOL=ON \
 	-DKDE4_XDMCP:BOOL=ON \
 	-DKWIN_BUILD_WITH_OPENGLES=ON
