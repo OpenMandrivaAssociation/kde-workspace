@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.21
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -114,7 +114,7 @@ BuildRequires:	pkgconfig(libdmtx)
 # google gadgets moved contrib
 #BuildRequires:	pkgconfig(libggadget-1.0)
 #BuildRequires:	pkgconfig(libggadget-qt-1.0)
-BuildRequires:	pkgconfig(libgpsd)
+BuildRequires:	pkgconfig(libgpsd) >= 3.15
 BuildRequires:	pkgconfig(libkactivities)
 BuildRequires:	pkgconfig(libpci)
 BuildRequires:	pkgconfig(libqalculate)
