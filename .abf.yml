@@ -1,3 +1,5 @@
-sources:
-  kdebase-workspace-kdm-2.7.2.tar.bz2: b5cfb60419c724831941fb724d4148987adc40ba
+removed_sources:
   kde-workspace-4.11.14.tar.xz: ec79a5d638a93b1abbb99b22a7bea52d9a2c26eb
+sources:
+  kde-workspace-4.11.22.tar.xz: f08fbe309ed16c51ad31b0b260b2adeb7af1bb37
+  kdebase-workspace-kdm-2.7.2.tar.bz2: b5cfb60419c724831941fb724d4148987adc40ba
