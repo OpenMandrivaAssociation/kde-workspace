@@ -13,8 +13,8 @@
 
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
-Version:	4.11.21
-Release:	4
+Version:	4.11.22
+Release:	1
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -25,7 +25,7 @@ Url:		http://www.kde.org
 %else
 %define ftpdir stable
 %endif
-Source0:	ftp://ftp.kde.org/pub/kde/%{ftpdir}/%{version}/src/%{name}-%{version}.tar.xz
+Source0:	http://download.kde.org/%{ftpdir}/applications/15.08.3/src/kde-workspace-%{version}.tar.xz
 Source1:	kde.pam
 Source2:	kde-np.pam
 Source4:	systemsettings.desktop
