@@ -305,6 +305,7 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/libexec/fontinst
 %{_kde_libdir}/kde4/libexec/fontinst_helper
 %{_kde_libdir}/kde4/libexec/fontinst_x11
+%{_kde_libdir}/kde4/libexec/kfontprint
 %{_kde_libdir}/kde4/libexec/kcmdatetimehelper
 %{_kde_libdir}/kde4/libexec/ksysguardprocesslist_helper
 %{_kde_libdir}/kde4/libexec/kwin_killer_helper
@@ -1489,7 +1490,6 @@ done
 	-DKWIN_BUILD_WITH_OPENGLES=ON \
 	-DBUILD_kdm:BOOL=OFF \
 	-DBUILD_kcheckpass:BOOL=OFF \
-	-DBUILD_kfontprint:BOOL=OFF \
 	-DBUILD_powerdevil:BOOL=OFF
 	
 %make
