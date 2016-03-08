@@ -383,7 +383,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_libdir}/kde4/plasma_wallpaper_color.so
 %{_kde_libdir}/kde4/plasma_wallpaper_image.so
 %{_kde_libdir}/kde4/plugins/styles/oxygen.so
-%{_kde_libdir}/kde4/powerdevilkeyboardbrightnesscontrolaction_config.so
 %{_kde_libdir}/kde4/ion_debianweather.so
 %{_kde_libdir}/kde4/krunner_activities.so
 %{_kde_libdir}/libkdeinit4_*.so
@@ -428,7 +427,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_configdir}/xcursor.knsrc
 %{_kde_configdir}/activities.knsrc
 %{_kde_configdir}/aurorae.knsrc
-%{_kde_configdir}/background.knsrc
 %{_kde_configdir}/colorschemes.knsrc
 %{_kde_configdir}/ksplash.knsrc
 %{_kde_configdir}/ksysguard.knsrc
@@ -633,7 +631,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_services}/plasma-layout-org.kde.plasma-desktop.SaL.desktop
 %{_kde_services}/plasma-layout-org.kde.plasma-desktop.desktopIcons.desktop
 %{_kde_services}/plasma-runner-activityrunner.desktop
-%{_kde_services}/powerdevilkeyboardbrightnesscontrolaction.desktop
 %{_kde_services}/recentdocuments.desktop
 %{_kde_services}/screensaver.desktop
 %{_kde_services}/settings-accessibility.desktop
@@ -673,7 +670,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/polkit-1/actions/org.kde.kcontrol.kcmclock.policy
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
-%{_kde_datadir}/wallpapers/*
 %{_datadir}/custom-xsessions/kde4-default.desktop
 
 %post
@@ -1022,21 +1018,6 @@ KDE 4 core library.
 
 #------------------------------------------------
 
-%define libpowerdevilcore_major 0
-%define libpowerdevilcore %mklibname powerdevilcore %{libpowerdevilcore_major}
-
-%package -n %{libpowerdevilcore}
-Summary:	KDE 4 core library
-Group:		System/Libraries
-
-%description -n %{libpowerdevilcore}
-KDE 4 core library.
-
-%files -n %{libpowerdevilcore}
-%{_kde_libdir}/libpowerdevilcore.so.%{libpowerdevilcore_major}*
-
-#------------------------------------------------
-
 %define libkephal_major 4
 %define libkephal %mklibname kephal %{libkephal_major}
 
@@ -1157,36 +1138,6 @@ KDE 4 core library.
 
 #-----------------------------------------------------------------------------
 
-%define powerdevilconfigcommonprivate_major 4
-%define libpowerdevilconfigcommonprivate %mklibname powerdevilconfigcommonprivate %{powerdevilconfigcommonprivate_major}
-
-%package -n %{libpowerdevilconfigcommonprivate}
-Summary:	KDE 4 core library
-Group:		System/Libraries
-
-%description -n %{libpowerdevilconfigcommonprivate}
-KDE 4 core library.
-
-%files -n %{libpowerdevilconfigcommonprivate}
-%{_kde_libdir}/libpowerdevilconfigcommonprivate.so.%{powerdevilconfigcommonprivate_major}*
-
-#-----------------------------------------------------------------------------
-
-%define libpowerdevilui_major 4
-%define libpowerdevilui %mklibname powerdevilui %{libpowerdevilui_major}
-
-%package -n %{libpowerdevilui}
-Summary:	KDE 4 core library
-Group:		System/Libraries
-
-%description -n %{libpowerdevilui}
-KDE 4 core library.
-
-%files -n %{libpowerdevilui}
-%{_kde_libdir}/libpowerdevilui.so.%{libpowerdevilui_major}*
-
-#-----------------------------------------------------------------------------
-
 %package -n plasma-applet-calendar
 Summary:	Plasma applet calendar
 Group:		Graphical desktop/KDE
@@ -1199,44 +1150,6 @@ Plasma Calendar applet.
 %files -n plasma-applet-calendar
 %{_kde_libdir}/kde4/plasma_applet_calendar.so
 %{_kde_services}/plasma-applet-calendar.desktop
-
-#-----------------------------------------------------------------------------
-
-%package -n plasma-krunner-powerdevil
-Summary:	KDE power management applet
-Group:		Graphical desktop/KDE
-Requires:	kde-runtime
-Requires:	upower
-Provides:	plasma-krunner
-
-%description -n plasma-krunner-powerdevil
-KDE power management applet.
-
-%files -n plasma-krunner-powerdevil
-%{_kde_libdir}/kde4/kded_powerdevil.so
-%{_kde_libdir}/kde4/krunner_powerdevil.so
-%{_kde_libdir}/kde4/powerdevilbrightnesscontrolaction_config.so
-%{_kde_libdir}/kde4/powerdevildimdisplayaction_config.so
-%{_kde_libdir}/kde4/powerdevildpmsaction.so
-%{_kde_libdir}/kde4/powerdevildpmsaction_config.so
-%{_kde_libdir}/kde4/powerdevilrunscriptaction_config.so
-%{_kde_libdir}/kde4/powerdevilsuspendsessionaction_config.so
-%{_kde_libdir}/kde4/kcm_powerdevilglobalconfig.so
-%{_kde_libdir}/kde4/kcm_powerdevilprofilesconfig.so
-%{_kde_libdir}/kde4/kcm_powerdevilactivitiesconfig.so
-%{_kde_libdir}/kde4/powerdevilhandlebuttoneventsaction_config.so
-%{_kde_appsdir}/powerdevil
-%{_kde_services}/kded/powerdevil.desktop
-%{_kde_services}/powerdevilglobalconfig.desktop
-%{_kde_services}/powerdevilhandlebuttoneventsaction.desktop
-%{_kde_services}/powerdevilprofilesconfig.desktop
-%{_kde_services}/plasma-runner-powerdevil.desktop
-%{_kde_services}/powerdevilbrightnesscontrolaction.desktop
-%{_kde_services}/powerdevildimdisplayaction.desktop
-%{_kde_services}/powerdevildpmsaction.desktop
-%{_kde_services}/powerdevilrunscriptaction.desktop
-%{_kde_services}/powerdevilsuspendsessionaction.desktop
-%{_kde_services}/powerdevilactivitiesconfig.desktop
 
 #-----------------------------------------------------------------------------
 
@@ -1282,7 +1195,6 @@ Features:
 Summary:	Simple plasma battery applet
 Group:		Graphical desktop/KDE
 Requires:	kde-runtime
-Requires:	plasma-krunner-powerdevil
 Provides:	plasma-applet
 
 %description -n plasma-applet-battery
@@ -1475,9 +1387,6 @@ Requires:	%{libksignalplotter} = %{EVRD}
 Requires:	%{libkwinglutils} = %{EVRD}
 Requires:	%{liboxygenstyleconfig} = %{EVRD}
 Requires:	%{liboxygenstyle} = %{EVRD}
-Requires:	%{libpowerdevilcore} = %{EVRD}
-Requires:	%{libpowerdevilconfigcommonprivate} = %{EVRD}
-Requires:	%{libpowerdevilui} = %{EVRD}
 %rename		kdebase4-workspace-devel
 
 %description devel
@@ -1485,7 +1394,6 @@ This package contains header files needed if you wish to build applications
 based on kdebase.
 
 %files devel
-%{_kde_libdir}/libpowerdevilui.so
 %{_kde_libdir}/libkdecorations.so
 %{_kde_libdir}/libkfontinst.so
 %{_kde_libdir}/libkfontinstui.so
@@ -1496,7 +1404,6 @@ based on kdebase.
 %{_kde_libdir}/libkworkspace.so
 %{_kde_libdir}/libplasma_applet-system-monitor.so
 %{_kde_libdir}/libplasmaclock.so
-%{_kde_libdir}/libpowerdevilcore.so
 %{_kde_libdir}/libprocesscore.so
 %{_kde_libdir}/libprocessui.so
 %{_kde_libdir}/libtaskmanager.so
@@ -1510,7 +1417,6 @@ based on kdebase.
 %{_kde_libdir}/libkwinglesutils.so
 %{_kde_libdir}/liboxygenstyleconfig.so
 %{_kde_libdir}/liboxygenstyle.so
-%{_kde_libdir}/libpowerdevilconfigcommonprivate.so
 %{_kde_includedir}/*
 %{_kde_libdir}/kde4/plugins/designer/*
 %{_kde_datadir}/apps/cmake/*/*
@@ -1566,12 +1472,24 @@ tar xf %{SOURCE6}
 %patch107 -p1
 %patch108 -p1
 
+# Disable some libs
+for lib in kdm; do
+    sed -i "/add_subdirectory($lib)/s/^/#/" libs/CMakeLists.txt
+done
+
+# Disable docs
+for doc in kdm; do
+    sed -i "/add_subdirectory($doc)/s/^/#/" doc/CMakeLists.txt
+done
+
 %build
 %cmake_kde4 -Wno-dev \
 	-DBUILD_KCM_RANDR:BOOL=ON \
 	-DKDE4_XDMCP:BOOL=ON \
 	-DKWIN_BUILD_WITH_OPENGLES=ON \
-	-DBUILD_kdm:BOOL=OFF
+	-DBUILD_kdm:BOOL=OFF \
+	-DBUILD_kcheckpass:BOOL=OFF \
+	-DBUILD_kfontprint:BOOL=OFF
 	
 %make
 
@@ -1604,11 +1522,6 @@ function kde4 {
 xinit /etc/X11/Xsession KDE4
 }
 EOF
-
-# Install kde pam configuration file
-install -d -m 0755 %{buildroot}%{_sysconfdir}/pam.d/
-install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/kde
-install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pam.d/kde-np
 
 %if "%{disttag}" == "omv"
 # OpenMandriva startkde
