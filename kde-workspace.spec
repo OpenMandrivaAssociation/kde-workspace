@@ -177,6 +177,7 @@ Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrol4 < 2:4.11.0
 Obsoletes:	%{_lib}kwinnvidiahack4 < 2:4.11.0
+Obsoletes:	kdm < 2:4.11.22-2
 Requires(post,preun):	update-alternatives
 %rename		kdebase4-workspace
 
@@ -764,7 +765,7 @@ This package allow kde4 to use plasma applets written in ruby.
 #------------------------------------------------
 
 %package -n plasma-scriptengine-python
-Summary:	Support for ruby python applets
+Summary:	Support for python plasma applets
 Group:		Graphical desktop/KDE
 Requires:	kde-runtime
 Requires:	python-kde4
@@ -1402,59 +1403,6 @@ This plugin provides integration of pure Qt4 applications with KDE4 Workspace.
 
 #-----------------------------------------------------------------------------
 
-%package -n kdm
-Summary:	KDE Desktop Login Manager
-Group:		Graphical desktop/KDE
-Requires:	kde-runtime
-Requires:	kde4-config-file
-Provides:	dm
-# Broken for now
-#Requires:	kdmfprintplugin
-
-%description -n kdm
-KDE Desktop Login Manager.
-
-%post -n kdm
-chksession -K
-
-%postun -n kdm
-chksession -K
-
-%files -n kdm
-%config(noreplace) %{_sysconfdir}/pam.d/kde
-%config(noreplace) %{_sysconfdir}/pam.d/kde-np
-%config(noreplace) %{_sysconfdir}/logrotate.d/kdm
-%{_kde_bindir}/kdm
-%{_kde_bindir}/kdmctl
-%{_kde_bindir}/genkdmconf
-%{_kde_libdir}/kde4/libexec/kdm_config
-%{_kde_libdir}/kde4/libexec/kdm_greet
-%{_kde_libdir}/kde4/libexec/kfontprint
-%{_kde_libdir}/kde4/libexec/krootimage
-%attr(4755,root,root) %{_kde_libdir}/kde4/libexec/kcheckpass
-%{_kde_libdir}/kde4/kcm_kdm.so
-%{_kde_appsdir}/doc/kdm
-%dir %{_kde_appsdir}/kdm
-%{_kde_appsdir}/kdm/*
-%{_kde_datadir}/config/kdm.knsrc
-%{_kde_datadir}/config/kdm
-%{_kde_services}/kdm.desktop
-%{_kde_docdir}/*/*/kdm
-%{_kde_libdir}/kde4/kgreet_*
-%{_sysconfdir}/dbus-1/system.d/org.kde.kcontrol.kcmkdm.conf
-%{_kde_datadir}/polkit-1/actions/org.kde.kcontrol.kcmkdm.policy
-%{_kde_datadir}/dbus-1/system-services/org.kde.kcontrol.kcmkdm.service
-%{_kde_libdir}/kde4/libexec/kcmkdmhelper
-%{_sysconfdir}/dbus-1/system.d/org.kde.powerdevil.backlighthelper.conf
-%{_kde_libdir}/kde4/libexec/backlighthelper
-%{_kde_datadir}/dbus-1/system-services/org.kde.powerdevil.backlighthelper.service
-%{_kde_datadir}/polkit-1/actions/org.kde.powerdevil.backlighthelper.policy
-%{_unitdir}/kdm.service
-%attr(0775,root,root) %dir %{_localstatedir}/spool/gdm
-%attr(0770, root, root) %dir %{_localstatedir}/lib/kdm
-
-#-----------------------------------------------------------------------------
-
 %package -n kinfocenter
 Summary:	Kinfocenter
 Group:		Graphical desktop/KDE
@@ -1624,7 +1572,9 @@ tar xf %{SOURCE6}
 %cmake_kde4 -Wno-dev \
 	-DBUILD_KCM_RANDR:BOOL=ON \
 	-DKDE4_XDMCP:BOOL=ON \
-	-DKWIN_BUILD_WITH_OPENGLES=ON
+	-DKWIN_BUILD_WITH_OPENGLES=ON \
+	-DBUILD_kdm:BOOL = OFF
+	
 %make
 
 %install
@@ -1674,26 +1624,6 @@ install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
 # We need to expand libdir into startkde
 sed -e 's,LIBDIR,%{_libdir},g' -i %{buildroot}%{_kde_bindir}/startkde
 sed -e 's,KDE4_LIBEXEC_INSTALL_DIR,%{_libdir}/kde4/libexec,g' -i %{buildroot}%{_kde_bindir}/startkde
-
-# systemd implimentation
-install -d -m 0775 %{buildroot}%{_unitdir}
-# It's different in OMV and ROSA
-%if "%{disttag}" == "omv"
-install -m 0644 %{SOURCE11} %{buildroot}%{_unitdir}/kdm.service
-%else
-install -m 0644 %{SOURCE12} %{buildroot}%{_unitdir}/kdm.service
-%endif
-
-# logrotate
-mkdir -p %{buildroot}%{_sysconfdir}/logrotate.d
-cat << EOF > %{buildroot}%{_sysconfdir}/logrotate.d/kdm
-/var/log/kdm.log {
-weekly
-notifempty
-missingok
-nocompress
-}
-EOF
 
 # We use our desktop files. Write over is a better decision than a patch that breaks most of the times
 cp -f %{SOURCE4} %{buildroot}%{_kde_applicationsdir}/
