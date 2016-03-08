@@ -674,7 +674,6 @@ This package contains the KDE 4 application workspace components.
 %{_kde_datadir}/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 %{_kde_datadir}/sounds/pop.wav
 %{_kde_datadir}/wallpapers/*
-%{_datadir}/xsessions/kde-plasma.desktop
 %{_datadir}/custom-xsessions/kde4-default.desktop
 
 %post
@@ -1587,7 +1586,6 @@ install -m 0644 %{SOURCE8} %{buildroot}%{_kde_services}/kcm_drakclock.desktop
 rm -f %{buildroot}%{_kde_appsdir}/plasma-desktop/updates/addShowActivitiesManagerPlasmoid.js
 
 install -d -m 0755 %{buildroot}%{_datadir}/xsessions/
-install -m 0644 %{buildroot}%{_kde_appsdir}/kdm/sessions/kde-plasma.desktop %{buildroot}%{_datadir}/xsessions/kde-plasma.desktop
 install -d -m 0755 %{buildroot}%{_datadir}/custom-xsessions/
 install -m 0644 %{SOURCE13} %{buildroot}%{_datadir}/custom-xsessions/kde4-default.desktop
 
