@@ -1483,6 +1483,9 @@ for doc in kdm; do
     sed -i "/add_subdirectory($doc)/s/^/#/" doc/CMakeLists.txt
 done
 
+# really kill powerdevil
+sed -i "/add_subdirectory(powerdevil)/s/^/#/" plasma/generic/runners/CMakeLists.txt
+
 %build
 %cmake_kde4 -Wno-dev \
 	-DBUILD_KCM_RANDR:BOOL=ON \
