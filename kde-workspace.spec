@@ -1489,7 +1489,8 @@ done
 	-DKWIN_BUILD_WITH_OPENGLES=ON \
 	-DBUILD_kdm:BOOL=OFF \
 	-DBUILD_kcheckpass:BOOL=OFF \
-	-DBUILD_kfontprint:BOOL=OFF
+	-DBUILD_kfontprint:BOOL=OFF \
+	-DBUILD_powerdevil:BOOL=OFF
 	
 %make
 
