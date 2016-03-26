@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.22
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
