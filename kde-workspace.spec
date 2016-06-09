@@ -120,10 +120,7 @@ BuildRequires:	pkgconfig(libpci)
 BuildRequires:	pkgconfig(libqalculate)
 BuildRequires:	pkgconfig(libraw1394)
 # (tpg) needed for patch 107
-BuildRequires:	pkgconfig(libsystemd-daemon)
-BuildRequires:	pkgconfig(libsystemd-id128)
-BuildRequires:	pkgconfig(libsystemd-journal)
-BuildRequires:	pkgconfig(libsystemd-login)
+BuildRequires:	pkgconfig(libsystemd)
 
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(libxklavier)
