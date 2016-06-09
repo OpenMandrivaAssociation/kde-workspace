@@ -1468,7 +1468,7 @@ tar xf %{SOURCE6}
 %patch107 -p1
 %patch108 -p1
 
-%if %{with kdm}
+%if !%{with kdm}
 # Disable some libs
 for lib in kdm; do
     sed -i "/add_subdirectory($lib)/s/^/#/" libs/CMakeLists.txt
@@ -1488,7 +1488,7 @@ sed -i "/add_subdirectory(powerdevil)/s/^/#/" plasma/generic/runners/CMakeLists.
 	-DBUILD_KCM_RANDR:BOOL=ON \
 	-DKDE4_XDMCP:BOOL=ON \
 	-DKWIN_BUILD_WITH_OPENGLES=ON \
-%if %{with kdm}
+%if !%{with kdm}
 	-DBUILD_kdm:BOOL=OFF \
 %endif
 	-DBUILD_kcheckpass:BOOL=OFF \
@@ -1509,7 +1509,7 @@ rm -f %{buildroot}%{_kde_appsdir}/plasma-desktop/updates/addShowActivitiesManage
 install -d -m 0755 %{buildroot}%{_datadir}/custom-xsessions/
 install -m 0644 %{SOURCE13} %{buildroot}%{_datadir}/custom-xsessions/kde4-default.desktop
 
-%if %{with kdm}
+%if !%{with kdm}
 rm -fr %{buildroot}%{_kde_appsdir}/kdm/sessions
 rm -fr %{buildroot}%{_kde_configdir}/kdm/X*
 rm -fr %{buildroot}%{_kde_configdir}/kdm/backgroundrc
