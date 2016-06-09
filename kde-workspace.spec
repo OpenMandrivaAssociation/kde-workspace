@@ -14,7 +14,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.22
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -166,11 +166,6 @@ Suggests:	plasma-applet-system-monitor-temperature
 Requires:	kscreen
 %else
 Requires:	krandr
-%endif
-%if "%{disttag}" == "omv"
-Requires:	homerun
-%else
-Suggests:	rosapanel
 %endif
 Conflicts:	kdm < 2:4.10.2-4
 Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
