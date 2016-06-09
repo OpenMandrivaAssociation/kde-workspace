@@ -1428,7 +1428,7 @@ based on kdebase.
 %if !%{with kdm}
 rm -fr kdm/kfrontend libs/kdm
 tar xf %{SOURCE6}
-%nedif
+%endif
 
 %patch0 -p1
 
