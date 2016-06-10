@@ -10,11 +10,12 @@
 %define kdm_version 2.7.2
 
 %bcond_without kscreen
+%bcond_with kdm
 
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.22
-Release:	5
+Release:	7
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -81,11 +82,11 @@ Patch100:	kdebase-workspace-4.8.1-hideklipper.patch
 Patch101:	kdebase-workspace-4.8.97-klippermenu.patch
 # (tpg) use original patch https://bugs.kde.org/show_bug.cgi?id=206089
 # (tpg) updated from Fedora
+%if %{with kdm}
 Patch104:	kde-workspace-4.11.1-kdm_plymouth081.patch
 # (tpg) from Fedora - make use of systemd multiseat
 Patch105:	kde-workspace-4.11.1-kdm-logind-multiseat.patch
-# older Fedora patch, let's keep it for Rosa
-Patch106:	kdebase-workspace-4.7.3.fedora-kdm-plymouth.patch
+%endif
 Patch107:	kdebase-workspace-4.11.0-no-hal.patch
 Patch108:	kde-workspace-4.11.14-qFuzzyCompare-arm.patch
 
@@ -119,11 +120,10 @@ BuildRequires:	pkgconfig(libkactivities)
 BuildRequires:	pkgconfig(libpci)
 BuildRequires:	pkgconfig(libqalculate)
 BuildRequires:	pkgconfig(libraw1394)
-# (tpg) needed for patch 107
-BuildRequires:	pkgconfig(libsystemd-daemon)
-BuildRequires:	pkgconfig(libsystemd-id128)
-BuildRequires:	pkgconfig(libsystemd-journal)
-BuildRequires:	pkgconfig(libsystemd-login)
+%if %{with kdm}
+# (tpg) needed for patch 105
+BuildRequires:	pkgconfig(libsystemd)
+%endif
 
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(libxklavier)
@@ -167,17 +167,14 @@ Requires:	kscreen
 %else
 Requires:	krandr
 %endif
-%if "%{disttag}" == "omv"
-Requires:	homerun
-%else
-Suggests:	rosapanel
-%endif
 Conflicts:	kdm < 2:4.10.2-4
 Obsoletes:	kdebase4-workspace-googlegadgets < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrolifaces4 < 2:4.11.0
 Obsoletes:	%{_lib}solidcontrol4 < 2:4.11.0
 Obsoletes:	%{_lib}kwinnvidiahack4 < 2:4.11.0
+%if !%{with kdm}
 Obsoletes:	kdm < 2:4.11.22-2
+%endif
 Requires(post,preun):	update-alternatives
 %rename		kdebase4-workspace
 
@@ -674,7 +671,6 @@ This package contains the KDE 4 application workspace components.
 %{_datadir}/custom-xsessions/kde4-default.desktop
 
 %post
-%{_sbindir}/update-alternatives --install %{_datadir}/xsessions/default.desktop default.desktop %{_datadir}/custom-xsessions/kde4-default.desktop 10
 %{_sbindir}/update-alternatives --install %{_kde_autostart}/krunner-alt.desktop krunner.desktop %{_kde_appsdir}/plasma/autostart/krunner.desktop 10
 %{_sbindir}/update-alternatives --install %{_kde_autostart}/plasma-desktop-alt.desktop plasma-desktop.desktop %{_kde_appsdir}/plasma/autostart/plasma-desktop.desktop 10
 
@@ -1429,8 +1425,10 @@ based on kdebase.
 %prep
 %setup -q -n kde-workspace-%{version}
 
+%if !%{with kdm}
 rm -fr kdm/kfrontend libs/kdm
 tar xf %{SOURCE6}
+%endif
 
 %patch0 -p1
 
@@ -1461,18 +1459,16 @@ tar xf %{SOURCE6}
 %patch100 -p1
 %patch101 -p1
 
-%if "%{disttag}" == "omv"
+%if %{with kdm}
 # OpenMandriva Plymouth and KDM patches
 %patch104 -p1
 %patch105 -p1
-%else
-# ROSA Plymouth and KDM patches
-%patch106 -p1
 %endif
 
 %patch107 -p1
 %patch108 -p1
 
+%if !%{with kdm}
 # Disable some libs
 for lib in kdm; do
     sed -i "/add_subdirectory($lib)/s/^/#/" libs/CMakeLists.txt
@@ -1482,6 +1478,7 @@ done
 for doc in kdm; do
     sed -i "/add_subdirectory($doc)/s/^/#/" doc/CMakeLists.txt
 done
+%endif
 
 # really kill powerdevil
 sed -i "/add_subdirectory(powerdevil)/s/^/#/" plasma/generic/runners/CMakeLists.txt
@@ -1491,10 +1488,12 @@ sed -i "/add_subdirectory(powerdevil)/s/^/#/" plasma/generic/runners/CMakeLists.
 	-DBUILD_KCM_RANDR:BOOL=ON \
 	-DKDE4_XDMCP:BOOL=ON \
 	-DKWIN_BUILD_WITH_OPENGLES=ON \
+%if !%{with kdm}
 	-DBUILD_kdm:BOOL=OFF \
+%endif
 	-DBUILD_kcheckpass:BOOL=OFF \
 	-DBUILD_powerdevil:BOOL=OFF
-	
+
 %make
 
 %install
@@ -1507,14 +1506,15 @@ install -m 0644 %{SOURCE8} %{buildroot}%{_kde_services}/kcm_drakclock.desktop
 # Remove it because all it does is adding Activities widget to existing panel
 rm -f %{buildroot}%{_kde_appsdir}/plasma-desktop/updates/addShowActivitiesManagerPlasmoid.js
 
-install -d -m 0755 %{buildroot}%{_datadir}/xsessions/
 install -d -m 0755 %{buildroot}%{_datadir}/custom-xsessions/
 install -m 0644 %{SOURCE13} %{buildroot}%{_datadir}/custom-xsessions/kde4-default.desktop
 
+%if !%{with kdm}
 rm -fr %{buildroot}%{_kde_appsdir}/kdm/sessions
 rm -fr %{buildroot}%{_kde_configdir}/kdm/X*
 rm -fr %{buildroot}%{_kde_configdir}/kdm/backgroundrc
 rm -fr %{buildroot}%{_kde_configdir}/kdm/kdmrc
+%endif
 
 # Env entry for start kde4
 install -d -m 0755 %{buildroot}/etc/profile.d
@@ -1527,13 +1527,8 @@ xinit /etc/X11/Xsession KDE4
 }
 EOF
 
-%if "%{disttag}" == "omv"
 # OpenMandriva startkde
 install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
-%else
-# Rosa startkde
-install -m 0755 %{SOURCE9} %{buildroot}%{_kde_bindir}/startkde
-%endif
 
 # We need to expand libdir into startkde
 sed -e 's,LIBDIR,%{_libdir},g' -i %{buildroot}%{_kde_bindir}/startkde
@@ -1544,7 +1539,9 @@ cp -f %{SOURCE4} %{buildroot}%{_kde_applicationsdir}/
 
 # own as part of plymouth/kdm integration hacks (rhbz #551310)
 mkdir -p -m775 %{buildroot}%{_localstatedir}/spool/gdm
+%if %{with kdm}
 mkdir -p -m770 %{buildroot}%{_localstatedir}/lib/kdm
+%endif
 
 sed -i 's!preferences-other!preferences-app-run!g' \
   %{buildroot}%{_kde_services}/settings-startup-and-shutdown.desktop
