@@ -177,7 +177,7 @@ Obsoletes:	kdm < 2:4.11.22-2
 %endif
 Requires(post,preun):	update-alternatives
 %rename		kdebase4-workspace
-Obsoletes:	kinfocenter < 2:4.11.22-9
+Obsoletes:	kinfocenter = 2:4.11.22-7
 
 %description
 This package contains the KDE 4 application workspace components.
