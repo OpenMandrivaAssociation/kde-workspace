@@ -15,7 +15,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.22
-Release:	8
+Release:	9
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -177,6 +177,7 @@ Obsoletes:	kdm < 2:4.11.22-2
 %endif
 Requires(post,preun):	update-alternatives
 %rename		kdebase4-workspace
+Obsoletes:	kinfocenter = 2:4.11.22-7
 
 %description
 This package contains the KDE 4 application workspace components.
