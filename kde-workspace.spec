@@ -15,7 +15,7 @@
 Summary:	KDE 4 application workspace components
 Name:		kde-workspace
 Version:	4.11.22
-Release:	7
+Release:	8
 Epoch:		2
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -1310,51 +1310,6 @@ This plugin provides integration of pure Qt4 applications with KDE4 Workspace.
 
 #-----------------------------------------------------------------------------
 
-%package -n kinfocenter
-Summary:	Kinfocenter
-Group:		Graphical desktop/KDE
-Requires:	kde-runtime
-Provides:	kinfocenter4
-Requires:	ldetect-lst
-
-%description -n kinfocenter
-Kinfocenter is a utility in KDE that provides information
-about a computer system.
-
-%files -n kinfocenter
-%{_kde_bindir}/kinfocenter
-%dir %{_kde_appsdir}/kinfocenter
-%{_kde_appsdir}/kinfocenter/*
-%{_kde_appsdir}/kcmview1394
-%{_kde_libdir}/kde4/kcm_info.so
-%{_kde_libdir}/kde4/kcm_opengl.so
-%{_kde_libdir}/kde4/kcm_nic.so
-%{_kde_libdir}/kde4/kcm_usb.so
-%{_kde_libdir}/kde4/kcm_view1394.so
-%{_kde_libdir}/kde4/kcm_memory.so
-%{_kde_libdir}/kde4/kcm_pci.so
-%{_kde_libdir}/kde4/kcm_samba.so
-%{_kde_libdir}/kde4/kcm_infosummary.so
-%{_kde_libdir}/kde4/devinfo.so
-%{_kde_applicationsdir}/kinfocenter.desktop
-%{_kde_docdir}/*/*/kinfocenter
-%{_kde_services}/dma.desktop
-%{_kde_services}/interrupts.desktop
-%{_kde_services}/ioports.desktop
-%{_kde_services}/kcmusb.desktop
-%{_kde_services}/kcmview1394.desktop
-%{_kde_services}/nic.desktop
-%{_kde_services}/opengl.desktop
-%{_kde_services}/scsi.desktop
-%{_kde_services}/xserver.desktop
-%{_kde_services}/kcm_memory.desktop
-%{_kde_services}/kcm_pci.desktop
-%{_kde_services}/smbstatus.desktop
-%{_kde_services}/devinfo.desktop
-%{_kde_services}/kcm_infosummary.desktop
-
-#-----------------------------------------------------------------------------
-
 %package devel
 Summary:	Devel stuff for kdebase 4
 Group:		Development/KDE and Qt
@@ -1550,6 +1505,38 @@ sed -i 's!preferences-other!preferences-app-run!g' \
 mkdir -p %{buildroot}%{_kde_appsdir}/plasma/autostart
 mv %{buildroot}%{_kde_autostart}/krunner.desktop %{buildroot}%{_kde_appsdir}/plasma/autostart/
 mv %{buildroot}%{_kde_autostart}/plasma-desktop.desktop %{buildroot}%{_kde_appsdir}/plasma/autostart/
+
+
+# (tpg) this is useless and replaced by PD's kinfocenter
+rm -rf %{buildroot}%{_kde_bindir}/kinfocenter
+rm -rf %{buildroot}%{_kde_appsdir}/kinfocenter
+rm -rf %{buildroot}%{_kde_appsdir}/kcmview1394
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_info.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_opengl.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_nic.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_usb.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_view1394.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_memory.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_pci.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_samba.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/kcm_infosummary.so
+rm -rf %{buildroot}%{_kde_libdir}/kde4/devinfo.so
+rm -rf %{buildroot}%{_kde_applicationsdir}/kinfocenter.desktop
+rm -rf %{buildroot}%{_kde_docdir}/*/*/kinfocenter
+rm -rf %{buildroot}%{_kde_services}/dma.desktop
+rm -rf %{buildroot}%{_kde_services}/interrupts.desktop
+rm -rf %{buildroot}%{_kde_services}/ioports.desktop
+rm -rf %{buildroot}%{_kde_services}/kcmusb.desktop
+rm -rf %{buildroot}%{_kde_services}/kcmview1394.desktop
+rm -rf %{buildroot}%{_kde_services}/nic.desktop
+rm -rf %{buildroot}%{_kde_services}/opengl.desktop
+rm -rf %{buildroot}%{_kde_services}/scsi.desktop
+rm -rf %{buildroot}%{_kde_services}/xserver.desktop
+rm -rf %{buildroot}%{_kde_services}/kcm_memory.desktop
+rm -rf %{buildroot}%{_kde_services}/kcm_pci.desktop
+rm -rf %{buildroot}%{_kde_services}/smbstatus.desktop
+rm -rf %{buildroot}%{_kde_services}/devinfo.desktop
+rm -rf %{buildroot}%{_kde_services}/kcm_infosummary.desktop
 
 %check
 for f in %{buildroot}%{_kde_applicationsdir}/*.desktop ; do
